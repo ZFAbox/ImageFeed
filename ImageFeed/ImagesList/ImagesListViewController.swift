@@ -46,24 +46,18 @@ final class ImagesListViewController: UIViewController {
         imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypred
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
         
-        
-        //gradient
-        
         let gradientLayer = CAGradientLayer()
-        let imageHeight = imagesListCell.frame.height
         gradientLayer.colors = [
             UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 0).cgColor,
-            UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 1).cgColor
-            ]
+            UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 0.2).cgColor
+        ]
+        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
         gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0, b: 0.54, c: -0.54, d: 0, tx: 0.77, ty: 0))
         gradientLayer.frame.size.width = imagesListCell.imageCellView.frame.width
-        gradientLayer.bounds = view.bounds.insetBy(dx: -0.5*view.bounds.size.width, dy: -0.5*view.bounds.size.height)
         gradientLayer.frame.size.height = 30
-        
-        gradientLayer.position.y = CGFloat(imageHeight - 15)
-        gradientLayer.position = imagesListCell.imageCellView.center
-        imagesListCell.imageCellView.layer.addSublayer(gradientLayer)
-                                
+        imagesListCell.gradienCellView.layer.addSublayer(gradientLayer)
     }
 }
 
@@ -91,7 +85,6 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-       
         guard let imageWidth = UIImage(named: "\(indexPath.row)")?.cgImage?.width else {return 10}
         let cellRowWidth = tableView.frame.width
         guard let imageHeight = UIImage(named: "\(indexPath.row)")?.cgImage?.height else { return 10 }
