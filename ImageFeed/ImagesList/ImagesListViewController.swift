@@ -43,7 +43,6 @@ final class ImagesListViewController: UIViewController {
     
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
         imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
-        print(indexPath.row)
         imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypred
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
     }
