@@ -7,18 +7,15 @@
 
 import UIKit
 
-
 final class ImagesListCell: UITableViewCell {
-    
+    //MARK: - IBOutlets
     @IBOutlet var imageCellView: UIImageView!{
         didSet{
             imageCellView.layer.cornerRadius = 16
             imageCellView.clipsToBounds = true
         }
     }
-    
     @IBOutlet weak var imageCellViewDate: UILabel!
-    
     @IBOutlet var gradienCellView: UIView! {
         didSet{
             gradienCellView.backgroundColor = UIColor.clear
@@ -29,7 +26,7 @@ final class ImagesListCell: UITableViewCell {
                 UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 1).cgColor
             ]
             gradientLayer.locations = [0, 1]
-            gradientLayer.startPoint = CGPoint(x: 0.25, y: 0.5)
+            gradientLayer.startPoint = CGPoint(x: 0.1, y: 0.5)
             gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
             gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0, b: 0.54, c: -0.54, d: 0, tx: 0.77, ty: 0))
             gradientLayer.frame.size.width = bounds.width
@@ -37,17 +34,11 @@ final class ImagesListCell: UITableViewCell {
             gradienCellView.layer.addSublayer(gradientLayer)
         }
     }
-    
-  
-    
-    
     @IBOutlet weak var likeCellViewButton: UIButton! {
         didSet{
             likeCellViewButton.titleLabel?.text = ""
         }
     }
-    
-   
+    //MARK: - Statics
     static let reuseIdentifier = "ImagesListCell"
-    
 }

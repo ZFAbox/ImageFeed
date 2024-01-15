@@ -8,7 +8,6 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
-
     //MARK: - IBOutlets
     @IBOutlet private var imagesListTableView: UITableView! {
         didSet {
@@ -18,14 +17,21 @@ final class ImagesListViewController: UIViewController {
         }
     }
     
-    //MARK: - Private variables
+    //MARK: - Privates
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0  )
+        imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
+        UIView.animate(withDuration: 0.3) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
     }
-    
+
     func dateFormat(date: Date) -> String {
         var curentDate = ""
         let dateFormatter = DateFormatter()
@@ -48,6 +54,7 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
+    //MARK: - Extensions
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photoArray.count
@@ -55,12 +62,10 @@ extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = imagesListTableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
-        
         guard let imagesListCell = cell as? ImagesListCell else {
             print("Ошибка приведения ячейки")
             return UITableViewCell()
         }
-        
         configCell(for: imagesListCell, indexPath: indexPath)
         return imagesListCell
     }
