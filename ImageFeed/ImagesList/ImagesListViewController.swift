@@ -8,16 +8,19 @@
 import UIKit
 
 final class ImagesListViewController: UIViewController {
+    
     //MARK: - IBOutlets
+    
     @IBOutlet private var imagesListTableView: UITableView! {
         didSet {
-            imagesListTableView.backgroundColor = .ypblack
+            imagesListTableView.backgroundColor = .ypBlack
             imagesListTableView.dataSource = self
             imagesListTableView.delegate = self
         }
     }
     
     //MARK: - Privates
+    
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -32,29 +35,13 @@ final class ImagesListViewController: UIViewController {
         }
     }
 
-    func dateFormat(date: Date) -> String {
-        var curentDate = ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.setLocalizedDateFormatFromTemplate("dMMMMyyyy")
-        for charackter in dateFormatter.string(from: date) {
-            if charackter != "г" {
-                if charackter != "." {
-                    curentDate.append(charackter)
-                }
-            }
-        }
-        return curentDate
-    }
-    
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
-        imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
-        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypred
-        imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
+        imagesListCell.configureCellContent(indexPath: indexPath)
     }
 }
 
     //MARK: - Extensions
+
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photoArray.count
@@ -63,7 +50,6 @@ extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = imagesListTableView.dequeueReusableCell(withIdentifier: ImagesListCell.reuseIdentifier, for: indexPath)
         guard let imagesListCell = cell as? ImagesListCell else {
-            print("Ошибка приведения ячейки")
             return UITableViewCell()
         }
         configCell(for: imagesListCell, indexPath: indexPath)

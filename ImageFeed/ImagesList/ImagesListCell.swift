@@ -8,15 +8,18 @@
 import UIKit
 
 final class ImagesListCell: UITableViewCell {
+   
     //MARK: - IBOutlets
-    @IBOutlet var imageCellView: UIImageView!{
+    
+    @IBOutlet private var imageCellView: UIImageView!{
         didSet{
             imageCellView.layer.cornerRadius = 16
             imageCellView.clipsToBounds = true
         }
     }
-    @IBOutlet weak var imageCellViewDate: UILabel!
-    @IBOutlet var gradienCellView: UIView! {
+    @IBOutlet private weak var imageCellViewDate: UILabel!
+    
+    @IBOutlet private weak var gradienCellView: UIView! {
         didSet{
             gradienCellView.backgroundColor = UIColor.clear
             
@@ -34,11 +37,36 @@ final class ImagesListCell: UITableViewCell {
             gradienCellView.layer.addSublayer(gradientLayer)
         }
     }
-    @IBOutlet weak var likeCellViewButton: UIButton! {
+    @IBOutlet private weak var likeCellViewButton: UIButton! {
         didSet{
             likeCellViewButton.titleLabel?.text = ""
         }
     }
+    
     //MARK: - Statics
+    
     static let reuseIdentifier = "ImagesListCell"
+    
+    //MARK: - Functions
+    
+    func dateFormat(date: Date) -> String {
+        var curentDate = ""
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dMMMMyyyy")
+        for charackter in dateFormatter.string(from: date) {
+            if charackter != "г" {
+                if charackter != "." {
+                    curentDate.append(charackter)
+                }
+            }
+        }
+        return curentDate
+    }
+    
+    func configureCellContent(indexPath: IndexPath) {
+            imageCellView?.image = UIImage(named: "\(indexPath.row)")
+            likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypRed
+            imageCellViewDate?.text = dateFormat(date: Date())
+    }
 }
