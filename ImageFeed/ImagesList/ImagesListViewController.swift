@@ -11,7 +11,7 @@ final class ImagesListViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet private var imagesListTableView: UITableView! {
         didSet {
-            imagesListTableView.backgroundColor = .ypblack
+            imagesListTableView.backgroundColor = .ypBlack
             imagesListTableView.dataSource = self
             imagesListTableView.delegate = self
         }
@@ -30,7 +30,10 @@ final class ImagesListViewController: UIViewController {
         UIView.animate(withDuration: 0.3) {
             self.setNeedsStatusBarAppearanceUpdate()
         }
+        self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
+    
+    
 
     func dateFormat(date: Date) -> String {
         var curentDate = ""
@@ -49,10 +52,14 @@ final class ImagesListViewController: UIViewController {
     
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
         imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
-        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypred
+        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypRed
+//        let isLiked = indexPath.row % 2 == 0
+//        let likeImage = isLiked ? UIImage(named: "isLiked") : UIImage(named: "notLiked")
+//        imagesListCell.likeCellViewButton.setImage(likeImage, for: .normal)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
+            
+        }
     }
-}
 
     //MARK: - Extensions
 extension ImagesListViewController: UITableViewDataSource {
@@ -74,6 +81,7 @@ extension ImagesListViewController: UITableViewDataSource {
 extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

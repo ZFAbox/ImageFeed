@@ -13,5 +13,6 @@ extension UIColor{
     static var ypWhite: UIColor {UIColor(named: "YP White") ?? UIColor.black}
     static var ypRed: UIColor {UIColor(named: "YP Red") ?? UIColor.red}
     static var transperantWhite: UIColor {UIColor(named: "Transperant White") ?? UIColor.white}
+    static var userGray: UIColor {UIColor(named: "User Gray") ?? UIColor.gray}
 }
     
