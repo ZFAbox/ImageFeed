@@ -19,11 +19,24 @@ final class ImagesListViewController: UIViewController {
     
     //MARK: - Privates
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
+    private var showSingleImageSegueIdentifier = "ShowSingleImage"
     
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
-    
+   
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == showSingleImageSegueIdentifier {
+            let viewController = segue.destination as! SingleImageViewController
+            let indexPath = sender as! IndexPath
+            let image = UIImage(named: photoArray[indexPath.row])
+//            _ = viewController.view //   Crash fixed!
+//            viewController.viewDidLoad()
+            viewController.image = image
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
@@ -82,6 +95,8 @@ extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        performSegue(withIdentifier: showSingleImageSegueIdentifier, sender: indexPath)
+        
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

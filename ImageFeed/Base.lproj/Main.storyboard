@@ -167,7 +167,6 @@
                                             <outlet property="imageCellView" destination="U0w-I7-ng8" id="3Sm-Tl-nFM"/>
                                             <outlet property="imageCellViewDate" destination="8dI-Pf-xbv" id="rla-Bs-i6l"/>
                                             <outlet property="likeCellViewButton" destination="3P0-Mj-pse" id="UPv-uE-F8u"/>
-                                            <segue destination="jxm-P0-GZy" kind="show" id="9tT-pa-0O3"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -186,6 +185,7 @@
                     <navigationItem key="navigationItem" id="YNU-RY-XIW"/>
                     <connections>
                         <outlet property="imagesListTableView" destination="v2B-vp-ilA" id="P7h-Vp-9so"/>
+                        <segue destination="jxm-P0-GZy" kind="show" identifier="ShowSingleImage" id="D9j-dK-c80"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

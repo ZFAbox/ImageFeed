@@ -9,12 +9,21 @@ import Foundation
 import UIKit
 
 
-final class SingleImageViewController: UIViewController {
+class SingleImageViewController: UIViewController {
     
-    @IBOutlet weak var SingleImageView: UIImageView!
-    
-    override func viewDidLoad() {
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    var image: UIImage! {
+        didSet {
+            guard isViewLoaded else { return }
+                singleImageView.image = image
+        }
     }
     
+    @IBOutlet weak var singleImageView: UIImageView!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        singleImageView.image = image
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+
+    }
 }
