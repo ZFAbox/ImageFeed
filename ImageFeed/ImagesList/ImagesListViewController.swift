@@ -30,8 +30,6 @@ final class ImagesListViewController: UIViewController {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
             let image = UIImage(named: photoArray[indexPath.row])
-//            _ = viewController.view //   Crash fixed!
-//            viewController.viewDidLoad()
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)

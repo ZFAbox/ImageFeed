@@ -23,7 +23,10 @@ class SingleImageViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         singleImageView.image = image
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-
     }
+    
+    @IBAction func backButtonAction(_ sender: Any) {
+        dismiss(animated: true, completion: nil)
+    }
+    
 }
