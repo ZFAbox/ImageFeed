@@ -69,13 +69,6 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
-		904E5B8F2B48A770001CB3BB /* Helpers + Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Helpers + Extensions";
-			sourceTree = "<group>";
-		};
 		9068735C2B3F60EF00F47AE0 = {
 			isa = PBXGroup;
 			children = (
@@ -97,7 +90,6 @@
 			children = (
 				902A9E112B51E325001436EE /* Resourses */,
 				90AEEC232B4DE519007A473A /* ImagesList */,
-				904E5B8F2B48A770001CB3BB /* Helpers + Extensions */,
 				906873682B3F60EF00F47AE0 /* AppDelegate.swift */,
 				9068736A2B3F60EF00F47AE0 /* SceneDelegate.swift */,
 				9068736E2B3F60EF00F47AE0 /* Main.storyboard */,

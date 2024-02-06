@@ -44,8 +44,6 @@ final class ImagesListViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
-    
-
     func dateFormat(date: Date) -> String {
         var curentDate = ""
         let dateFormatter = DateFormatter()
@@ -61,14 +59,26 @@ final class ImagesListViewController: UIViewController {
         return curentDate
     }
     
+    func prepareGradientLayer(cell: ImagesListCell){
+        cell.gradienCellView.layer.sublayers?.first?.removeFromSuperlayer()
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.colors = [
+            UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 0).cgColor,
+            UIColor(red: 0.102, green: 0.106, blue: 0.133, alpha: 0.2).cgColor
+        ]
+        gradientLayer.locations = [0, 1]
+        gradientLayer.startPoint = CGPoint(x: 0.1, y: 0.5)
+        gradientLayer.endPoint = CGPoint(x: 0.75, y: 0.5)
+        gradientLayer.transform = CATransform3DMakeAffineTransform(CGAffineTransform(a: 0, b: 0.54, c: -0.54, d: 0, tx: 0.77, ty: 0))
+        gradientLayer.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 30)
+        cell.gradienCellView.layer.addSublayer(gradientLayer)
+    }
+    
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
         imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
         imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypRed
-//        let isLiked = indexPath.row % 2 == 0
-//        let likeImage = isLiked ? UIImage(named: "isLiked") : UIImage(named: "notLiked")
-//        imagesListCell.likeCellViewButton.setImage(likeImage, for: .normal)
+        prepareGradientLayer(cell: imagesListCell)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
-            
         }
     }
 
