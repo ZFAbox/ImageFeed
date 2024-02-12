@@ -45,6 +45,8 @@ class SingleImageViewController: UIViewController {
         scrollView.setZoomScale( scrollView.minimumZoomScale, animated: true)
         } else if scrollView.zoomScale == 1  {
             scrollView.setZoomScale( scrollView.maximumZoomScale, animated: true)
+        } else {
+            scrollView.setZoomScale( 1, animated: true)
         }
     }
     
