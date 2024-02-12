@@ -19,9 +19,7 @@ class SingleImageViewController: UIViewController {
     }
     
     @IBOutlet weak var scrollView: UIScrollView!
-    
     @IBOutlet weak var singleImageView: UIImageView!
-    
     @IBOutlet weak var shareButton: UIButton! {
         didSet {
             shareButton.layer.cornerRadius = 0.5 * shareButton.layer.bounds.height

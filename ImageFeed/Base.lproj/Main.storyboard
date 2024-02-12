@@ -10,9 +10,6 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="YS Display-Bold.ttf">
-            <string>YSDisplay-Bold</string>
-        </array>
         <array key="YS Display-Medium.ttf">
             <string>YSDisplay-Medium</string>
         </array>
@@ -25,78 +22,10 @@
                     <view key="view" contentMode="scaleToFill" id="4gh-tC-wE4">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nDi-ia-aP4">
-                                <rect key="frame" x="16" y="80" width="70" height="70"/>
-                                <color key="backgroundColor" name="YP Black"/>
-                                <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="70" id="0zW-db-5aH"/>
-                                    <constraint firstAttribute="width" constant="70" id="rId-1U-hz9"/>
-                                </constraints>
-                                <imageReference key="image" image="User Photo" symbolScale="large" renderingMode="original" variableValue="1"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="35"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.clipToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Екатерина Новикова" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vBj-xT-a2t">
-                                <rect key="frame" x="16" y="158" width="224.5" height="27"/>
-                                <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="23"/>
-                                <color key="textColor" name="YP White"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@ekaterina_nov" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6l7-u8-cGn">
-                                <rect key="frame" x="16" y="193" width="122.5" height="20.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" name="User Gray"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, world!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="W7n-4J-9SJ">
-                                <rect key="frame" x="16" y="221.5" width="94.5" height="20"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" name="YP White"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kOM-HW-Cu7">
-                                <rect key="frame" x="366" y="103" width="24" height="24"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="99l-bD-Sir"/>
-                                    <constraint firstAttribute="height" constant="24" id="Kcf-Uz-0y3"/>
-                                </constraints>
-                                <color key="tintColor" name="YP Red"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" image="rectangle.portrait.and.arrow.forward" catalog="system"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="string" keyPath="keyPath.titleLable.text" value="&quot;&quot;"/>
-                                </userDefinedRuntimeAttributes>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="vhf-9C-sg5"/>
                         <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="W7n-4J-9SJ" firstAttribute="top" secondItem="6l7-u8-cGn" secondAttribute="bottom" constant="8" id="Ia0-iM-LDT"/>
-                            <constraint firstItem="kOM-HW-Cu7" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="nDi-ia-aP4" secondAttribute="trailing" id="Iab-aj-gJM"/>
-                            <constraint firstItem="vhf-9C-sg5" firstAttribute="trailing" secondItem="kOM-HW-Cu7" secondAttribute="trailing" constant="24" id="M5O-bs-lhY"/>
-                            <constraint firstItem="W7n-4J-9SJ" firstAttribute="leading" secondItem="vhf-9C-sg5" secondAttribute="leading" constant="16" id="P91-cR-TSV"/>
-                            <constraint firstItem="nDi-ia-aP4" firstAttribute="top" secondItem="vhf-9C-sg5" secondAttribute="top" constant="32" id="Rvh-96-duT"/>
-                            <constraint firstItem="vBj-xT-a2t" firstAttribute="top" secondItem="nDi-ia-aP4" secondAttribute="bottom" constant="8" id="cpj-fz-84A"/>
-                            <constraint firstItem="6l7-u8-cGn" firstAttribute="leading" secondItem="vhf-9C-sg5" secondAttribute="leading" constant="16" id="iL8-nk-O6f"/>
-                            <constraint firstItem="kOM-HW-Cu7" firstAttribute="top" secondItem="vhf-9C-sg5" secondAttribute="top" constant="55" id="jbU-UQ-feU"/>
-                            <constraint firstItem="6l7-u8-cGn" firstAttribute="top" secondItem="vBj-xT-a2t" secondAttribute="bottom" constant="8" id="lhu-kk-xKL"/>
-                            <constraint firstItem="vBj-xT-a2t" firstAttribute="leading" secondItem="vhf-9C-sg5" secondAttribute="leading" constant="16" id="yEX-gf-4Ik"/>
-                            <constraint firstItem="nDi-ia-aP4" firstAttribute="leading" secondItem="vhf-9C-sg5" secondAttribute="leading" constant="16" id="yej-ti-p6c"/>
-                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="" image="Tab view person" id="ts2-yS-Bgo"/>
-                    <connections>
-                        <outlet property="profileExitButton" destination="kOM-HW-Cu7" id="cWR-Mn-Gg3"/>
-                        <outlet property="profileIdLable" destination="6l7-u8-cGn" id="6k4-bp-IqN"/>
-                        <outlet property="profileImageView" destination="nDi-ia-aP4" id="RRY-Og-Sbo"/>
-                        <outlet property="profileNameLable" destination="vBj-xT-a2t" id="q7L-fx-j3m"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ylh-PU-aJb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -300,17 +229,9 @@
         <image name="Button share" width="51" height="51"/>
         <image name="Tab view person" width="24" height="24"/>
         <image name="Tab view table" width="30" height="30"/>
-        <image name="User Photo" width="140" height="140"/>
-        <image name="rectangle.portrait.and.arrow.forward" catalog="system" width="128" height="108"/>
         <image name="suit.heart.fill" catalog="system" width="128" height="107"/>
-        <namedColor name="User Gray">
-            <color red="0.68235294117647061" green="0.68627450980392157" blue="0.70588235294117652" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-        </namedColor>
         <namedColor name="YP Black">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
-        </namedColor>
-        <namedColor name="YP Red">
-            <color red="0.96100002527236938" green="0.41999998688697815" blue="0.42399999499320984" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <namedColor name="YP White">
             <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
