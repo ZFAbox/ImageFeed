@@ -10,7 +10,6 @@ import UIKit
 final class ProfileViewController:UIViewController {
     
     //MARK: - Privates
-    
     private var profileImageView = UIImageView()
     private var profileName = UILabel()
     private var profileId = UILabel()
@@ -27,7 +26,7 @@ final class ProfileViewController:UIViewController {
     }
     
     //MARK: - Layout Methods
-    func adjustProfileImage(){
+    private func adjustProfileImage(){
         guard let image = UIImage(named: "User Photo") else { return }
         profileImageView.image = image
         profileImageView.layer.cornerRadius = 70 / 2
@@ -42,7 +41,7 @@ final class ProfileViewController:UIViewController {
         ])
     }
     
-    func adjustProfileName(){
+    private func adjustProfileName(){
         profileName.text = "Екатерина Новикова"
         profileName.font = UIFont(name: "YSDisplay-Bold", size: 23)
         profileName.textColor = .ypWhite
@@ -54,7 +53,7 @@ final class ProfileViewController:UIViewController {
         ])
     }
     
-    func adjustProfileID(){
+    private func adjustProfileID(){
         profileId.text = "@ekaterina_nov"
         profileId.font = UIFont(name: "YSDisplay-Medium", size: 13)
         profileId.textColor = .userGray
@@ -66,7 +65,7 @@ final class ProfileViewController:UIViewController {
         ])
     }
     
-    func adjustProfileStatus(){
+    private func adjustProfileStatus(){
         profileStatus.text = "Hello, world!"
         profileStatus.font = UIFont(name: "YSDisplay-Medium", size: 13)
         profileStatus.textColor = .ypWhite
@@ -78,7 +77,7 @@ final class ProfileViewController:UIViewController {
         ])
     }
     
-    func adjustExitButton(){
+    private func adjustExitButton(){
         exitButton.setBackgroundImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
         exitButton.tintColor = .ypRed
         exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)

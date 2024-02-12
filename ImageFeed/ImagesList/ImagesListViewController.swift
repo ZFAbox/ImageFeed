@@ -99,6 +99,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
+//MARK: -Extensions
 extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

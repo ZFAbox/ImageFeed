@@ -155,15 +155,13 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="414" placeholderIntrinsicHeight="346" image="0" translatesAutoresizingMaskIntoConstraints="NO" id="SKq-jp-JxA">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="346"/>
                                     </imageView>
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="SKq-jp-JxA" firstAttribute="leading" secondItem="4aw-Zd-Gbo" secondAttribute="leading" id="82r-nO-8DL"/>
-                                    <constraint firstItem="SKq-jp-JxA" firstAttribute="centerX" secondItem="4aw-Zd-Gbo" secondAttribute="centerX" id="AGZ-oX-udO"/>
                                     <constraint firstAttribute="bottom" secondItem="SKq-jp-JxA" secondAttribute="bottom" id="EPx-is-spw"/>
                                     <constraint firstAttribute="trailing" secondItem="SKq-jp-JxA" secondAttribute="trailing" id="Id5-Aq-5gH"/>
-                                    <constraint firstItem="SKq-jp-JxA" firstAttribute="centerY" secondItem="4aw-Zd-Gbo" secondAttribute="centerY" id="NDz-Y6-hHY"/>
                                     <constraint firstItem="SKq-jp-JxA" firstAttribute="top" secondItem="4aw-Zd-Gbo" secondAttribute="top" id="afM-b3-iPI"/>
                                 </constraints>
                                 <viewLayoutGuide key="contentLayoutGuide" id="AdK-PG-92O"/>
