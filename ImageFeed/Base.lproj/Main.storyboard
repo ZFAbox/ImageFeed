@@ -135,8 +135,8 @@
                         </tabBarAppearance>
                     </tabBar>
                     <connections>
-                        <segue destination="Dua-us-ghc" kind="relationship" relationship="viewControllers" id="dL7-nm-cFv"/>
                         <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="qMI-3Z-nHP"/>
+                        <segue destination="Dua-us-ghc" kind="relationship" relationship="viewControllers" id="dL7-nm-cFv"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="URw-6U-02p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

@@ -12,18 +12,19 @@ import UIKit
 class SingleImageViewController: UIViewController {
     
    //MARK: - Constants and Vars
-   var image: UIImage! {
+   var image: UIImage? {
         didSet {
             guard isViewLoaded else { return }
+            guard let image else { return }
             singleImageView.image = image
             imageScaleAdjustment(image: image)
         }
     }
     
     //MARK: - IBOutlets
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var singleImageView: UIImageView!
-    @IBOutlet weak var shareButton: UIButton! {
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private weak var singleImageView: UIImageView!
+    @IBOutlet private weak var shareButton: UIButton! {
         didSet {
             shareButton.layer.cornerRadius = 0.5 * shareButton.layer.bounds.height
         }
@@ -33,7 +34,7 @@ class SingleImageViewController: UIViewController {
         super.viewDidLoad()
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
-//        scrollView.layer.bounds.height / image.size.height / ( scrollView.layer.bounds.width / image.size.width )
+        guard let image else { return }
         imageScaleAdjustment(image: image)
         singleImageView.image = image
         let doubleTapRecognizer = UITapGestureRecognizer(
@@ -65,9 +66,14 @@ class SingleImageViewController: UIViewController {
         let scaleToFitWidth = scrollViewSize.width / imageSize.width
         let scaleToFitHeight = scrollViewSize.height / imageSize.height
         let scaleToFit = min(scaleToFitHeight, scaleToFitWidth)
-        let minimalZoomScale = max(minZoom, scaleToFit)
-        let scale = min(maxZoom, minimalZoomScale)
-        scrollView.setZoomScale(scale, animated: false)
+        if scaleToFit > maxZoom {
+            scrollView.maximumZoomScale = scaleToFit
+            scrollView.setZoomScale(scaleToFit, animated: false)
+        } else {
+            let scale = max(minZoom, scaleToFit)
+            scrollView.maximumZoomScale = 1.25
+            scrollView.setZoomScale(scale, animated: false)
+        }
         scrollView.layoutIfNeeded()
         let contentSize = scrollView.contentSize
         let x = (contentSize.width - scrollViewSize.width) / 2

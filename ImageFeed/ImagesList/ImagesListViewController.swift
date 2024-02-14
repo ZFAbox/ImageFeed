@@ -76,7 +76,7 @@ final class ImagesListViewController: UIViewController {
     
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
         imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
-        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypRed
+        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 != 0 ? UIColor.transperantWhite : UIColor.ypRed
         prepareGradientLayer(cell: imagesListCell)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
         }
