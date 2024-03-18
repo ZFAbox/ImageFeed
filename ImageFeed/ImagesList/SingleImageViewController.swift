@@ -58,23 +58,14 @@ class SingleImageViewController: UIViewController {
     }
     
     func imageScaleAdjustment(image:UIImage){
-        let minZoom = scrollView.minimumZoomScale
-        let maxZoom = scrollView.maximumZoomScale
-        view.layoutIfNeeded()
         let scrollViewSize = scrollView.bounds.size
         let imageSize = image.size
         let scaleToFitWidth = scrollViewSize.width / imageSize.width
         let scaleToFitHeight = scrollViewSize.height / imageSize.height
         let scaleToFit = min(scaleToFitHeight, scaleToFitWidth)
-        if scaleToFit > maxZoom {
             scrollView.maximumZoomScale = scaleToFit
             scrollView.setZoomScale(scaleToFit, animated: false)
-        } else {
-            let scale = max(minZoom, scaleToFit)
-            scrollView.maximumZoomScale = 1.25
-            scrollView.setZoomScale(scale, animated: false)
-        }
-        scrollView.layoutIfNeeded()
+        view.layoutIfNeeded()
         let contentSize = scrollView.contentSize
         let x = (contentSize.width - scrollViewSize.width) / 2
         let y = (contentSize.height - scrollViewSize.height) / 2

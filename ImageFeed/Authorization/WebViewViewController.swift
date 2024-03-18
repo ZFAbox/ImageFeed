@@ -12,13 +12,9 @@ import WebKit
 class WebViewViewController: UIViewController {
     
     var delegate: AuthViewComtroller?
-    
-    var splashController = SplashViewController()
-    
+    private var splashController = SplashViewController()
     private let storage = OAuth2TokenStorage()
-    
     @IBOutlet weak var webView: WKWebView!
-    
     @IBOutlet weak var progreesView: UIProgressView!
     
     enum WebViewConstants {
@@ -58,7 +54,7 @@ class WebViewViewController: UIViewController {
         }
     }
     
-    func updateProgress() {
+    private func updateProgress() {
         progreesView.progress = Float(webView.estimatedProgress)
         progreesView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
     }
@@ -69,10 +65,10 @@ class WebViewViewController: UIViewController {
             return
         }
         urlComponents.queryItems = [
-            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: AccessKey),
-            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: RedirectURI),
+            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.AccessKey),
+            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.RedirectURI),
             URLQueryItem(name: URLQueryItemsList.responseType.rawValue, value: "code"),
-            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: AccessScope)
+            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: Constants.AccessScope)
         ]
         guard let url = urlComponents.url else {
             print ("Ошибка формирования URL")
@@ -93,11 +89,9 @@ extension WebViewViewController: WKNavigationDelegate {
                     switch result {
                     case .success(let data):
                         self.storage.token = data.access_token
-                        print(self.storage.token!)
                         splashController.didAuthenticate(delegate)
                     case .failure(let error) :
                         print(error.localizedDescription)
-                        
                     }
                 }
             }

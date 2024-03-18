@@ -8,12 +8,10 @@
 import Foundation
 import UIKit
 
-class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
+final class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
     
     static var showWebViewSigueIdentifier = "ShowWebView"
-    
     private let oAuth2Service = OAuth2Service.shared
-    
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
@@ -45,11 +43,11 @@ class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
             preconditionFailure("ошибка формирования строки запроса авторизации")
         }
             urlComponents.queryItems = [
-                URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: AccessKey),
-                URLQueryItem(name: URLQueryItemsList.clientSecret.rawValue, value: SecretKey),
-                URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: RedirectURI),
+                URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.AccessKey),
+                URLQueryItem(name: URLQueryItemsList.clientSecret.rawValue, value: Constants.SecretKey),
+                URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.RedirectURI),
                 URLQueryItem(name: URLQueryItemsList.code.rawValue, value: code),
-                URLQueryItem(name: URLQueryItemsList.grantType.rawValue, value: GrantType)
+                URLQueryItem(name: URLQueryItemsList.grantType.rawValue, value: Constants.GrantType)
             ]
             
             guard let url = urlComponents.url else {
@@ -80,7 +78,6 @@ class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
         }
         urlSession.resume()
     }
-    
     
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Button back")

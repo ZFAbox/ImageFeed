@@ -247,7 +247,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="Dhk-dt-wDU" kind="presentation" identifier="LoginSplashViewIdentifier" modalPresentationStyle="fullScreen" id="ilN-ro-95u"/>
+                        <segue destination="Dhk-dt-wDU" kind="presentation" identifier="LoginSplashViewIdentifier" animates="NO" modalPresentationStyle="fullScreen" id="ilN-ro-95u"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zU8-ai-COC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
