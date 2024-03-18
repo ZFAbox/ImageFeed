@@ -35,12 +35,14 @@ class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
                 URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: AccessKey),
                 URLQueryItem(name: URLQueryItemsList.clientSecret.rawValue, value: SecretKey),
                 URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: RedirectURI),
-                URLQueryItem(name: URLQueryItemsList.code.rawValue, value: code)
+                URLQueryItem(name: URLQueryItemsList.code.rawValue, value: code),
+                URLQueryItem(name: URLQueryItemsList.grantType.rawValue, value: GrantType)
             ]
             
             guard let url = urlComponents.url else {
                 preconditionFailure("Невозможно сформировать ссылку на запрос авторизации")}
             var request = URLRequest(url: url)
+            print(request)
             request.httpMethod = "POST"
             return request  
     }
@@ -48,8 +50,8 @@ class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
     func fetchOAuthToken(code: String, handler: @escaping (Result<OAuthTokenResponseDecoder,Error>) -> Void) {
         
         let request = self.makeAuthorizationRequest(code: code)
+        print(request)
         let urlSession = URLSession.shared.data(for: request) { result in
-        
             switch result {
             case.success(let data):
                 do {
@@ -63,7 +65,7 @@ class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
                 handler(.failure(error))
             }
         }
-        
+        urlSession.resume()
     }
     
     

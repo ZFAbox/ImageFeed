@@ -13,7 +13,7 @@ class WebViewViewController: UIViewController {
 
     static var sigueIdentifier = "ShowWebView"
     
-    var delegate: AuthViewComtroller?
+    var delegate = AuthViewComtroller()
     
     private let storage = OAuth2TokenStorage()
     
@@ -98,8 +98,7 @@ class WebViewViewController: UIViewController {
 extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
-            //T0D0: process code
-            delegate?.fetchOAuthToken(code: code) { result in
+            delegate.fetchOAuthToken(code: code) { result in
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     switch result {
@@ -121,7 +120,7 @@ extension WebViewViewController: WKNavigationDelegate {
         if
             let url = navigationAction.request.url,
             let urlComponents = URLComponents(string: url.absoluteString),
-            urlComponents.path == "oauth/authorize/native",
+            urlComponents.path == "/oauth/authorize/native",
             let items = urlComponents.queryItems,
             let codeItem = items.first(where: { $0.name == "code" })
         {

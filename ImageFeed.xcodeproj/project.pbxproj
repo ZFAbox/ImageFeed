@@ -27,6 +27,7 @@
 		90FE33912B61BF4D00B91BEE /* SingleImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE33902B61BF4D00B91BEE /* SingleImageViewController.swift */; };
 		90FE471A2B8AC346007884D8 /* AuthViewComtroller.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE47192B8AC346007884D8 /* AuthViewComtroller.swift */; };
 		90FE471C2B8AC597007884D8 /* WebViewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FE471B2B8AC597007884D8 /* WebViewViewController.swift */; };
+		9F8A51DD2BA820B200CD96E3 /* NetworkClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A51DC2BA820B200CD96E3 /* NetworkClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		90FE33902B61BF4D00B91BEE /* SingleImageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleImageViewController.swift; sourceTree = "<group>"; };
 		90FE47192B8AC346007884D8 /* AuthViewComtroller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewComtroller.swift; sourceTree = "<group>"; };
 		90FE471B2B8AC597007884D8 /* WebViewViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewViewController.swift; sourceTree = "<group>"; };
+		9F8A51DC2BA820B200CD96E3 /* NetworkClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,6 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				90F018AF2BA5635900270B68 /* OAuth2TokenStorage.swift */,
+				9F8A51DC2BA820B200CD96E3 /* NetworkClient.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				90EF4A012B9947E700DC568C /* OAuth2Service.swift in Sources */,
 				9068736D2B3F60EF00F47AE0 /* ImagesListViewController.swift in Sources */,
 				90EB4E862B8D7504007A228B /* WebViewViewControllerDelegate.swift in Sources */,
+				9F8A51DD2BA820B200CD96E3 /* NetworkClient.swift in Sources */,
 				90AEEC222B4DE4FD007A473A /* ImagesListCell.swift in Sources */,
 				90D461F42B5CF3DF0042A3AD /* ProfileViewController.swift in Sources */,
 				906873692B3F60EF00F47AE0 /* AppDelegate.swift in Sources */,
