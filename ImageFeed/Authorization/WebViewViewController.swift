@@ -10,10 +10,8 @@ import UIKit
 import WebKit
 
 class WebViewViewController: UIViewController {
-
-    static var sigueIdentifier = "ShowWebView"
     
-    var delegate = AuthViewComtroller()
+    var delegate: AuthViewComtroller?
     
     private let storage = OAuth2TokenStorage()
     
@@ -81,30 +79,18 @@ class WebViewViewController: UIViewController {
         let request = URLRequest(url: url)
         webView.load(request)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == WebViewViewController.sigueIdentifier {
-            guard let viewController = segue.source as? AuthViewComtroller else { 
-                print("Ошибка назначения делегата WebViewViewController")
-                return }
-            delegate = viewController
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
-    
 }
 
 extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
-            delegate.fetchOAuthToken(code: code) { result in
+            delegate?.fetchOAuthToken(code: code) { result in
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     switch result {
                     case .success(let data):
                         self.storage.token = data.access_token
-                        print(self.storage.token)
+                        print(self.storage.token!)
                     case .failure(let error) :
                         print(error.localizedDescription)
                     }

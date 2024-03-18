@@ -10,6 +10,8 @@ import UIKit
 
 class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
     
+    static var showWebViewSigueIdentifier = "ShowWebView"
+    
     private let oAuth2Service = OAuth2Service.shared
     
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
@@ -25,6 +27,17 @@ class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         configureBackButton()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == AuthViewComtroller.showWebViewSigueIdentifier {
+            guard let webViewController = segue.destination as? WebViewViewController else {
+                print("Ошибка назначения делегата WebViewViewController")
+                return }
+            webViewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
     }
     
     private func makeAuthorizationRequest(code: String) -> URLRequest{

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Dhk-dt-wDU">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pU0-Ln-emq">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -223,10 +223,28 @@
             </objects>
             <point key="canvasLocation" x="-1269.4656488549617" y="211.97183098591552"/>
         </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="zf9-L0-157">
+            <objects>
+                <viewController id="pU0-Ln-emq" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="flg-5r-WdJ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="bl6-a0-nd2"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <connections>
+                        <segue destination="Dhk-dt-wDU" kind="presentation" identifier="LoginSplashViewIdentifier" modalPresentationStyle="fullScreen" id="ilN-ro-95u"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zU8-ai-COC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-3130" y="-719"/>
+        </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="mVF-rI-mOb">
             <objects>
-                <tabBarController id="Pfu-MN-ZJR" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TapBarViewController" id="Pfu-MN-ZJR" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vT6-wP-64O">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -284,7 +302,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ksc-Wr-yj7">
-                                <rect key="frame" x="181.5" y="795" width="51" height="51"/>
+                                <rect key="frame" x="181.5" y="761" width="51" height="51"/>
                                 <color key="backgroundColor" name="YP Black"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="51" id="8v8-Vu-B0A"/>
@@ -325,6 +343,7 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Dhk-dt-wDU" sceneMemberID="viewController">
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="t1p-v3-qGe"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Jdh-Yz-bEG">
                         <rect key="frame" x="0.0" y="48" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>

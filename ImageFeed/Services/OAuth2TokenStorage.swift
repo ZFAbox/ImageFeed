@@ -13,9 +13,9 @@ final class OAuth2TokenStorage {
     enum Keys: String {
         case token
     }
-    var token: String {
+    var token: String? {
         get {
-            userDefaults.string(forKey: Keys.token.rawValue) ?? ""
+            userDefaults.string(forKey: Keys.token.rawValue)
         }
         set {
             userDefaults.set(newValue, forKey: Keys.token.rawValue)
