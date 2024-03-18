@@ -17,7 +17,6 @@ final class SplashViewController: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
         if storage.token != nil {
             switchToTapBarController()
         } else {
@@ -32,6 +31,11 @@ final class SplashViewController: UIViewController {
         let tapBarController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: tapBarViewControllerId)
         window.rootViewController = tapBarController
+    }
+    
+    func didAuthenticate (_ vc: AuthViewComtroller) {
+        vc.dismiss(animated: true)
+        switchToTapBarController()
     }
 }
 

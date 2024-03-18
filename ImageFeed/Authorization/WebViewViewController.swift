@@ -13,6 +13,8 @@ class WebViewViewController: UIViewController {
     
     var delegate: AuthViewComtroller?
     
+    var splashController = SplashViewController()
+    
     private let storage = OAuth2TokenStorage()
     
     @IBOutlet weak var webView: WKWebView!
@@ -84,15 +86,18 @@ class WebViewViewController: UIViewController {
 extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
-            delegate?.fetchOAuthToken(code: code) { result in
+            guard let delegate else { return }
+            delegate.fetchOAuthToken(code: code) { result in
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     switch result {
                     case .success(let data):
                         self.storage.token = data.access_token
                         print(self.storage.token!)
+                        splashController.didAuthenticate(delegate)
                     case .failure(let error) :
                         print(error.localizedDescription)
+                        
                     }
                 }
             }
