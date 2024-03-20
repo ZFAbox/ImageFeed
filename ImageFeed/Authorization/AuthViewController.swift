@@ -11,12 +11,21 @@ import UIKit
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
     
     static var showWebViewSigueIdentifier = "ShowWebView"
-    private let oAuth2Service = OAuth2Service.shared
+    private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
     var delegate: SplashViewController?
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
+        oauth2Service.fetchOAuthToken(code: code) { result in
+                switch result {
+                case .success(let data):
+                    vc.storage.token = data.access_token
+                    print(vc.storage.token!)
+                    vc.splashController.didAuthenticate(self)
+                case .failure(let error) :
+                    print(error.localizedDescription)
+            }
+        }
     }
     
     func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
