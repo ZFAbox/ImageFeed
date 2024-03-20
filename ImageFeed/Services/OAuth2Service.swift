@@ -19,11 +19,11 @@ final class OAuth2Service {
             preconditionFailure("ошибка формирования строки запроса авторизации")
         }
             urlComponents.queryItems = [
-                URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.AccessKey),
-                URLQueryItem(name: URLQueryItemsList.clientSecret.rawValue, value: Constants.SecretKey),
-                URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.RedirectURI),
+                URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.accessKey),
+                URLQueryItem(name: URLQueryItemsList.clientSecret.rawValue, value: Constants.secretKey),
+                URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.redirectURI),
                 URLQueryItem(name: URLQueryItemsList.code.rawValue, value: code),
-                URLQueryItem(name: URLQueryItemsList.grantType.rawValue, value: Constants.GrantType)
+                URLQueryItem(name: URLQueryItemsList.grantType.rawValue, value: Constants.grantType)
             ]
             
             guard let url = urlComponents.url else {

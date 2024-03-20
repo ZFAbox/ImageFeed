@@ -8,12 +8,12 @@
 import Foundation
 
 enum Constants {
-    static let AccessKey = "axcd9X9sH4EtYMesKjEuSNZ40NCMylA7YO4zxWU05mc"
-    static let SecretKey = "F6DBCmSASFMAGYI6tQ2KuCzQgiXWvu3YKKGPw8BZJNs"
-    static let RedirectURI = "urn:ietf:wg:oauth:2.0:oob"
-    static let AccessScope = "public+read_user+write_user+write_photos+write_likes"
-    static let DefaultBaseUrl:URL? = URL(string: "https://api.unsplash.com/")
-    static let GrantType = "authorization_code"
+    static let accessKey = "axcd9X9sH4EtYMesKjEuSNZ40NCMylA7YO4zxWU05mc"
+    static let secretKey = "F6DBCmSASFMAGYI6tQ2KuCzQgiXWvu3YKKGPw8BZJNs"
+    static let redirectURI = "urn:ietf:wg:oauth:2.0:oob"
+    static let accessScope = "public+read_user+write_user+write_photos+write_likes"
+    static let defaultBaseUrl:URL? = URL(string: "https://api.unsplash.com/")
+    static let grantType = "authorization_code"
 }
 
 enum URLQueryItemsList: String {

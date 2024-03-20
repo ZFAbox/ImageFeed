@@ -28,12 +28,12 @@ extension URLSession {
                     fulfillComplitionOnTheMainThread(.failure(error))
                 }
                 
-                if let response = response as? HTTPURLResponse, 200 ..< 300 ~= response.statusCode {
-                    fulfillComplitionOnTheMainThread(.failure(NetworkError.httpStatusCode(response.statusCode)))
-                }
-                
-                if let data {
-                    fulfillComplitionOnTheMainThread(.success(data))
+                if let data = data, let response = response, let statusCode = (response  as? HTTPURLResponse)?.statusCode {
+                    if 200 ..< 300 ~= statusCode {
+                        fulfillComplitionOnTheMainThread(.success(data))
+                    } else {
+                        fulfillComplitionOnTheMainThread(.failure(NetworkError.httpStatusCode(statusCode)))
+                    }
                 }
             }
             return task

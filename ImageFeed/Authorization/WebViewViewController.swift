@@ -67,10 +67,10 @@ class WebViewViewController: UIViewController {
             return
         }
         urlComponents.queryItems = [
-            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.AccessKey),
-            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.RedirectURI),
+            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.accessKey),
+            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.redirectURI),
             URLQueryItem(name: URLQueryItemsList.responseType.rawValue, value: "code"),
-            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: Constants.AccessScope)
+            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: Constants.accessScope)
         ]
         guard let url = urlComponents.url else {
             print ("Ошибка формирования URL")
@@ -91,6 +91,7 @@ extension WebViewViewController: WKNavigationDelegate {
                     switch result {
                     case .success(let data):
                         self.storage.token = data.access_token
+                        print(self.storage.token!)
                         self.splashController.didAuthenticate(delegate)
                     case .failure(let error) :
                         print(error.localizedDescription)
