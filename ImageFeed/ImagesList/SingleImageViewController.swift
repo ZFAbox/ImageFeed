@@ -8,7 +8,6 @@
 import Foundation
 import UIKit
 
-
 class SingleImageViewController: UIViewController {
     
    //MARK: - Constants and Vars
@@ -65,11 +64,12 @@ class SingleImageViewController: UIViewController {
         let scaleToFit = min(scaleToFitHeight, scaleToFitWidth)
             scrollView.maximumZoomScale = scaleToFit
             scrollView.setZoomScale(scaleToFit, animated: false)
-        view.layoutIfNeeded()
+        scrollView.layoutIfNeeded()
         let contentSize = scrollView.contentSize
         let x = (contentSize.width - scrollViewSize.width) / 2
         let y = (contentSize.height - scrollViewSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+        scrollView.layoutIfNeeded()
     }
     
     func centerContent(){
@@ -81,8 +81,8 @@ class SingleImageViewController: UIViewController {
     }
     
     private func didTapShareButton() {
-        let imageToShare = singleImageView.image
-        let images = [ imageToShare! ]
+        guard let imageToShare = singleImageView.image else { return }
+        let images = [ imageToShare ]
         let activityViewController = UIActivityViewController(activityItems: images, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
     }
@@ -112,3 +112,5 @@ extension SingleImageViewController: UIScrollViewDelegate {
         centerContent()
     }
 }
+
+

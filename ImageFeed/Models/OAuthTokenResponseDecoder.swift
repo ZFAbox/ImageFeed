@@ -13,6 +13,7 @@ class SnakeCaseJsonDecoder: JSONDecoder {
         keyDecodingStrategy = .convertFromSnakeCase
     }
 }
+
 struct OAuthTokenResponseDecoder: Decodable {
     var accessToken: String
     var tokenType: String
