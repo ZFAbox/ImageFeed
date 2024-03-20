@@ -9,7 +9,7 @@ import Foundation
 
 final class OAuth2TokenStorage {
     private lazy var userDefaults = UserDefaults.standard
-    private let authViewController = AuthViewComtroller()
+    private let authViewController = AuthViewController()
     enum Keys: String {
         case token
     }

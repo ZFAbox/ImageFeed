@@ -24,6 +24,18 @@ final class SplashViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == loginSplashViewIdentifier {
+            guard
+                let navigationController = segue.destination as? UINavigationController,
+                let viewController = navigationController.viewControllers[0] as? AuthViewController
+            else { fatalError("Failed to prepare for \(loginSplashViewIdentifier)") }
+            viewController.delegate = self
+        } else {
+            super.prepare(for: segue, sender: sender)
+        }
+    }
+    
     func switchToTapBarController (){
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Неверная настройка")
@@ -33,7 +45,7 @@ final class SplashViewController: UIViewController {
         window.rootViewController = tapBarController
     }
     
-    func didAuthenticate (_ vc: AuthViewComtroller) {
+    func didAuthenticate (_ vc: AuthViewController) {
         vc.dismiss(animated: true)
         switchToTapBarController()
     }

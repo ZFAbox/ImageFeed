@@ -1,42 +1,18 @@
 //
-//  AuthViewComtroller.swift
+//  OAuth2Service.swift
 //  ImageFeed
 //
-//  Created by Федор Завьялов on 25.02.2024.
+//  Created by Федор Завьялов on 07.03.2024.
 //
 
 import Foundation
-import UIKit
 
-final class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate {
+final class OAuth2Service {
     
-    static var showWebViewSigueIdentifier = "ShowWebView"
-    private let oAuth2Service = OAuth2Service.shared
+    static let shared = OAuth2Service()
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
     
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        
-    }
-    
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-        dismiss(animated: true)
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        configureBackButton()
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == AuthViewComtroller.showWebViewSigueIdentifier {
-            guard let webViewController = segue.destination as? WebViewViewController else {
-                print("Ошибка назначения делегата WebViewViewController")
-                return }
-            webViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
+    private init() {}
     
     private func makeAuthorizationRequest(code: String) -> URLRequest{
         guard var urlComponents = URLComponents(string: unsplashPostRequestURLString) else {
@@ -55,7 +31,7 @@ final class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate 
             var request = URLRequest(url: url)
             print(request)
             request.httpMethod = "POST"
-            return request  
+            return request
     }
     
     func fetchOAuthToken(code: String, handler: @escaping (Result<OAuthTokenResponseDecoder,Error>) -> Void) {
@@ -78,12 +54,5 @@ final class AuthViewComtroller: UIViewController, WebViewViewControllerDelegate 
         }
         urlSession.resume()
     }
-    
-    private func configureBackButton() {
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Button back")
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Button back")
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = .black
-    }
-    
+
 }

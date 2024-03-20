@@ -11,9 +11,11 @@ import WebKit
 
 class WebViewViewController: UIViewController {
     
-    var delegate: AuthViewComtroller?
+    var delegate: AuthViewController?
     private var splashController = SplashViewController()
     private let storage = OAuth2TokenStorage()
+    private let oauth2Service = OAuth2Service.shared
+    
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progreesView: UIProgressView!
     
@@ -83,13 +85,13 @@ extension WebViewViewController: WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
         if let code = code(from: navigationAction) {
             guard let delegate else { return }
-            delegate.fetchOAuthToken(code: code) { result in
+            oauth2Service.fetchOAuthToken(code: code) { result in
                 DispatchQueue.main.async { [weak self] in
                     guard let self else { return }
                     switch result {
                     case .success(let data):
                         self.storage.token = data.access_token
-                        splashController.didAuthenticate(delegate)
+                        self.splashController.didAuthenticate(delegate)
                     case .failure(let error) :
                         print(error.localizedDescription)
                     }
