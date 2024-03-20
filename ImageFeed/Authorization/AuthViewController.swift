@@ -10,27 +10,15 @@ import UIKit
 
 final class AuthViewController: UIViewController, WebViewViewControllerDelegate {
     
+    //MARK: - Statics
     static var showWebViewSigueIdentifier = "ShowWebView"
+    
+    //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
+    
+    //MARK: - Delegate
     var delegate: SplashViewController?
-    
-    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        oauth2Service.fetchOAuthToken(code: code) { result in
-                switch result {
-                case .success(let token):
-                    vc.storage.token = token
-                    print(token)
-                    vc.splashController.didAuthenticate(self)
-                case .failure(let error) :
-                    print(error.localizedDescription)
-            }
-        }
-    }
-    
-    func webViewViewControllerDidCancel(_ vc: WebViewViewController) {
-        dismiss(animated: true)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,9 +35,8 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-    
-    
+
+    //MARK: - Class Methods
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Button back")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Button back")
@@ -57,4 +44,17 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         navigationItem.backBarButtonItem?.tintColor = .black
     }
     
+    func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
+        oauth2Service.fetchOAuthToken(code: code) { result in
+            guard let delegate = self.delegate else { return }
+                switch result {
+                case .success(let token):
+                    vc.storage.token = token
+                    print(token)
+                    delegate.didAuthenticate(self)
+                case .failure(let error) :
+                    print(error.localizedDescription)
+            }
+        }
+    }
 }

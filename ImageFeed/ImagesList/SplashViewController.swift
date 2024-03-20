@@ -8,12 +8,12 @@
 import Foundation
 import UIKit
 
-final class SplashViewController: UIViewController {
+final class SplashViewController: UIViewController, AuthViewControllerDelegate {
 
-    let loginSplashViewIdentifier = "LoginSplashViewIdentifier"
-    let tapBarViewControllerId = "TapBarViewController"
-    
-    let storage = OAuth2TokenStorage()
+    //MARK: - Privates
+    private let loginSplashViewIdentifier = "LoginSplashViewIdentifier"
+    private let tapBarViewControllerId = "TapBarViewController"
+    private let storage = OAuth2TokenStorage()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -36,7 +36,8 @@ final class SplashViewController: UIViewController {
         }
     }
     
-    func switchToTapBarController (){
+    //MARK: - Class Methods
+    private func switchToTapBarController (){
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Неверная настройка")
         }

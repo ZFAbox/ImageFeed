@@ -6,3 +6,7 @@
 //
 
 import Foundation
+
+protocol AuthViewControllerDelegate {
+    func didAuthenticate (_ vc: AuthViewController)
+}

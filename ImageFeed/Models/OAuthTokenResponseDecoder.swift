@@ -7,16 +7,15 @@
 
 import Foundation
 
-struct OAuthTokenResponseDecoder: Codable {
-    var access_token: String
-    var token_type: String
-    var scope: String
-    var created_at: Int
-    
-    private enum CodingKeys: String, CodingKey {
-        case access_token = "access_token"
-        case token_type = "token_type"
-        case scope = "scope"
-        case created_at = "created_at"
+class SnakeCaseJsonDecoder: JSONDecoder {
+    override init() {
+        super .init()
+        keyDecodingStrategy = .convertFromSnakeCase
     }
+}
+struct OAuthTokenResponseDecoder: Decodable {
+    var accessToken: String
+    var tokenType: String
+    var scope: String
+    var createdAt: Int
 }

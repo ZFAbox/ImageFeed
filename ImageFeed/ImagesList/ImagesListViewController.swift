@@ -44,6 +44,7 @@ final class ImagesListViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    //MARK: - Class Methods
     func dateFormat(date: Date) -> String {
         var curentDate = ""
         let dateFormatter = DateFormatter()
