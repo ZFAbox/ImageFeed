@@ -14,7 +14,6 @@ class WebViewViewController: UIViewController {
     var delegate: AuthViewController?
     let splashController = SplashViewController()
     let storage = OAuth2TokenStorage()
-    let oauth2Service = OAuth2Service.shared
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progreesView: UIProgressView!
@@ -89,20 +88,6 @@ extension WebViewViewController: WKNavigationDelegate {
                 guard let self else { return }
                 delegate.webViewViewController(self, didAuthenticateWithCode: code)
             }
-//            oauth2Service.fetchOAuthToken(code: code) { result in
-//                DispatchQueue.main.async { [weak self] in
-//                    guard let self else { return }
-//                    switch result {
-//                    case .success(let data):
-//                        self.storage.token = data.access_token
-//                        print(self.storage.token!)
-//                        self.splashController.didAuthenticate(delegate)
-//                    case .failure(let error) :
-//                        print(error.localizedDescription)
-//                    }
-//                }
-//            }
-            
             decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)

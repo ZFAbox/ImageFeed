@@ -18,9 +18,9 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
         oauth2Service.fetchOAuthToken(code: code) { result in
                 switch result {
-                case .success(let data):
-                    vc.storage.token = data.access_token
-                    print(vc.storage.token!)
+                case .success(let token):
+                    vc.storage.token = token
+                    print(token)
                     vc.splashController.didAuthenticate(self)
                 case .failure(let error) :
                     print(error.localizedDescription)

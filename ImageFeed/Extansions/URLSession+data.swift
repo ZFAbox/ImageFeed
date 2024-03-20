@@ -25,7 +25,9 @@ extension URLSession {
             
             let task = dataTask(with: request) { data, response, error in
                 if let error {
-                    fulfillComplitionOnTheMainThread(.failure(error))
+                    fulfillComplitionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
+                } else {
+                    fulfillComplitionOnTheMainThread( .failure(NetworkError.urlSessionError))
                 }
                 
                 if let data = data, let response = response, let statusCode = (response  as? HTTPURLResponse)?.statusCode {

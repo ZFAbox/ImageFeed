@@ -34,7 +34,7 @@ final class OAuth2Service {
             return request
     }
     
-    func fetchOAuthToken(code: String, handler: @escaping (Result<OAuthTokenResponseDecoder,Error>) -> Void) {
+    func fetchOAuthToken(code: String, handler: @escaping (Result<String,Error>) -> Void) {
         
         let request = self.makeAuthorizationRequest(code: code)
         print(request)
@@ -43,7 +43,7 @@ final class OAuth2Service {
             case.success(let data):
                 do {
                     let decodedData = try JSONDecoder().decode(OAuthTokenResponseDecoder.self, from: data)
-                    handler(.success(decodedData))
+                    handler(.success(decodedData.access_token))
                 } catch {
                     print("Ошибка декодирования")
                     handler(.failure(error))
