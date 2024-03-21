@@ -8,27 +8,33 @@
 import Foundation
 import UIKit
 
-
 class SingleImageViewController: UIViewController {
     
-    var image: UIImage! {
+   //MARK: - Constants and Vars
+   var image: UIImage? {
         didSet {
             guard isViewLoaded else { return }
+            guard let image else { return }
             singleImageView.image = image
+            imageScaleAdjustment(image: image)
         }
     }
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var singleImageView: UIImageView!
-    @IBOutlet weak var shareButton: UIButton! {
+    //MARK: - IBOutlets
+    @IBOutlet private var scrollView: UIScrollView!
+    @IBOutlet private weak var singleImageView: UIImageView!
+    @IBOutlet private weak var shareButton: UIButton! {
         didSet {
             shareButton.layer.cornerRadius = 0.5 * shareButton.layer.bounds.height
         }
     }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        scrollView.minimumZoomScale = 1
-        scrollView.maximumZoomScale = scrollView.layer.bounds.height / image.size.height / ( scrollView.layer.bounds.width / image.size.width )
+        scrollView.minimumZoomScale = 0.1
+        scrollView.maximumZoomScale = 1.25
+        guard let image else { return }
+        imageScaleAdjustment(image: image)
         singleImageView.image = image
         let doubleTapRecognizer = UITapGestureRecognizer(
             target: self,
@@ -38,7 +44,9 @@ class SingleImageViewController: UIViewController {
         scrollView.addGestureRecognizer(doubleTapRecognizer)
     }
     
-    @objc private func adjustImageSize (image: UIImage) {
+    //MARK: - Class Methods
+    @objc private func adjustImageSize() {
+        
         if scrollView.zoomScale > 1 {
         scrollView.setZoomScale( scrollView.minimumZoomScale, animated: true)
         } else if scrollView.zoomScale == 1  {
@@ -48,14 +56,38 @@ class SingleImageViewController: UIViewController {
         }
     }
     
-    func didTapShareButton() {
-        let imageToShare = singleImageView.image
-        let images = [ imageToShare! ]
-        
+    func imageScaleAdjustment(image:UIImage){
+        let scrollViewSize = scrollView.bounds.size
+        let imageSize = image.size
+        let scaleToFitWidth = scrollViewSize.width / imageSize.width
+        let scaleToFitHeight = scrollViewSize.height / imageSize.height
+        let scaleToFit = min(scaleToFitHeight, scaleToFitWidth)
+            scrollView.maximumZoomScale = scaleToFit
+            scrollView.setZoomScale(scaleToFit, animated: false)
+        scrollView.layoutIfNeeded()
+        let contentSize = scrollView.contentSize
+        let x = (contentSize.width - scrollViewSize.width) / 2
+        let y = (contentSize.height - scrollViewSize.height) / 2
+        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+        scrollView.layoutIfNeeded()
+    }
+    
+    func centerContent(){
+        let visibleRectSize = scrollView.bounds.size
+        let newContentSize = scrollView.contentSize
+        let x = (newContentSize.width - visibleRectSize.width) / 2
+        let y = (newContentSize.height - visibleRectSize.height) / 2
+        scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
+    }
+    
+    private func didTapShareButton() {
+        guard let imageToShare = singleImageView.image else { return }
+        let images = [ imageToShare ]
         let activityViewController = UIActivityViewController(activityItems: images, applicationActivities: nil)
         self.present(activityViewController, animated: true, completion: nil)
     }
     
+    //MARK: - IBActions
     @IBAction func backButtonAction(_ sender: Any) {
         dismiss(animated: true, completion: nil)
     }
@@ -65,10 +97,20 @@ class SingleImageViewController: UIViewController {
     }
 }
 
+//MARK: - Extensions
 extension SingleImageViewController: UIScrollViewDelegate {
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return singleImageView
     }
     
+    func scrollViewDidEndZooming(_ scrollView: UIScrollView, with view: UIView?, atScale scale: CGFloat) {
+        centerContent()
+    }
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        centerContent()
+    }
 }
+
+

@@ -44,6 +44,7 @@ final class ImagesListViewController: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     
+    //MARK: - Class Methods
     func dateFormat(date: Date) -> String {
         var curentDate = ""
         let dateFormatter = DateFormatter()
@@ -76,7 +77,7 @@ final class ImagesListViewController: UIViewController {
     
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
         imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
-        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 == 0 ? UIColor.transperantWhite : UIColor.ypRed
+        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 != 0 ? UIColor.transperantWhite : UIColor.ypRed
         prepareGradientLayer(cell: imagesListCell)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
         }
@@ -99,6 +100,7 @@ extension ImagesListViewController: UITableViewDataSource {
     }
 }
 
+//MARK: -Extensions
 extension ImagesListViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
