@@ -6,15 +6,21 @@
 //
 
 import Foundation
+//import ProgressHUD
 
 final class OAuth2Service {
     
     static let shared = OAuth2Service()
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    private enum AuthServiceError: Error {
+        case invalidRequest
+    }
     
     private init() {}
     
-    private func makeAuthorizationRequest(code: String) -> URLRequest{
+    private func makeAuthorizationRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: unsplashPostRequestURLString) else {
             preconditionFailure("ошибка формирования строки запроса авторизации")
         }
@@ -35,24 +41,46 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, handler: @escaping (Result<String,Error>) -> Void) {
-        
-        let request = self.makeAuthorizationRequest(code: code)
+//        ProgressHUD.animate()
+        if task != nil {
+            if lastCode != nil {
+                task?.cancel()
+            } else {
+                handler(.failure(AuthServiceError.invalidRequest))
+                return
+            }
+        } else {
+            if lastCode == code {
+                handler(.failure(AuthServiceError.invalidRequest))
+                return
+            }
+        }
+        lastCode = code
+        guard let request = self.makeAuthorizationRequest(code: code) else{
+            handler(.failure(AuthServiceError.invalidRequest))
+            return
+            }
         print(request)
-        let urlSession = URLSession.shared.data(for: request) { result in
+        let task = URLSession.shared.data(for: request) { result in
             switch result {
             case.success(let data):
                 do {
                     let decodedData = try SnakeCaseJsonDecoder().decode(OAuthTokenResponseDecoder.self, from: data)
                     handler(.success(decodedData.accessToken))
+//                    ProgressHUD.dismiss()
+                    self.task = nil
+                    self.lastCode = nil
                 } catch {
                     print("Ошибка декодирования")
                     handler(.failure(error))
                 }
             case .failure(let error):
                 handler(.failure(error))
+//                ProgressHUD.dismiss()
             }
         }
-        urlSession.resume()
+        self.task = task
+        task.resume()
     }
 
 }
