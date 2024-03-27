@@ -6,7 +6,7 @@
 //
 
 import Foundation
-//import ProgressHUD
+import ProgressHUD
 
 final class OAuth2Service {
     
@@ -41,33 +41,37 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, handler: @escaping (Result<String,Error>) -> Void) {
-//        ProgressHUD.animate()
-        if task != nil {
-            if lastCode != nil {
-                task?.cancel()
-            } else {
-                handler(.failure(AuthServiceError.invalidRequest))
-                return
-            }
-        } else {
-            if lastCode == code {
-                handler(.failure(AuthServiceError.invalidRequest))
-                return
-            }
+        UIBlockingProgressHud.show()
+//        if task != nil {
+//            if lastCode != nil {
+//                task?.cancel()
+//            } else {
+//                handler(.failure(AuthServiceError.invalidRequest))
+//                return
+//            }
+//        } else {
+//            if lastCode == code {
+//                handler(.failure(AuthServiceError.invalidRequest))
+//                return
+//            }
+//        }
+        guard lastCode != code else {
+            handler(.failure(AuthServiceError.invalidRequest))
+            return
         }
+        task?.cancel()
         lastCode = code
         guard let request = self.makeAuthorizationRequest(code: code) else{
             handler(.failure(AuthServiceError.invalidRequest))
             return
             }
-        print(request)
         let task = URLSession.shared.data(for: request) { result in
             switch result {
             case.success(let data):
                 do {
                     let decodedData = try SnakeCaseJsonDecoder().decode(OAuthTokenResponseDecoder.self, from: data)
                     handler(.success(decodedData.accessToken))
-//                    ProgressHUD.dismiss()
+                    UIBlockingProgressHud.dismiss()
                     self.task = nil
                     self.lastCode = nil
                 } catch {
@@ -76,7 +80,7 @@ final class OAuth2Service {
                 }
             case .failure(let error):
                 handler(.failure(error))
-//                ProgressHUD.dismiss()
+                UIBlockingProgressHud.dismiss()
             }
         }
         self.task = task
