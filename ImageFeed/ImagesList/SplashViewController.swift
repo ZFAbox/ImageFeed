@@ -14,10 +14,13 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let loginSplashViewIdentifier = "LoginSplashViewIdentifier"
     private let tapBarViewControllerId = "TapBarViewController"
     private let storage = OAuth2TokenStorage()
+    private let profileStorage = ProfileDataStorage()
+    private let profile = ProfileService()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if storage.token != nil {
+            print("Name: \(profileStorage.profile.username)")
             switchToTapBarController()
         } else {
             performSegue(withIdentifier: loginSplashViewIdentifier, sender: nil)

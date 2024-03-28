@@ -16,6 +16,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
+    private let profile = ProfileService()
     
     //MARK: - Delegate
     var delegate: SplashViewController?
@@ -51,6 +52,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
                 case .success(let token):
                     vc.storage.token = token
                     print(token)
+                    self.profile.prepareProfileModel(token: token)
                     delegate.didAuthenticate(self)
                 case .failure(let error) :
                     print(error.localizedDescription)

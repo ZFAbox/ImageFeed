@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct Profile {
+struct ProfileModel: Codable {
     var username: String
     var name: String
     var loginName: String
-    var bio: String
+    var bio: String?
 }
