@@ -15,13 +15,14 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let tapBarViewControllerId = "TapBarViewController"
     private let storage = OAuth2TokenStorage()
     private let profileStorage = ProfileDataStorage()
-    private let profile = ProfileService()
+    private let profileService = ProfileService()
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        if storage.token != nil {
+        if let token = storage.token {
+//            switchToTapBarController()
+            fetchProfile(token: token)
             print("Name: \(profileStorage.profile.username)")
-            switchToTapBarController()
         } else {
             performSegue(withIdentifier: loginSplashViewIdentifier, sender: nil)
         }
@@ -51,7 +52,34 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     
     func didAuthenticate (_ vc: AuthViewController) {
         vc.dismiss(animated: true)
-        switchToTapBarController()
+        guard let token = storage.token else {
+            return
+        }
+        fetchProfile(token: token)
+//        switchToTapBarController()
+    }
+    
+    private func fetchProfile(token: String) {
+        UIBlockingProgressHud.show()
+        profileService.fetchUserProfileData(token: token) { [weak self] result in
+            guard let self else { return }
+            switch result {
+            case .success(let decodedData):
+                let username = decodedData.username
+                let name = decodedData.firstName + " " + decodedData.lastName
+                let login = "@" + username
+                let bio = decodedData.bio
+                    let model = ProfileModel(
+                        username: username,
+                        name: name,
+                        loginName: login,
+                        bio: bio)
+                    self.profileStorage.profile = model
+                self.switchToTapBarController()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
 

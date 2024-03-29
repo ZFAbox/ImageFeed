@@ -52,7 +52,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
                 case .success(let token):
                     vc.storage.token = token
                     print(token)
-                    self.profile.prepareProfileModel(token: token)
+//                    self.profile.prepareProfileModel(token: token)
                     delegate.didAuthenticate(self)
                 case .failure(let error) :
                     print(error.localizedDescription)

@@ -57,23 +57,15 @@ class ProfileService {
             switch result {
             case .success(let decodedData):
                 let username = decodedData.username
-                let name = decodedData.firstName
-                let login = decodedData.lastName
-                if let bio = decodedData.bio {
+                let name = decodedData.firstName + " " + decodedData.lastName
+                let login = "@" + username
+                let bio = decodedData.bio
                     let model = ProfileModel(
                         username: username,
                         name: name,
                         loginName: login,
                         bio: bio)
                     self.profileStorage.profile = model
-                } else {
-                    let model = ProfileModel(
-                        username: username,
-                        name: name,
-                        loginName: login,
-                        bio: "")
-                    self.profileStorage.profile = model}
-
             case .failure(let error):
                 print(error.localizedDescription)
             }
