@@ -7,16 +7,18 @@
 
 import Foundation
 
-class ProfileService {
+final class ProfileService {
+    
+    static var shared = ProfileService()
     // MARK: - Privates
     var profileModel: ProfileModel?
     private var mainUrlProfile = "https://api.unsplash.com/me"
-    var profileStorage = ProfileDataStorage()
+//    private var profileStorage = ProfileDataStorage()
     
-    enum GetUserDataError: Error {
+    private enum GetUserDataError: Error {
         case invalidProfileRequest
     }
-    func makeProfileRequest (token: String) -> URLRequest? {
+    private func makeProfileRequest (token: String) -> URLRequest? {
         guard let url = URL(string: mainUrlProfile) else {
             preconditionFailure("Ошибка формирования URL")
         }
@@ -52,25 +54,23 @@ class ProfileService {
         task.resume()
     }
     
-    func prepareProfileModel(token: String) {
-        self.fetchUserProfileData(token: token) { result in
-            switch result {
-            case .success(let decodedData):
-                let username = decodedData.username
-                let name = decodedData.firstName + " " + decodedData.lastName
-                let login = "@" + username
-                let bio = decodedData.bio
-                    let model = ProfileModel(
-                        username: username,
-                        name: name,
-                        loginName: login,
-                        bio: bio)
-                    self.profileStorage.profile = model
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-
-       
-    }
+//    func prepareProfileModel(token: String) {
+//        self.fetchUserProfileData(token: token) { result in
+//            switch result {
+//            case .success(let decodedData):
+//                let username = decodedData.username
+//                let name = decodedData.firstName + " " + decodedData.lastName
+//                let login = "@" + username
+//                let bio = decodedData.bio
+//                    let model = ProfileModel(
+//                        username: username,
+//                        name: name,
+//                        loginName: login,
+//                        bio: bio)
+//                    self.profileStorage.profile = model
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
 }

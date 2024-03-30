@@ -56,6 +56,8 @@ final class ProfileViewController:UIViewController {
         super.viewDidLoad()
         addSubViews()
         applyConstrains()
+        if let model = ProfileService.shared.profileModel {
+            loadUserData(profileModel: model)}
     }
     
     //MARK: - Layout Methods
@@ -118,5 +120,10 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
+    }
+    
+    private func loadUserData(profileModel: ProfileModel) {
+        profileName.text = profileModel.name
+        profileId.text = profileModel.loginName
     }
 }

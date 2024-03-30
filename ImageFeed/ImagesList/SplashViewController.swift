@@ -15,7 +15,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let tapBarViewControllerId = "TapBarViewController"
     private let storage = OAuth2TokenStorage()
     private let profileStorage = ProfileDataStorage()
-    private let profileService = ProfileService()
+    private let profileService = ProfileService.shared
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -56,31 +56,32 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             return
         }
         fetchProfile(token: token)
-//        switchToTapBarController()
+        switchToTapBarController()
     }
     
     private func fetchProfile(token: String) {
         UIBlockingProgressHud.show()
-        profileService.fetchUserProfileData(token: token) { [weak self] result in
-            guard let self else { return }
-            switch result {
-            case .success(let decodedData):
-                let username = decodedData.username
-                let name = decodedData.firstName + " " + decodedData.lastName
-                let login = "@" + username
-                let bio = decodedData.bio
-                    let model = ProfileModel(
-                        username: username,
-                        name: name,
-                        loginName: login,
-                        bio: bio)
-                    self.profileStorage.profile = model
-                self.switchToTapBarController()
-            case .failure(let error):
-                print(error.localizedDescription)
+        profileService.fetchUserProfileData(token: token) { [self] result in
+            UIBlockingProgressHud.dismiss()
+                switch result {
+                case .success(let decodedData):
+                    let username = decodedData.username
+                    let name = decodedData.firstName + " " + decodedData.lastName
+                    let login = "@" + username
+                    let bio = decodedData.bio
+                        let model = ProfileModel(
+                            username: username,
+                            name: name,
+                            loginName: login,
+                            bio: bio)
+                    profileStorage.profile = model
+                    switchToTapBarController()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
             }
         }
     }
-}
+
 
 
