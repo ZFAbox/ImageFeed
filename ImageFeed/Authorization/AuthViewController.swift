@@ -16,7 +16,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
-    private let profile = ProfileService()
+//    private let profile = ProfileService()
     
     //MARK: - Delegate
     var delegate: SplashViewController?

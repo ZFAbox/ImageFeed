@@ -15,6 +15,8 @@ final class ProfileService {
     private var mainUrlProfile = "https://api.unsplash.com/me"
 //    private var profileStorage = ProfileDataStorage()
     
+    private init(){}
+    
     private enum GetUserDataError: Error {
         case invalidProfileRequest
     }
@@ -40,7 +42,7 @@ final class ProfileService {
             switch result {
             case .success(let data):
                 do {
-                    print("Выводим данные профиля \(String(decoding: data, as: UTF8.self))")
+//                    print("Выводим данные профиля \(String(decoding: data, as: UTF8.self))")
                     let decodedData = try SnakeCaseJsonDecoder().decode(ProfileDataDecoder.self, from: data)
                     handler(.success(decodedData))
                 } catch {

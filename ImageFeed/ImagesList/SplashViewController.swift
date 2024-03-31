@@ -16,13 +16,19 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let storage = OAuth2TokenStorage()
     private let profileStorage = ProfileDataStorage()
     private let profileService = ProfileService.shared
+    private let profileImageService = ProfileImageService.shared
+    let semaphore = DispatchSemaphore(value: 0)
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let token = storage.token {
+            print(token)
 //            switchToTapBarController()
             fetchProfile(token: token)
-            print("Name: \(profileStorage.profile.username)")
+//            print("Name: \(String(describing: self.profileService.profileModel?.username))")
+//            if let username = profileService.profileModel?.username {
+//            fetchProfileImageUrl(token: token, username: "zfabox")
+//            }
         } else {
             performSegue(withIdentifier: loginSplashViewIdentifier, sender: nil)
         }
@@ -74,7 +80,22 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
                             name: name,
                             loginName: login,
                             bio: bio)
-                    profileStorage.profile = model
+                    profileService.profileModel = model
+                    fetchProfileImageUrl(token: token, username: username)
+                    switchToTapBarController()
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    
+    private func fetchProfileImageUrl (token: String, username: String) {
+        UIBlockingProgressHud.show()
+        profileImageService.fetchUserProfileImageData(token: token, username: username) { [self] result in
+            UIBlockingProgressHud.dismiss()
+                switch result {
+                case .success(let decodedData):
+                    profileImageService.profileImageUrl = decodedData.profileImage.small
                     switchToTapBarController()
                 case .failure(let error):
                     print(error.localizedDescription)

@@ -19,6 +19,8 @@
 		90931EC22BAB92F900AC7914 /* AuthViewControllerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90931EC12BAB92F900AC7914 /* AuthViewControllerDelegate.swift */; };
 		9096A7282B46090D009C589C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9096A7272B46090D009C589C /* LaunchScreen.storyboard */; };
 		90AEEC222B4DE4FD007A473A /* ImagesListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90AEEC212B4DE4FD007A473A /* ImagesListCell.swift */; };
+		90BE185D2BBA1111009135FD /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BE185C2BBA1111009135FD /* ProfileImageService.swift */; };
+		90BE185F2BBA116A009135FD /* UserResultImageDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BE185E2BBA116A009135FD /* UserResultImageDecoder.swift */; };
 		90C4362B2B81CACD00590BB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C4362A2B81CACD00590BB1 /* Constants.swift */; };
 		90D461F42B5CF3DF0042A3AD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D461F32B5CF3DF0042A3AD /* ProfileViewController.swift */; };
 		90E7F10A2B9D411400DEC5E6 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E7F1092B9D411400DEC5E6 /* URLSession+data.swift */; };
@@ -52,6 +54,8 @@
 		90931EC12BAB92F900AC7914 /* AuthViewControllerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewControllerDelegate.swift; sourceTree = "<group>"; };
 		9096A7272B46090D009C589C /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		90AEEC212B4DE4FD007A473A /* ImagesListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCell.swift; sourceTree = "<group>"; };
+		90BE185C2BBA1111009135FD /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
+		90BE185E2BBA116A009135FD /* UserResultImageDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResultImageDecoder.swift; sourceTree = "<group>"; };
 		90C4362A2B81CACD00590BB1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		90D461F32B5CF3DF0042A3AD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		90E7F1092B9D411400DEC5E6 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
@@ -162,6 +166,7 @@
 				90E7F10C2B9D4B8000DEC5E6 /* OAuthTokenResponseDecoder.swift */,
 				9F7870EA2BB4586A00254517 /* ProfileDataDecoder.swift */,
 				9F7870EC2BB45D3500254517 /* ProfileModel.swift */,
+				90BE185E2BBA116A009135FD /* UserResultImageDecoder.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -183,6 +188,7 @@
 				9FA27DA92BB431DB000EA883 /* UIBlockingProgreeHud.swift */,
 				9F7870E82BB4582F00254517 /* ProfileService.swift */,
 				905FF6162BB620D90001730F /* ProfileDataStorage.swift */,
+				90BE185C2BBA1111009135FD /* ProfileImageService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -227,7 +233,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1520;
+				LastUpgradeCheck = 1530;
 				TargetAttributes = {
 					906873642B3F60EF00F47AE0 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -286,6 +292,7 @@
 				9F7870EB2BB4586A00254517 /* ProfileDataDecoder.swift in Sources */,
 				905FF6172BB620D90001730F /* ProfileDataStorage.swift in Sources */,
 				90931EC22BAB92F900AC7914 /* AuthViewControllerDelegate.swift in Sources */,
+				90BE185D2BBA1111009135FD /* ProfileImageService.swift in Sources */,
 				9F7870ED2BB45D3500254517 /* ProfileModel.swift in Sources */,
 				90AEEC222B4DE4FD007A473A /* ImagesListCell.swift in Sources */,
 				90D461F42B5CF3DF0042A3AD /* ProfileViewController.swift in Sources */,
@@ -296,6 +303,7 @@
 				90F018B02BA5635900270B68 /* OAuth2TokenStorage.swift in Sources */,
 				90C4362B2B81CACD00590BB1 /* Constants.swift in Sources */,
 				90FE471A2B8AC346007884D8 /* AuthViewController.swift in Sources */,
+				90BE185F2BBA116A009135FD /* UserResultImageDecoder.swift in Sources */,
 				9FB2E4232BA87E650020B926 /* SplashViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -318,6 +326,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -379,6 +388,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
