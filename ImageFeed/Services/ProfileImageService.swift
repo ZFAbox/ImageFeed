@@ -10,6 +10,7 @@ import Foundation
 final class ProfileImageService {
     
     static var shared = ProfileImageService()
+    static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
     var profileImageUrl: String?
     private var mailImageProfileUrl = "https://api.unsplash.com/users/"
     private enum GetUserImageDataError: Error {
@@ -44,6 +45,7 @@ final class ProfileImageService {
                     print("Выводим инфрмацию пользователя \(String(decoding: data, as: UTF8.self))")
                     let decodedData = try SnakeCaseJsonDecoder().decode(UserResultImageDecoder.self, from: data)
                     handler(.success(decodedData))
+                    
                 } catch {
                     print("Ошибка декодирования изображения пользователя")
                     handler(.failure(error))
@@ -52,6 +54,11 @@ final class ProfileImageService {
                 handler(.failure(error))
             }
         }
+        guard let profileImageUrl else { return }
+        NotificationCenter.default.post(
+            name: ProfileImageService.didChangeNotification,
+            object: self,
+            userInfo: ["URL": profileImageUrl])
         task.resume()
     }
     
