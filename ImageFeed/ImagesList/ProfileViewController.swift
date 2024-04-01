@@ -73,7 +73,9 @@ final class ProfileViewController:UIViewController {
         if let model = ProfileService.shared.profileModel {
             loadUserData(profileModel: model)}
         if let avatarURL = ProfileImageService.shared.profileImageUrl,
-           let url = URL(string: avatarURL)
+           let url = URL(string: avatarURL){
+            
+        }
     }
     
     //MARK: - Layout Methods
