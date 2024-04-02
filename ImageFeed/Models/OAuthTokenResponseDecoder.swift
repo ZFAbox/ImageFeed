@@ -14,7 +14,7 @@ class SnakeCaseJsonDecoder: JSONDecoder {
     }
 }
 
-struct OAuthTokenResponseDecoder: Decodable {
+struct OAuthTokenResponseDecoder: Codable {
     var accessToken: String
     var tokenType: String
     var scope: String
