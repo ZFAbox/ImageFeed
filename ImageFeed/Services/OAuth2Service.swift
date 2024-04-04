@@ -65,22 +65,24 @@ final class OAuth2Service {
             handler(.failure(AuthServiceError.invalidRequest))
             return
             }
-        let task = URLSession.shared.data(for: request) { result in
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseDecoder, Error>) in
+            guard let self = self else { return }
+            UIBlockingProgressHud.dismiss()
             switch result {
-            case.success(let data):
-                do {
-                    let decodedData = try SnakeCaseJsonDecoder().decode(OAuthTokenResponseDecoder.self, from: data)
-                    handler(.success(decodedData.accessToken))
-                    UIBlockingProgressHud.dismiss()
+            case.success(let decodedData):
+//                do {
+//                    let decodedData = try SnakeCaseJsonDecoder().decode(OAuthTokenResponseDecoder.self, from: data)
+
+                handler(.success(decodedData.accessToken))
+
                     self.task = nil
                     self.lastCode = nil
-                } catch {
-                    print("Ошибка декодирования")
-                    handler(.failure(error))
-                }
+//                } catch {
+//                    print("Ошибка декодирования")
+//                    handler(.failure(error))
+//                }
             case .failure(let error):
                 handler(.failure(error))
-                UIBlockingProgressHud.dismiss()
             }
         }
         self.task = task

@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ProfileDataDecoder: Decodable {
+struct ProfileDataDecoder: Codable {
 //    var id: String
 //    var updatedAt: String
     var username: String

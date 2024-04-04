@@ -81,18 +81,20 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
                             loginName: login,
                             bio: bio)
                     profileService.profileModel = model
+                    print(username)
                     fetchProfileImageUrl(token: token, username: username)
                     switchToTapBarController()
                 case .failure(let error):
                     print(error.localizedDescription)
+//                    assertionFailure("Не удалось получить данные профиля")
                 }
             }
         }
     
     private func fetchProfileImageUrl (token: String, username: String) {
-        UIBlockingProgressHud.show()
+//        UIBlockingProgressHud.show()
         profileImageService.fetchUserProfileImageData(token: token, username: username) { [self] result in
-            UIBlockingProgressHud.dismiss()
+//            UIBlockingProgressHud.dismiss()
                 switch result {
                 case .success(let decodedData):
                     profileImageService.profileImageUrl = decodedData.profileImage.small

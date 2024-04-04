@@ -26,9 +26,9 @@ final class ProfileService {
         }
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        print(request)
+//        print(request)
         request.httpMethod = "GET"
-        print(request)
+//        print(request)
         return request
     }
     
@@ -38,17 +38,18 @@ final class ProfileService {
             handler(.failure(GetUserDataError.invalidProfileRequest))
             return
         }
-        let task = URLSession.shared.data(for: request) { result in
+        print (request)
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<ProfileDataDecoder, Error>) in
             switch result {
-            case .success(let data):
-                do {
-//                    print("Выводим данные профиля \(String(decoding: data, as: UTF8.self))")
-                    let decodedData = try SnakeCaseJsonDecoder().decode(ProfileDataDecoder.self, from: data)
-                    handler(.success(decodedData))
-                } catch {
-                    print("Ошибка декодирования данных пользователя")
-                    handler(.failure(error))
-                }
+            case .success(let decodedData):
+//                do {
+////                    print("Выводим данные профиля \(String(decoding: data, as: UTF8.self))")
+//                    let decodedData = try SnakeCaseJsonDecoder().decode(ProfileDataDecoder.self, from: data)
+                handler(.success(decodedData))
+//                } catch {
+//                    print("Ошибка декодирования данных пользователя")
+//                    handler(.failure(error))
+//                }
             case .failure(let error):
                 handler(.failure(error))
             }

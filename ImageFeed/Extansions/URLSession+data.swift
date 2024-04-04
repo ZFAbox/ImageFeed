@@ -64,7 +64,7 @@ extension URLSession {
                         do { let decodedData = try decoder.decode(T.self, from: data)
                             fulfillComplitionOnTheMainThread(.success(decodedData))
                         } catch {
-                            print("Ошибка декодирования")
+                            print("Ошибка декодирования: \(error.localizedDescription), Данные: \(String(data: data, encoding: .utf8) ?? "")")
                             fulfillComplitionOnTheMainThread(.failure(NetworkError.decoderError(error)))
                         }
                     } else {
