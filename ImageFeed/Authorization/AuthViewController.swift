@@ -55,6 +55,18 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
 //                    self.profile.prepareProfileModel(token: token)
                     delegate.didAuthenticate(self)
                 case .failure(let error) :
+                    //Создаем Alert
+                    let alert = UIAlertController(title: "Что-то пошло не так(", message: "", preferredStyle: .alert)
+                    alert.view.accessibilityIdentifier = "alertId"
+                    //Создаем действие для Alert
+                    let action = UIAlertAction(title: "Ok", style: .default) { _ in
+                        
+                        alert.dismiss(animated: true)
+                        
+                        }
+                    alert.addAction(action)
+                    
+                    vc.present(alert, animated: true, completion: nil)
                     print(error.localizedDescription)
             }
         }
