@@ -98,11 +98,18 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
                 switch result {
                 case .success(let decodedData):
                     profileImageService.profileImageUrl = decodedData.profileImage.small
-                    switchToTapBarController()
+                    print(profileImageService.profileImageUrl!)
+//                    switchToTapBarController()
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
             }
+        guard let profileImageUrl = profileImageService.profileImageUrl else { return }
+        NotificationCenter.default.post(
+            name: ProfileImageService.didChangeNotification,
+            object: self,
+            userInfo: ["URL": profileImageUrl])
+
         }
     }
 

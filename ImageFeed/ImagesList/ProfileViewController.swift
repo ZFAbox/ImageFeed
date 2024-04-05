@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController:UIViewController {
     
@@ -99,7 +100,7 @@ final class ProfileViewController:UIViewController {
         guard let profileImageURL = ProfileImageService.shared.profileImageUrl,
         let url = URL(string: profileImageURL)
         else { return }
-        
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "Placeholder"))
         // TODO - Обновить аватар Kingfisher
     }
     

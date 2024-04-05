@@ -39,28 +39,23 @@ final class ProfileImageService {
             return
         }
         let task = URLSession.shared.objectTask(for: request) { (result: Result<UserResultImageDecoder, Error>) in
-//            guard let self = self else { return }
+            //            guard let self = self else { return }
             switch result {
             case .success(let decodedData):
-//                do {
-//                    print("Выводим инфрмацию пользователя \(String(decoding: data, as: UTF8.self))")
-//                    let decodedData = try SnakeCaseJsonDecoder().decode(UserResultImageDecoder.self, from: data)
+                //                do {
+                //                    print("Выводим инфрмацию пользователя \(String(decoding: data, as: UTF8.self))")
+                //                    let decodedData = try SnakeCaseJsonDecoder().decode(UserResultImageDecoder.self, from: data)
                 handler(.success(decodedData))
-//
-//                } catch {
-//                    print("Ошибка декодирования изображения пользователя")
-//                    handler(.failure(error))
-//                }
+                //
+                //                } catch {
+                //                    print("Ошибка декодирования изображения пользователя")
+                //                    handler(.failure(error))
+                //                }
             case .failure(let error):
                 handler(.failure(error))
             }
         }
-        guard let profileImageUrl else { return }
-        NotificationCenter.default.post(
-            name: ProfileImageService.didChangeNotification,
-            object: self,
-            userInfo: ["URL": profileImageUrl])
+      
         task.resume()
     }
-    
 }
