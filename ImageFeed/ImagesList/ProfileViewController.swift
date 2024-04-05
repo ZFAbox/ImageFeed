@@ -10,6 +10,8 @@ import Kingfisher
 
 final class ProfileViewController:UIViewController {
     
+    
+    
     //MARK: - Privates
     private lazy var profileImageView: UIImageView = {
         let profileImageView = UIImageView ()
@@ -73,6 +75,7 @@ final class ProfileViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         addSubViews()
         applyConstrains()
         if let model = ProfileService.shared.profileModel {

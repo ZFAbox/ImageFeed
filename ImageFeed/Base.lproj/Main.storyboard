@@ -19,22 +19,6 @@
         </array>
     </customFonts>
     <scenes>
-        <!--ProfileViewController-->
-        <scene sceneID="bHW-Ka-bz6">
-            <objects>
-                <viewController id="Dua-us-ghc" userLabel="ProfileViewController" customClass="ProfileViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4gh-tC-wE4">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="vhf-9C-sg5"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                    </view>
-                    <tabBarItem key="tabBarItem" title="" image="Tab view person" id="ts2-yS-Bgo"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ylh-PU-aJb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1269" y="-521"/>
-        </scene>
         <!--Auth View Controller-->
         <scene sceneID="uxf-No-DIi">
             <objects>
@@ -135,13 +119,13 @@
         <!--ImageList-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController wantsFullScreenLayout="YES" id="BYZ-38-t0r" userLabel="ImageList" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ImagesListViewController" wantsFullScreenLayout="YES" id="BYZ-38-t0r" userLabel="ImageList" customClass="ImagesListViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="v2B-vp-ilA">
-                                <rect key="frame" x="16" y="0.0" width="382" height="813"/>
+                                <rect key="frame" x="16" y="0.0" width="382" height="862"/>
                                 <color key="backgroundColor" name="YP Black"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleAspectFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationWidth="10" reuseIdentifier="ImagesListCell" rowHeight="246" id="L7X-8v-Hok" customClass="ImagesListCell" customModule="ImageFeed" customModuleProvider="target">
@@ -254,10 +238,10 @@
             </objects>
             <point key="canvasLocation" x="-3130" y="-719"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Tab Bar View Controller-->
         <scene sceneID="mVF-rI-mOb">
             <objects>
-                <tabBarController storyboardIdentifier="TapBarViewController" id="Pfu-MN-ZJR" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TapBarViewController" id="Pfu-MN-ZJR" customClass="TabBarViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="vT6-wP-64O">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -266,10 +250,6 @@
                             <color key="backgroundColor" name="YP Black"/>
                         </tabBarAppearance>
                     </tabBar>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="qMI-3Z-nHP"/>
-                        <segue destination="Dua-us-ghc" kind="relationship" relationship="viewControllers" id="dL7-nm-cFv"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="URw-6U-02p" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -377,7 +357,6 @@
         <image name="Button back" width="24" height="24"/>
         <image name="Button share" width="51" height="51"/>
         <image name="LunchScreen" width="37.5" height="39"/>
-        <image name="Tab view person" width="24" height="24"/>
         <image name="Tab view table" width="30" height="30"/>
         <image name="Unsplash logo" width="60" height="60"/>
         <image name="suit.heart.fill" catalog="system" width="128" height="107"/>
