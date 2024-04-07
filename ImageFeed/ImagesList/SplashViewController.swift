@@ -18,6 +18,13 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
     let semaphore = DispatchSemaphore(value: 0)
+    
+    private lazy var logoImageView: UIImageView = {
+        let logoImageViww = UIImageView()
+        logoImageViww.translatesAutoresizingMaskIntoConstraints = false
+        let image = UIImage(named: "LunchScreen") ?? UIImage()
+        logoImageViww.image = image
+    }
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -46,7 +53,28 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        view.addSubview(logoImageView)
+        
+    }
+    
     //MARK: - Class Methods
+    
+    private func addConstraints (){
+        NSLayoutConstraint.activate([
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            logoImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+        ])
+        
+    }
+    
+    private func authViewControllerPresenter () {
+        let viewController = AuthViewController()
+        viewController.delegate = self
+        viewController.modalPresentationStyle = .fullScreen
+        present.(viewController, animated: true, completion: nil)
+    }
     private func switchToTapBarController (){
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Неверная настройка")
