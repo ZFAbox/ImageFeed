@@ -56,6 +56,7 @@ final class OAuth2Service {
             return
             }
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseDecoder, Error>) in
+            UIBlockingProgressHud.dismiss()
             guard let self = self else { return }
             switch result {
             case.success(let decodedData):

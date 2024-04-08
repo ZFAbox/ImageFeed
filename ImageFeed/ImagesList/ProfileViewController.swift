@@ -54,7 +54,7 @@ final class ProfileViewController:UIViewController {
     } ()
     
     private var profileImageServiceObserver: NSObjectProtocol?
-    private var storage = OAuth2TokenStorage()
+//    private var storage = OAuth2TokenStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,6 +141,7 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
+//        storage.removeToken()
     }
     
     private func loadUserData(profileModel: ProfileModel) {

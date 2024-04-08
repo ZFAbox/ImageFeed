@@ -41,7 +41,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Button back")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Button back")
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = .black
+        navigationItem.backBarButtonItem?.tintColor = .ypBlack
     }
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
@@ -52,11 +52,9 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
                     vc.storage.token = token
                     print(token)
                     delegate.didAuthenticate(self)
-                    UIBlockingProgressHud.dismiss()
                 case .failure(let error) :
                     self.showAlert(vc)
                     print(error.localizedDescription)
-                    UIBlockingProgressHud.dismiss()
             }
         }
     }

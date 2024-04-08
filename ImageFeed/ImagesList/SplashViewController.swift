@@ -13,6 +13,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     //MARK: - Privates
     private let loginSplashViewIdentifier = "LoginSplashViewIdentifier"
     private let tapBarViewControllerId = "TapBarViewController"
+    private let authViewController = "AuthViewController"
     private let storage = OAuth2TokenStorage()
     private let profileService = ProfileService.shared
     private let profileImageService = ProfileImageService.shared
@@ -24,6 +25,9 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         return logoImageView
     } ()
     
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
+    }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let token = storage.token {
@@ -36,7 +40,12 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(logoImageView)
+        view.backgroundColor = .ypBlack
         addConstraints()
+        UIView.animate(withDuration: 0.3) {
+            self.setNeedsStatusBarAppearanceUpdate()
+        }
+
     }
     
     //MARK: - Class Methods
@@ -49,10 +58,14 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     }
     
     private func authViewControllerPresenter () {
-        let viewController = AuthViewController()
-        viewController.delegate = self
-        viewController.modalPresentationStyle = .fullScreen
-        self.present(viewController, animated: true, completion: nil)
+        guard let window = UIApplication.shared.windows.first else {
+            fatalError("Неверная настройка")
+        }
+        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+            window.rootViewController = authViewController
+            authViewController.delegate = self
+        }
     }
     
     private func switchToTapBarController (){
@@ -70,7 +83,6 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             return
         }
         fetchProfile(token: token)
-        switchToTapBarController()
     }
     
     private func fetchProfile(token: String) {
@@ -105,7 +117,6 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             switch result {
             case .success(let decodedData):
                 profileImageService.profileImageUrl = decodedData.profileImage.small
-                print(profileImageService.profileImageUrl!)
             case .failure(let error):
                 print(error.localizedDescription)
             }

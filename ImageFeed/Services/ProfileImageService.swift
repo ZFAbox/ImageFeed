@@ -9,9 +9,14 @@ import Foundation
 
 final class ProfileImageService {
     
+    //MARK: - Statics
     static var shared = ProfileImageService()
     static let didChangeNotification = Notification.Name(rawValue: "ProfileImageProviderDidChange")
+    
     var profileImageUrl: String?
+    var task: URLSessionTask?
+    
+    //MARK: - Privates
     private var mailImageProfileUrl = "https://api.unsplash.com/users/"
     private enum GetUserImageDataError: Error {
         case invalidProfileImageRequest
@@ -19,6 +24,7 @@ final class ProfileImageService {
     
     private init() {}
     
+    //MARK: - Class Methods
     private func makeProfileImageRequest (token: String, username: String) -> URLRequest? {
         let imageUrlString = mailImageProfileUrl + username
         guard let url = URL(string: imageUrlString) else {
@@ -33,29 +39,20 @@ final class ProfileImageService {
     }
     
     func fetchUserProfileImageData(token: String, username: String, handler: @escaping (Result<UserResultImageDecoder,Error>) -> Void) {
-        
+        task?.cancel()
         guard let request = self.makeProfileImageRequest(token: token, username: username) else {
             handler(.failure(GetUserImageDataError.invalidProfileImageRequest))
             return
         }
         let task = URLSession.shared.objectTask(for: request) { (result: Result<UserResultImageDecoder, Error>) in
-            //            guard let self = self else { return }
             switch result {
             case .success(let decodedData):
-                //                do {
-                //                    print("Выводим инфрмацию пользователя \(String(decoding: data, as: UTF8.self))")
-                //                    let decodedData = try SnakeCaseJsonDecoder().decode(UserResultImageDecoder.self, from: data)
                 handler(.success(decodedData))
-                //
-                //                } catch {
-                //                    print("Ошибка декодирования изображения пользователя")
-                //                    handler(.failure(error))
-                //                }
             case .failure(let error):
                 handler(.failure(error))
             }
         }
-      
+        self.task = task
         task.resume()
     }
 }
