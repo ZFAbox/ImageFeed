@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pU0-Ln-emq">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -207,37 +207,6 @@
             </objects>
             <point key="canvasLocation" x="-1269.4656488549617" y="211.97183098591552"/>
         </scene>
-        <!--Splash View Controller-->
-        <scene sceneID="zf9-L0-157">
-            <objects>
-                <viewController id="pU0-Ln-emq" customClass="SplashViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="flg-5r-WdJ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LunchScreen" translatesAutoresizingMaskIntoConstraints="NO" id="sbg-Tc-JHK">
-                                <rect key="frame" x="169.5" y="409" width="75" height="78"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="AaZ-F9-ZrV"/>
-                                    <constraint firstAttribute="height" constant="78" id="JHW-Ke-0ym"/>
-                                </constraints>
-                            </imageView>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="bl6-a0-nd2"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="sbg-Tc-JHK" firstAttribute="centerY" secondItem="flg-5r-WdJ" secondAttribute="centerY" id="nJa-hs-MMZ"/>
-                            <constraint firstItem="sbg-Tc-JHK" firstAttribute="centerX" secondItem="flg-5r-WdJ" secondAttribute="centerX" id="wty-b0-99I"/>
-                        </constraints>
-                    </view>
-                    <connections>
-                        <segue destination="Dhk-dt-wDU" kind="presentation" identifier="LoginSplashViewIdentifier" modalPresentationStyle="fullScreen" id="ilN-ro-95u"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="zU8-ai-COC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-3130" y="-719"/>
-        </scene>
         <!--Tab Bar View Controller-->
         <scene sceneID="mVF-rI-mOb">
             <objects>
@@ -356,7 +325,6 @@
         <image name="4" width="200" height="115"/>
         <image name="Button back" width="24" height="24"/>
         <image name="Button share" width="51" height="51"/>
-        <image name="LunchScreen" width="37.5" height="39"/>
         <image name="Tab view table" width="30" height="30"/>
         <image name="Unsplash logo" width="60" height="60"/>
         <image name="suit.heart.fill" catalog="system" width="128" height="107"/>

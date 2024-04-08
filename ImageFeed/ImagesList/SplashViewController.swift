@@ -20,12 +20,13 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     let semaphore = DispatchSemaphore(value: 0)
     
     private lazy var logoImageView: UIImageView = {
-        let logoImageViww = UIImageView()
-        logoImageViww.translatesAutoresizingMaskIntoConstraints = false
+        let logoImageView = UIImageView()
+        logoImageView.translatesAutoresizingMaskIntoConstraints = false
         let image = UIImage(named: "LunchScreen") ?? UIImage()
-        logoImageViww.image = image
-    }
-
+        logoImageView.image = image
+        return logoImageView
+    } ()
+		
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if let token = storage.token {
@@ -37,26 +38,27 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
 //            fetchProfileImageUrl(token: token, username: "zfabox")
 //            }
         } else {
-            performSegue(withIdentifier: loginSplashViewIdentifier, sender: nil)
+            authViewControllerPresenter()
+//            performSegue(withIdentifier: loginSplashViewIdentifier, sender: nil)
         }
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == loginSplashViewIdentifier {
-            guard
-                let navigationController = segue.destination as? UINavigationController,
-                let viewController = navigationController.viewControllers[0] as? AuthViewController
-            else { fatalError("Failed to prepare for \(loginSplashViewIdentifier)") }
-            viewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//        if segue.identifier == loginSplashViewIdentifier {
+//            guard
+//                let navigationController = segue.destination as? UINavigationController,
+//                let viewController = navigationController.viewControllers[0] as? AuthViewController
+//            else { fatalError("Failed to prepare for \(loginSplashViewIdentifier)") }
+//            viewController.delegate = self
+//        } else {
+//            super.prepare(for: segue, sender: sender)
+//        }
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.addSubview(logoImageView)
-        
+        addConstraints()
     }
     
     //MARK: - Class Methods
@@ -73,8 +75,9 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
         let viewController = AuthViewController()
         viewController.delegate = self
         viewController.modalPresentationStyle = .fullScreen
-        present.(viewController, animated: true, completion: nil)
+        self.present(viewController, animated: true, completion: nil)
     }
+    
     private func switchToTapBarController (){
         guard let window = UIApplication.shared.windows.first else {
             fatalError("Неверная настройка")
