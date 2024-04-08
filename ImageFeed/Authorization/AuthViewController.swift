@@ -16,7 +16,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
-//    private let profile = ProfileService()
     
     //MARK: - Delegate
     var delegate: SplashViewController?
@@ -52,23 +51,25 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
                 case .success(let token):
                     vc.storage.token = token
                     print(token)
-//                    self.profile.prepareProfileModel(token: token)
                     delegate.didAuthenticate(self)
+                    UIBlockingProgressHud.dismiss()
                 case .failure(let error) :
-                    //Создаем Alert
-                    let alert = UIAlertController(title: "Что-то пошло не так(", message: "", preferredStyle: .alert)
-                    alert.view.accessibilityIdentifier = "alertId"
-                    //Создаем действие для Alert
-                    let action = UIAlertAction(title: "Ok", style: .default) { _ in
-                        
-                        alert.dismiss(animated: true)
-                        
-                        }
-                    alert.addAction(action)
-                    
-                    vc.present(alert, animated: true, completion: nil)
+                    self.showAlert(vc)
                     print(error.localizedDescription)
+                    UIBlockingProgressHud.dismiss()
             }
         }
+    }
+    
+    private func showAlert(_ vc: WebViewViewController) {
+        let alert = UIAlertController(title: "Что-то пошло не так(", message: "", preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "alertId"
+
+        let action = UIAlertAction(title: "Ok", style: .default) { _ in
+            alert.dismiss(animated: true)
+            }
+        
+        alert.addAction(action)
+        vc.present(alert, animated: true, completion: nil)
     }
 }

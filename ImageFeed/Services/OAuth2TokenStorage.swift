@@ -9,7 +9,7 @@ import Foundation
 import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
-//    private lazy var userDefaults = UserDefaults.standard
+    
     private lazy var keychain = KeychainWrapper.standard
     enum Keys: String {
         case token

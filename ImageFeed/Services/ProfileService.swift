@@ -13,67 +13,38 @@ final class ProfileService {
     // MARK: - Privates
     var profileModel: ProfileModel?
     private var mainUrlProfile = "https://api.unsplash.com/me"
-//    private var profileStorage = ProfileDataStorage()
-    
-    private init(){}
-    
+    private var task: URLSessionTask?
     private enum GetUserDataError: Error {
         case invalidProfileRequest
     }
+    
+    private init(){}
+    
     private func makeProfileRequest (token: String) -> URLRequest? {
         guard let url = URL(string: mainUrlProfile) else {
             preconditionFailure("Ошибка формирования URL")
         }
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-//        print(request)
         request.httpMethod = "GET"
-//        print(request)
         return request
     }
     
     func fetchUserProfileData(token: String, handler: @escaping (Result<ProfileDataDecoder,Error>) -> Void) {
-        
+        task?.cancel()
         guard let request = self.makeProfileRequest(token: token) else {
             handler(.failure(GetUserDataError.invalidProfileRequest))
             return
         }
-        print (request)
         let task = URLSession.shared.objectTask(for: request) { (result: Result<ProfileDataDecoder, Error>) in
             switch result {
             case .success(let decodedData):
-//                do {
-////                    print("Выводим данные профиля \(String(decoding: data, as: UTF8.self))")
-//                    let decodedData = try SnakeCaseJsonDecoder().decode(ProfileDataDecoder.self, from: data)
                 handler(.success(decodedData))
-//                } catch {
-//                    print("Ошибка декодирования данных пользователя")
-//                    handler(.failure(error))
-//                }
             case .failure(let error):
                 handler(.failure(error))
             }
         }
+        self.task = task
         task.resume()
     }
-    
-//    func prepareProfileModel(token: String) {
-//        self.fetchUserProfileData(token: token) { result in
-//            switch result {
-//            case .success(let decodedData):
-//                let username = decodedData.username
-//                let name = decodedData.firstName + " " + decodedData.lastName
-//                let login = "@" + username
-//                let bio = decodedData.bio
-//                    let model = ProfileModel(
-//                        username: username,
-//                        name: name,
-//                        loginName: login,
-//                        bio: bio)
-//                    self.profileStorage.profile = model
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//            }
-//        }
-//    }
 }
