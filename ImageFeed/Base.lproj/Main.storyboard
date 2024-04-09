@@ -53,7 +53,7 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
                                 </userDefinedRuntimeAttributes>
                                 <connections>
-                                    <segue destination="8aT-cg-eYq" kind="presentation" identifier="ShowWebView" modalPresentationStyle="fullScreen" id="dES-4v-05g"/>
+                                    <action selector="enterButtonDidTapped:" destination="NoG-RU-zRJ" eventType="touchUpInside" id="i0h-IS-ZIa"/>
                                 </connections>
                             </button>
                         </subviews>

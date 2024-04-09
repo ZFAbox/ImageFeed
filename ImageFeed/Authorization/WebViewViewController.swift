@@ -15,6 +15,7 @@ class WebViewViewController: UIViewController {
     let splashController = SplashViewController()
     let storage = OAuth2TokenStorage()
     var estimatedProgreeObservation: NSKeyValueObservation?
+    private let authViewController = "AuthViewController"
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progreesView: UIProgressView!
@@ -24,26 +25,6 @@ class WebViewViewController: UIViewController {
     enum WebViewConstants {
         static let unsplashAuthirizeURLString = "https://unsplash.com/oauth/authorize"
     }
-    
-//    override func viewWillAppear(_ animated: Bool) {
-//        super.viewWillAppear(animated)
-//        webView.addObserver(
-//            self,
-//            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-//            options: .new,
-//            context: nil)
-//        updateProgress()
-//    }
-//
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        webView.removeObserver(
-//            self,
-//            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-//            context: nil
-//        )
-//    }
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,14 +39,6 @@ class WebViewViewController: UIViewController {
         loadAuthorizationView()
         
     }
-    
-//    override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-//        if keyPath == #keyPath(WKWebView.estimatedProgress) {
-//            updateProgress()
-//        } else {
-//            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
-//        }
-//    }
     
     
     
@@ -126,7 +99,6 @@ extension WebViewViewController: WKNavigationDelegate {
         guard let delegate else { return }
         delegate.webViewViewControllerDismiss(self)
     }
-    
 }
 
 

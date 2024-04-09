@@ -17,25 +17,15 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
+    private let authViewController = "AuthViewController"
     
     //MARK: - Delegate
     var delegate: SplashViewController?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureBackButton()
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == AuthViewController.showWebViewSigueIdentifier {
-            guard let webViewController = segue.destination as? WebViewViewController else {
-                print("Ошибка назначения делегата WebViewViewController")
-                return }
-            webViewController.delegate = self
-        } else {
-            super.prepare(for: segue, sender: sender)
-        }
-    }
 
     //MARK: - Class Methods
     private func showWebViewController (){
@@ -45,13 +35,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
             webViewController.modalPresentationStyle = .fullScreen
             self.present(webViewController, animated: true)
         }
-    }
-    
-    private func configureBackButton() {
-        navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Button back")
-        navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Button back")
-        navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-        navigationItem.backBarButtonItem?.tintColor = .ypBlack
     }
     
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
@@ -70,7 +53,11 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }
     
     func webViewViewControllerDismiss(_ vc: WebViewViewController) {
-        vc.dismiss(animated: true)
+        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+            authViewController.modalPresentationStyle = .fullScreen
+            vc.present(authViewController, animated: true)
+        }
     }
     
     private func showAlert(_ vc: WebViewViewController) {
@@ -86,4 +73,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }
     
     
+    @IBAction func enterButtonDidTapped(_ sender: Any) {
+        showWebViewController()
+    }
 }
