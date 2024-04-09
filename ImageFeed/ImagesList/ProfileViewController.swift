@@ -54,7 +54,8 @@ final class ProfileViewController:UIViewController {
     } ()
     
     private var profileImageServiceObserver: NSObjectProtocol?
-//    private var storage = OAuth2TokenStorage()
+    private var storage = OAuth2TokenStorage()
+    private let authViewController = "AuthViewController"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,7 +142,12 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
-//        storage.removeToken()
+        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+            authViewController.modalPresentationStyle = .fullScreen
+            self.present(authViewController, animated: true)
+        }
+        storage.removeToken()
     }
     
     private func loadUserData(profileModel: ProfileModel) {
