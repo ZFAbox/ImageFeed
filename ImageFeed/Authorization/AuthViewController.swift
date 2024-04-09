@@ -13,6 +13,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     //MARK: - Statics
     static var showWebViewSigueIdentifier = "ShowWebView"
     
+    
     //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
@@ -37,6 +38,15 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }
 
     //MARK: - Class Methods
+    private func showWebViewController (){
+        if let webViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
+            webViewController.delegate = self
+            webViewController.modalPresentationStyle = .fullScreen
+            self.present(webViewController, animated: true)
+        }
+    }
+    
     private func configureBackButton() {
         navigationController?.navigationBar.backIndicatorImage = UIImage(named: "Button back")
         navigationController?.navigationBar.backIndicatorTransitionMaskImage = UIImage(named: "Button back")
@@ -59,6 +69,10 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         }
     }
     
+    func webViewViewControllerDismiss(_ vc: WebViewViewController) {
+        vc.dismiss(animated: true)
+    }
+    
     private func showAlert(_ vc: WebViewViewController) {
         let alert = UIAlertController(title: "Что-то пошло не так(", message: "", preferredStyle: .alert)
         alert.view.accessibilityIdentifier = "alertId"
@@ -70,4 +84,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         alert.addAction(action)
         vc.present(alert, animated: true, completion: nil)
     }
+    
+    
 }

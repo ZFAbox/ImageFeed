@@ -19,6 +19,8 @@ class WebViewViewController: UIViewController {
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progreesView: UIProgressView!
     
+    
+    
     enum WebViewConstants {
         static let unsplashAuthirizeURLString = "https://unsplash.com/oauth/authorize"
     }
@@ -42,6 +44,7 @@ class WebViewViewController: UIViewController {
 //        )
 //    }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         webView.navigationDelegate = self
@@ -63,6 +66,8 @@ class WebViewViewController: UIViewController {
 //            super.observeValue(forKeyPath: keyPath, of: object, change: change, context: context)
 //        }
 //    }
+    
+    
     
     private func updateProgress() {
         progreesView.progress = Float(webView.estimatedProgress)
@@ -116,6 +121,12 @@ extension WebViewViewController: WKNavigationDelegate {
             return nil
         }
     }
+    
+    @IBAction func BackButtonAction(_ sender: Any) {
+        guard let delegate else { return }
+        delegate.webViewViewControllerDismiss(self)
+    }
+    
 }
 
 
