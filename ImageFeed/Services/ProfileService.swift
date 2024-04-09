@@ -47,4 +47,17 @@ final class ProfileService {
         self.task = task
         task.resume()
     }
+    
+    func prepareProfileModelFromData(data: ProfileDataDecoder) -> ProfileModel {
+        let username = data.username
+        let name = data.firstName + " " + data.lastName
+        let login = "@" + username
+        let bio = data.bio
+        let profileModel = ProfileModel(
+            username: username,
+            name: name,
+            loginName: login,
+            bio: bio)
+        return profileModel
+    }
 }

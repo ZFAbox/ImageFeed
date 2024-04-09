@@ -29,9 +29,6 @@ extension URLSession {
                 if let error {
                     print("\(String(describing: T.self)) [URLRequest:] - \(error.localizedDescription)")
                     fulfillComplitionOnTheMainThread(.failure(NetworkError.urlRequestError(error)))
-                } else {
-                    print("\(String(describing: T.self)) [URLSeesion:] - \(String(describing: NetworkError.urlSessionError))")
-                    fulfillComplitionOnTheMainThread( .failure(NetworkError.urlSessionError))
                 }
                 
                 if let data = data, let response = response, let statusCode = (response  as? HTTPURLResponse)?.statusCode {

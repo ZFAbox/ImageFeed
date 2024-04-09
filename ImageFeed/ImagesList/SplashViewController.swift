@@ -90,36 +90,14 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
             UIBlockingProgressHud.dismiss()
             switch result {
             case .success(let decodedData):
-//                let username = decodedData.username
-//                let name = decodedData.firstName + " " + decodedData.lastName
-//                let login = "@" + username
-//                let bio = decodedData.bio
-//                let model = ProfileModel(
-//                    username: username,
-//                    name: name,
-//                    loginName: login,
-//                    bio: bio)
-                let model = prepareProfileModelFromData(data: decodedData)
-                profileService.profileModel = prepareProfileModelFromData(data: decodedData)
+                let model = profileService.prepareProfileModelFromData(data: decodedData)
+                profileService.profileModel = model
                 fetchProfileImageUrl(token: token, username: model.username)
                 switchToTapBarController()
             case .failure(let error):
                 print(error.localizedDescription)
             }
         }
-    }
-    
-    private func prepareProfileModelFromData(data: ProfileDataDecoder) -> ProfileModel {
-        let username = data.username
-        let name = data.firstName + " " + data.lastName
-        let login = "@" + username
-        let bio = data.bio
-        let profileModel = ProfileModel(
-            username: username,
-            name: name,
-            loginName: login,
-            bio: bio)
-        return profileModel
     }
     
     private func fetchProfileImageUrl (token: String, username: String) {

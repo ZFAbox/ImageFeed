@@ -12,15 +12,13 @@ import WebKit
 class WebViewViewController: UIViewController {
     
     var delegate: AuthViewController?
-    let splashController = SplashViewController()
+    private let splashController = SplashViewController()
     let storage = OAuth2TokenStorage()
     var estimatedProgreeObservation: NSKeyValueObservation?
     private let authViewController = "AuthViewController"
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progreesView: UIProgressView!
-    
-    
     
     enum WebViewConstants {
         static let unsplashAuthirizeURLString = "https://unsplash.com/oauth/authorize"
@@ -37,11 +35,9 @@ class WebViewViewController: UIViewController {
                  self.updateProgress()
              })
         loadAuthorizationView()
-        
     }
     
-    
-    
+    //MARK: - Class Methods
     private func updateProgress() {
         progreesView.progress = Float(webView.estimatedProgress)
         progreesView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
