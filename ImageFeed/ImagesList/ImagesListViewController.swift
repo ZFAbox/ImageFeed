@@ -20,10 +20,6 @@ final class ImagesListViewController: UIViewController {
     //MARK: - Privates
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
-    }
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -38,9 +34,6 @@ final class ImagesListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
-        UIView.animate(withDuration: 0.3) {
-            self.setNeedsStatusBarAppearanceUpdate()
-        }
         self.navigationController?.setNavigationBarHidden(true, animated: false)
     }
     

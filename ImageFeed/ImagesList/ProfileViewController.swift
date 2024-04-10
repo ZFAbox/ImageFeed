@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ProfileViewController:UIViewController {
     
@@ -43,22 +44,45 @@ final class ProfileViewController:UIViewController {
         profileStatus.textColor = .ypWhite
         return profileStatus
     } ()
-    private let exitButton: UIButton = {
+    private var exitButton: UIButton = {
         let exitButton = UIButton(type: .system)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         exitButton.setBackgroundImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
         exitButton.tintColor = .ypRed
-        exitButton.addTarget(ProfileViewController.self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        exitButton.addTarget(ProfileViewController.self, action: Selector(("exitButtonTapped")), for: .touchUpInside)
         return exitButton
     } ()
+    
+    private var profileImageServiceObserver: NSObjectProtocol?
+    private var storage = OAuth2TokenStorage()
+    private let authViewController = "AuthViewController"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         addSubViews()
         applyConstrains()
+        if let model = ProfileService.shared.profileModel {
+            loadUserData(profileModel: model)}
+        profileImageServiceObserver = NotificationCenter.default.addObserver(
+            forName: ProfileImageService.didChangeNotification,
+            object: nil,
+            queue: .main,
+            using: { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        )
+        updateAvatar()
     }
     
     //MARK: - Layout Methods
+    
+    private func updateAvatar() {
+        guard let profileImageURL = ProfileImageService.shared.profileImageUrl,
+        let url = URL(string: profileImageURL)
+        else { return }
+        profileImageView.kf.setImage(with: url, placeholder: UIImage(named: "Placeholder"))
+    }
     
     private func addSubViews(){
         view.addSubview(profileImageView)
@@ -118,5 +142,16 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
+        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
+            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+            authViewController.modalPresentationStyle = .fullScreen
+            present(authViewController, animated: true)
+        }
+        storage.removeToken()
+    }
+    
+    private func loadUserData(profileModel: ProfileModel) {
+        profileName.text = profileModel.name
+        profileId.text = profileModel.loginName
     }
 }
