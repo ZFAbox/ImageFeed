@@ -6,20 +6,28 @@
 //
 
 import Foundation
+import SwiftKeychainWrapper
 
 final class OAuth2TokenStorage {
-    private lazy var userDefaults = UserDefaults.standard
-    private let authViewController = AuthViewController()
+    
+    private lazy var keychain = KeychainWrapper.standard
     enum Keys: String {
         case token
     }
     var token: String? {
         get {
-            userDefaults.string(forKey: Keys.token.rawValue)
+            let token: String? = keychain.string(forKey: Keys.token.rawValue)
+            return token
         }
         set {
-            userDefaults.set(newValue, forKey: Keys.token.rawValue)
+            guard let token = newValue else { return }
+            let isSuccess = keychain.set(token, forKey: Keys.token.rawValue)
+            guard isSuccess else { return }
         }
+    }
+    
+    func removeToken(){
+        keychain.removeObject(forKey: Keys.token.rawValue)
     }
     
 }

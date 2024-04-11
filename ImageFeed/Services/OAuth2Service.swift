@@ -6,15 +6,25 @@
 //
 
 import Foundation
+import ProgressHUD
 
 final class OAuth2Service {
     
+    //MARK: - Statics
     static let shared = OAuth2Service()
+    
+    //MARK: - Privates
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
+    private var task: URLSessionTask?
+    private var lastCode: String?
+    private enum AuthServiceError: Error {
+        case invalidRequest
+    }
     
     private init() {}
     
-    private func makeAuthorizationRequest(code: String) -> URLRequest{
+    //MARK: - Class Methods
+    private func makeAuthorizationRequest(code: String) -> URLRequest? {
         guard var urlComponents = URLComponents(string: unsplashPostRequestURLString) else {
             preconditionFailure("ошибка формирования строки запроса авторизации")
         }
@@ -25,7 +35,6 @@ final class OAuth2Service {
                 URLQueryItem(name: URLQueryItemsList.code.rawValue, value: code),
                 URLQueryItem(name: URLQueryItemsList.grantType.rawValue, value: Constants.grantType)
             ]
-            
             guard let url = urlComponents.url else {
                 preconditionFailure("Невозможно сформировать ссылку на запрос авторизации")}
             var request = URLRequest(url: url)
@@ -35,24 +44,31 @@ final class OAuth2Service {
     }
     
     func fetchOAuthToken(code: String, handler: @escaping (Result<String,Error>) -> Void) {
-        
-        let request = self.makeAuthorizationRequest(code: code)
-        print(request)
-        let urlSession = URLSession.shared.data(for: request) { result in
+        UIBlockingProgressHud.show()
+        guard lastCode != code else {
+            handler(.failure(AuthServiceError.invalidRequest))
+            return
+        }
+        task?.cancel()
+        lastCode = code
+        guard let request = self.makeAuthorizationRequest(code: code) else{
+            handler(.failure(AuthServiceError.invalidRequest))
+            return
+            }
+        let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseDecoder, Error>) in
+            UIBlockingProgressHud.dismiss()
+            guard let self = self else { return }
             switch result {
-            case.success(let data):
-                do {
-                    let decodedData = try SnakeCaseJsonDecoder().decode(OAuthTokenResponseDecoder.self, from: data)
-                    handler(.success(decodedData.accessToken))
-                } catch {
-                    print("Ошибка декодирования")
-                    handler(.failure(error))
-                }
+            case.success(let decodedData):
+                handler(.success(decodedData.accessToken))
+                    self.task = nil
+                    self.lastCode = nil
             case .failure(let error):
                 handler(.failure(error))
             }
         }
-        urlSession.resume()
+        self.task = task
+        task.resume()
     }
 
 }
