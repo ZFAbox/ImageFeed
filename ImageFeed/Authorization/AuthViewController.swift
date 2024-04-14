@@ -27,13 +27,14 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }()
     private var authViewControllerButton: UIButton = {
         let authViewControllerButton = UIButton(type: .system)
+        authViewControllerButton.tintColor = .ypBlack
+        authViewControllerButton.titleLabel?.font = UIFont(name: "HelveticaNeue-Bold", size: 17)
         authViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         authViewControllerButton.setTitle("Войти", for: .normal)
-//        authViewControllerButton.layer.backgroundColor = UIColor.ypWhite.cgColor
         authViewControllerButton.backgroundColor = .ypWhite
         authViewControllerButton.layer.cornerRadius = 16
         authViewControllerButton.clipsToBounds = true
-        authViewControllerButton.addTarget(AuthViewController.self, action: #selector(buttonAction), for: .touchUpInside)
+        authViewControllerButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return authViewControllerButton
     } ()
     
@@ -64,9 +65,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         NSLayoutConstraint.activate([
             authViewControllerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             authViewControllerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            authViewControllerButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            authViewControllerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            authViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
+            authViewControllerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -90),
             authViewControllerButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
@@ -113,11 +112,9 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }
     
     func webViewViewControllerDismiss(_ vc: WebViewViewController) {
-        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
-            authViewController.modalPresentationStyle = .fullScreen
-            vc.present(authViewController, animated: true)
-        }
+        let authViewController = AuthViewController()
+        authViewController.modalPresentationStyle = .fullScreen
+        vc.present(authViewController, animated: true)
     }
     
     private func showAlert(_ vc: WebViewViewController) {
