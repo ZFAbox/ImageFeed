@@ -27,13 +27,13 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }()
     private var authViewControllerButton: UIButton = {
         let authViewControllerButton = UIButton(type: .system)
+        authViewControllerButton.tintColor = .ypBlack
         authViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         authViewControllerButton.setTitle("Войти", for: .normal)
-//        authViewControllerButton.layer.backgroundColor = UIColor.ypWhite.cgColor
         authViewControllerButton.backgroundColor = .ypWhite
         authViewControllerButton.layer.cornerRadius = 16
         authViewControllerButton.clipsToBounds = true
-        authViewControllerButton.addTarget(AuthViewController.self, action: #selector(buttonAction), for: .touchUpInside)
+        authViewControllerButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         return authViewControllerButton
     } ()
     
@@ -113,11 +113,9 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     }
     
     func webViewViewControllerDismiss(_ vc: WebViewViewController) {
-        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+        let authViewController = AuthViewController()
             authViewController.modalPresentationStyle = .fullScreen
             vc.present(authViewController, animated: true)
-        }
     }
     
     private func showAlert(_ vc: WebViewViewController) {
