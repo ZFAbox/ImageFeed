@@ -30,6 +30,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         authViewControllerButton.tintColor = .ypBlack
         authViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         authViewControllerButton.setTitle("Войти", for: .normal)
+        authViewControllerButton.titleLabel?.font = UIFont(name: "YSDisplay-Bold", size: 17)
         authViewControllerButton.backgroundColor = .ypWhite
         authViewControllerButton.layer.cornerRadius = 16
         authViewControllerButton.clipsToBounds = true
@@ -64,9 +65,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         NSLayoutConstraint.activate([
             authViewControllerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             authViewControllerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
-//            authViewControllerButton.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-//            authViewControllerButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            authViewControllerButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -90),
+            authViewControllerButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -90),
             authViewControllerButton.heightAnchor.constraint(equalToConstant: 48)
         ])
     }
