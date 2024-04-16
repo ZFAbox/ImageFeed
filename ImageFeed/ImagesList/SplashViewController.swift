@@ -59,12 +59,16 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     }
     
     private func authViewControllerPresenter () {
-        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
-            authViewController.delegate = self
-            authViewController.modalPresentationStyle = .fullScreen
-            self.present(authViewController, animated: true)
-        }
+//        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
+//            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+//            authViewController.delegate = self
+//            authViewController.modalPresentationStyle = .fullScreen
+//            self.present(authViewController, animated: true)
+//        }
+        let authViewController = AuthViewController()
+        authViewController.delegate = self
+        authViewController.modalPresentationStyle = .fullScreen
+        self.present(authViewController,animated: true)
     }
     
     private func switchToTapBarController (){
@@ -79,8 +83,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
     func didAuthenticate (_ vc: AuthViewController) {
         vc.dismiss(animated: true)
         guard let token = storage.token else {
-            return
-        }
+            return }
         fetchProfile(token: token)
     }
     

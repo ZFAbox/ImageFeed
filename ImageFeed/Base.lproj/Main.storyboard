@@ -11,68 +11,11 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="YS Display-Bold.ttf">
-            <string>YSDisplay-Bold</string>
-        </array>
         <array key="YS Display-Medium.ttf">
             <string>YSDisplay-Medium</string>
         </array>
     </customFonts>
     <scenes>
-        <!--Auth View Controller-->
-        <scene sceneID="uxf-No-DIi">
-            <objects>
-                <viewController storyboardIdentifier="AuthViewController" id="NoG-RU-zRJ" userLabel="Auth View Controller" customClass="AuthViewController" customModule="ImageFeed" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="NwU-uA-Xlu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Unsplash logo" translatesAutoresizingMaskIntoConstraints="NO" id="sbU-tm-40v">
-                                <rect key="frame" x="177" y="418" width="60" height="60"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="60" id="dTf-fL-FKX"/>
-                                    <constraint firstAttribute="width" constant="60" id="fRz-mH-j6E"/>
-                                </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aHc-zQ-NWf">
-                                <rect key="frame" x="16" y="682" width="383" height="48"/>
-                                <color key="backgroundColor" name="YP White"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="qMz-CB-sNj"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="YSDisplay-Bold" family="YS Display" pointSize="17"/>
-                                <color key="tintColor" name="YP Black"/>
-                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Войти">
-                                    <color key="titleColor" name="YP Black"/>
-                                </state>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
-                                        <integer key="value" value="16"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
-                                </userDefinedRuntimeAttributes>
-                                <connections>
-                                    <action selector="enterButtonDidTapped:" destination="NoG-RU-zRJ" eventType="touchUpInside" id="i0h-IS-ZIa"/>
-                                </connections>
-                            </button>
-                        </subviews>
-                        <viewLayoutGuide key="safeArea" id="8ha-sn-FsE"/>
-                        <color key="backgroundColor" name="YP Black"/>
-                        <constraints>
-                            <constraint firstItem="sbU-tm-40v" firstAttribute="centerX" secondItem="NwU-uA-Xlu" secondAttribute="centerX" id="3Hc-mw-U3k"/>
-                            <constraint firstItem="aHc-zQ-NWf" firstAttribute="top" secondItem="sbU-tm-40v" secondAttribute="bottom" constant="204" id="gul-A9-z8z"/>
-                            <constraint firstItem="8ha-sn-FsE" firstAttribute="trailing" secondItem="aHc-zQ-NWf" secondAttribute="trailing" constant="15" id="m66-UK-GBk"/>
-                            <constraint firstItem="sbU-tm-40v" firstAttribute="centerY" secondItem="NwU-uA-Xlu" secondAttribute="centerY" id="qjv-3G-vFI"/>
-                            <constraint firstItem="aHc-zQ-NWf" firstAttribute="leading" secondItem="8ha-sn-FsE" secondAttribute="leading" constant="16" id="y8O-vw-t01"/>
-                        </constraints>
-                    </view>
-                    <navigationItem key="navigationItem" id="QzK-Yy-iuU"/>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Eqp-6h-kwA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1270" y="-1286"/>
-        </scene>
         <!--Web View View Controller-->
         <scene sceneID="VCb-Lp-IK4">
             <objects>
@@ -322,7 +265,6 @@
         <image name="Button back black" width="24" height="24"/>
         <image name="Button share" width="51" height="51"/>
         <image name="Tab view table" width="30" height="30"/>
-        <image name="Unsplash logo" width="60" height="60"/>
         <image name="suit.heart.fill" catalog="system" width="128" height="107"/>
         <namedColor name="YP Black">
             <color red="0.10199999809265137" green="0.10599999874830246" blue="0.13300000131130219" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>

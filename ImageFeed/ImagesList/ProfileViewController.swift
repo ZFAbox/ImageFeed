@@ -44,12 +44,12 @@ final class ProfileViewController:UIViewController {
         profileStatus.textColor = .ypWhite
         return profileStatus
     } ()
-    private let exitButton: UIButton = {
+    private var exitButton: UIButton = {
         let exitButton = UIButton(type: .system)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         exitButton.setBackgroundImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
         exitButton.tintColor = .ypRed
-        exitButton.addTarget(ProfileViewController.self, action: #selector(exitButtonTapped), for: .touchUpInside)
+        exitButton.addTarget(ProfileViewController.self, action: Selector(("exitButtonTapped")), for: .touchUpInside)
         return exitButton
     } ()
     
@@ -145,7 +145,7 @@ final class ProfileViewController:UIViewController {
         if let authViewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
             authViewController.modalPresentationStyle = .fullScreen
-            self.present(authViewController, animated: true)
+            present(authViewController, animated: true)
         }
         storage.removeToken()
     }
