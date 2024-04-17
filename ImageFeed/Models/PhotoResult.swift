@@ -7,13 +7,25 @@
 
 import Foundation
 
-struct PhotoResult {
+struct PhotoResult:Codable {
     
-    let id: String
-    let createdAt: String
+    let photos: [Photo]
     
-    
-    struct UrlsResult {
+    struct Photo: Codable {
+        let id: String
+        let createdAt: String?
+        let width: Int
+        let height: Int
+        let likedByUser: Bool
+        let description: String?
+        let urks: UrlsResult
         
+        struct UrlsResult: Codable {
+            let raw: String
+            let full: String
+            let regular: String
+            let small: String
+            let thumb: String
+        }
     }
 }
