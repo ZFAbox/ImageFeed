@@ -18,7 +18,7 @@ struct PhotoResult:Codable {
         let height: Int
         let likedByUser: Bool
         let description: String?
-        let urks: UrlsResult
+        let urls: UrlsResult
         
         struct UrlsResult: Codable {
             let raw: String

@@ -46,7 +46,7 @@ class ImageListService {
         let task = URLSession.shared.objectTask(for: request) { (result: Result<PhotoResult, Error>) in
             switch result {
             case .success(let decodedPhotoList):
-                photos = decodedPhotoList
+                self.photos += self.preparePhotoModel(photoResult: decodedPhotoList)
                 handler(.success(decodedPhotoList))
             case .failure(let error):
                 handler(.failure(error))
@@ -58,14 +58,18 @@ class ImageListService {
     
     func preparePhotoModel(photoResult: PhotoResult) -> [Photo] {
         var photoModel: [Photo] = []
-        var photo: Photo
         for result in photoResult.photos {
-            photo.id = result.id
-            photo.createdAt = convertStringToDate(stringDate: result.createdAt)
-            photo.size.width = CGFloat(result.width)
-            photo.size.height = CGFloat(result.height)
-            
+            var photo = Photo(
+                id: result.id,
+                size: CGSize(width: Double(result.width), height: Double(result.height)),
+                createdAt: convertStringToDate(stringDate: result.createdAt),
+                welcomeDescription: result.description,
+                thumbImageURL: result.urls.thumb,
+                largeImageURL: result.urls.full,
+                isLiked: result.likedByUser)
+            photoModel.append(photo)
         }
+        return photoModel
     }
     
     func convertStringToDate(stringDate: String?) -> Date? {
