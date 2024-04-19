@@ -61,11 +61,22 @@ class ImageListService {
         var photo: Photo
         for result in photoResult.photos {
             photo.id = result.id
-            photo.createdAt = result.createdAt
+            photo.createdAt = convertStringToDate(stringDate: result.createdAt)
             photo.size.width = CGFloat(result.width)
             photo.size.height = CGFloat(result.height)
             
         }
+    }
+    
+    func convertStringToDate(stringDate: String?) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        guard let stringDate else {
+            print("Пустая дата")
+            return nil}
+        let date = dateFormatter.date(from: stringDate)
+        return date
     }
     
 }
