@@ -19,7 +19,7 @@ class ImageListService {
         case invalidPhotoRequest
     }
     
-    func makePhotoRequest(token: String, username: String, page: Int, perPage: Int) -> URLRequest? {
+    func makePhotoRequest(token: String, page: Int, perPage: Int) -> URLRequest? {
         let urlString = Constants.defaultBaseApiUrl + "/photos"
         guard var urlComponents = URLComponents(string: urlString) else {
             preconditionFailure("ошибка формирования строки запроса авторизации")
@@ -39,7 +39,7 @@ class ImageListService {
     func fetchPhotoNextPage (token: String, username: String, handler: @escaping (Result<PhotoResult,Error>) -> Void) {
         if photos.count < page * perPage || task != nil {task?.cancel()}
         page += 1
-        guard let request = self.makePhotoRequest(token: token, username: username, page: page, perPage: perPage) else {
+        guard let request = self.makePhotoRequest(token: token, page: page, perPage: perPage) else {
             handler(.failure(GetPhotoListError.invalidPhotoRequest))
             return
         }
@@ -59,7 +59,7 @@ class ImageListService {
     func preparePhotoModel(photoResult: PhotoResult) -> [Photo] {
         var photoModel: [Photo] = []
         for result in photoResult.photos {
-            var photo = Photo(
+            let photo = Photo(
                 id: result.id,
                 size: CGSize(width: Double(result.width), height: Double(result.height)),
                 createdAt: convertStringToDate(stringDate: result.createdAt),
