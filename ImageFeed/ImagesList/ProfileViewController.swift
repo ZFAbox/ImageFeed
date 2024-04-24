@@ -62,7 +62,8 @@ final class ProfileViewController:UIViewController {
         addSubViews()
         applyConstrains()
         if let model = ProfileService.shared.profileModel {
-            loadUserData(profileModel: model)}
+            loadUserData(profileModel: model)
+        }
         profileImageServiceObserver = NotificationCenter.default.addObserver(
             forName: ProfileImageService.didChangeNotification,
             object: nil,
