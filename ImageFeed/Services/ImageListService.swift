@@ -7,9 +7,9 @@
 
 import Foundation
 
-class ImageListService {
+final class ImageListService {
     
-//    static var shared = ImageListService()
+    static var shared = ImageListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     var photos: [Photo] = []
     var page: Int = 0

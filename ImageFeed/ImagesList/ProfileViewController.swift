@@ -73,7 +73,7 @@ final class ProfileViewController:UIViewController {
                 self.updateAvatar()
             }
         )
-        updateAvatar()
+//        updateAvatar()
     }
     
     //MARK: - Layout Methods

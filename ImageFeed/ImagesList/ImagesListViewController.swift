@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 final class ImagesListViewController: UIViewController {
     //MARK: - IBOutlets
@@ -18,7 +19,9 @@ final class ImagesListViewController: UIViewController {
     }
     
     //MARK: - Privates
+    private var photo: [Photo] = []
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
+    private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -69,17 +72,36 @@ final class ImagesListViewController: UIViewController {
     }
     
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
-        imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
+//        imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
+//
+        let imageUrlStringForRow = photo[indexPath.row].thumbImageURL
+        let imageUrlForRow = URL(string: imageUrlStringForRow)
+        imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
+        
         imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 != 0 ? UIColor.transperantWhite : UIColor.ypRed
         prepareGradientLayer(cell: imagesListCell)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
         }
+    
+    func updateTableViewAnimated() {
+        imagesListTableView.performBatchUpdates {
+            let startIndex = photo.count
+            let endIndex = ImageListService.shared.photos.count
+            for index in startIndex...endIndex {
+                imagesListTableView.insertRows(at: [
+                    IndexPath(row: index, section: 0)
+                ], with: .automatic)
+            }
+        } completion: { _ in
+        }
     }
+}
 
     //MARK: - Extensions
 extension ImagesListViewController: UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photoArray.count
+        return photo.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -88,9 +110,22 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения ячейки")
             return UITableViewCell()
         }
+        
+        if photo.count < indexPath.row {
+            if let token = storage.token {
+                ImageListService.shared.fetchPhotoNextPage(token: token)
+            }
+        }
+        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+            self.updateTableViewAnimated()
+            self.photo = ImageListService.shared.photos
+
+        }
         configCell(for: imagesListCell, indexPath: indexPath)
+
         return imagesListCell
     }
+    
 }
 
 //MARK: -Extensions
@@ -109,5 +144,7 @@ extension ImagesListViewController: UITableViewDelegate {
         let cellRowHeight = CGFloat(cellRowWidth) / CGFloat(imageWidth) * CGFloat(imageHeight) + 8
         return cellRowHeight
     }
+    
+
 }
 
