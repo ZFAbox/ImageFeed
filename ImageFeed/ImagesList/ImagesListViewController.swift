@@ -19,7 +19,7 @@ final class ImagesListViewController: UIViewController {
     }
     
     //MARK: - Privates
-    private var photo: [Photo] = []
+    private var photos: [Photo] = []
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
     private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
@@ -38,6 +38,19 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
+        if photos.isEmpty {
+            if let token = storage.token {
+                ImageListService.shared.fetchPhotoNextPage(token: token)
+            }
+        }
+        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+            self.photos = ImageListService.shared.photos
+//            self.imagesListTableView.reloadData()
+//            self.updateTableViewAnimated()
+        }
+
+//        photos = ImageListService.shared.photos
+//        imagesListTableView.beginUpdates()
     }
     
     //MARK: - Class Methods
@@ -74,7 +87,7 @@ final class ImagesListViewController: UIViewController {
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
 //        imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
 //
-        let imageUrlStringForRow = photo[indexPath.row].thumbImageURL
+        let imageUrlStringForRow = photos[indexPath.row].thumbImageURL
         let imageUrlForRow = URL(string: imageUrlStringForRow)
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
         
@@ -85,8 +98,9 @@ final class ImagesListViewController: UIViewController {
     
     func updateTableViewAnimated() {
         imagesListTableView.performBatchUpdates {
-            let startIndex = photo.count
+            let startIndex = photos.count
             let endIndex = ImageListService.shared.photos.count
+            photos = ImageListService.shared.photos
             for index in startIndex...endIndex {
                 imagesListTableView.insertRows(at: [
                     IndexPath(row: index, section: 0)
@@ -100,8 +114,23 @@ final class ImagesListViewController: UIViewController {
     //MARK: - Extensions
 extension ImagesListViewController: UITableViewDataSource {
     
+//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+//        if photos.count == indexPath.row {
+//            if let token = storage.token {
+//                ImageListService.shared.fetchPhotoNextPage(token: token)
+//            }
+//        }
+//        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+//            self.photos = ImageListService.shared.photos
+//            self.updateTableViewAnimated()
+//        }
+//
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photo.count
+        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+        }
+        return photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -110,17 +139,8 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения ячейки")
             return UITableViewCell()
         }
-        
-        if photo.count < indexPath.row {
-            if let token = storage.token {
-                ImageListService.shared.fetchPhotoNextPage(token: token)
-            }
-        }
-        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-            self.updateTableViewAnimated()
-            self.photo = ImageListService.shared.photos
 
-        }
+        
         configCell(for: imagesListCell, indexPath: indexPath)
 
         return imagesListCell
