@@ -50,7 +50,7 @@ final class ImagesListViewController: UIViewController {
 //            }
 //        }
 //        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-//            self.updateTableViewAnimated()
+//            self.photos = ImageListService.shared.photos
 //        }
 
 //        photos = ImageListService.shared.photos
@@ -126,13 +126,12 @@ extension ImagesListViewController: UITableViewDataSource {
 //        }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-//        }
         var rows = 0
-        DispatchQueue.main.async {
-            rows = self.photos.count
+        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+            rows = ImageListService.shared.photos.count
+            print (rows)
         }
-        return rows
+        return  rows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
