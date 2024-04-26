@@ -28,7 +28,13 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-            let image = UIImage(named: photoArray[indexPath.row])
+//            let image = UIImage(named: photoArray[indexPath.row])
+            let imageUrlStringForRow = photos[indexPath.row].largeImageURL
+            let imageUrlForRow = URL(string: imageUrlStringForRow)
+            guard let url = imageUrlForRow else { return }
+            let data = try? Data(contentsOf: url)
+            guard let data else { return }
+            let image = UIImage(data: data)
             viewController.image = image
         } else {
             super.prepare(for: segue, sender: sender)
@@ -38,16 +44,14 @@ final class ImagesListViewController: UIViewController {
         super.viewDidLoad()
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        if photos.isEmpty {
-            if let token = storage.token {
-                ImageListService.shared.fetchPhotoNextPage(token: token)
-            }
-        }
-        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-            self.photos = ImageListService.shared.photos
-//            self.imagesListTableView.reloadData()
+//        if photos.isEmpty {
+//            if let token = storage.token {
+//                ImageListService.shared.fetchPhotoNextPage(token: token)
+//            }
+//        }
+//        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
 //            self.updateTableViewAnimated()
-        }
+//        }
 
 //        photos = ImageListService.shared.photos
 //        imagesListTableView.beginUpdates()
@@ -120,17 +124,15 @@ extension ImagesListViewController: UITableViewDataSource {
 //                ImageListService.shared.fetchPhotoNextPage(token: token)
 //            }
 //        }
-//        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-//            self.photos = ImageListService.shared.photos
-//            self.updateTableViewAnimated()
-//        }
-//
-//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+//        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+//        }
+        var rows = 0
+        DispatchQueue.main.async {
+            rows = self.photos.count
         }
-        return photos.count
+        return rows
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {

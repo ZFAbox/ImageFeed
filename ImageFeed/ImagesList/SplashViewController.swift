@@ -96,6 +96,7 @@ final class SplashViewController: UIViewController, AuthViewControllerDelegate {
                 let model = profileService.prepareProfileModelFromData(data: decodedData)
                 profileService.profileModel = model
                 fetchProfileImageUrl(token: token, username: model.username)
+                ImageListService.shared.fetchPhotoNextPage(token: token)
                 switchToTapBarController()
             case .failure(let error):
                 print(error.localizedDescription)
