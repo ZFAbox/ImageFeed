@@ -12,9 +12,15 @@ final class ImageListService {
     static var shared = ImageListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     var photos: [Photo] = []
+//    {
+//        didSet {
+//            delegate?.updateTableViewAnimated()
+//        }
+//    }
     var page: Int = 0
     var perPage: Int = 10
     var task: URLSessionTask?
+    var delegate: ImagesListViewController?
     
     private enum GetPhotoListError: Error {
         case invalidPhotoRequest
@@ -48,6 +54,8 @@ final class ImageListService {
             switch result {
             case .success(let decodedPhotoList):
                 self.photos += self.preparePhotoModel(photoResult: decodedPhotoList)
+                guard let delegate = self.delegate else { return }
+                delegate.photos = self.photos
                 NotificationCenter.default.post(
                     name: ImageListService.didChangeNotification,
                     object: nil,

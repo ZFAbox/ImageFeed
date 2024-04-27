@@ -19,7 +19,15 @@ final class ImagesListViewController: UIViewController {
     }
     
     //MARK: - Privates
-    private var photos: [Photo] = []
+    var photos: [Photo] = [] {
+        didSet {
+            if photos.count - 10 == 0 {
+                imagesListTableView.reloadData()
+            } else {
+                updateTableViewAnimated()
+            }
+        }
+    }
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
     private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
@@ -35,13 +43,17 @@ final class ImagesListViewController: UIViewController {
             let data = try? Data(contentsOf: url)
             guard let data else { return }
             let image = UIImage(data: data)
-            viewController.image = image
+            DispatchQueue.main.async {
+                viewController.image = image
+            }
+
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        ImageListService.shared.delegate = self
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
 //        if photos.isEmpty {
@@ -50,7 +62,7 @@ final class ImagesListViewController: UIViewController {
 //            }
 //        }
 //        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-//            self.photos = ImageListService.shared.photos
+//            self.imagesListTableView.reloadData()
 //        }
 
 //        photos = ImageListService.shared.photos
@@ -102,9 +114,8 @@ final class ImagesListViewController: UIViewController {
     
     func updateTableViewAnimated() {
         imagesListTableView.performBatchUpdates {
-            let startIndex = photos.count
-            let endIndex = ImageListService.shared.photos.count
-            photos = ImageListService.shared.photos
+            let startIndex = photos.count - ImageListService.shared.perPage
+            let endIndex = photos.count - 1
             for index in startIndex...endIndex {
                 imagesListTableView.insertRows(at: [
                     IndexPath(row: index, section: 0)
@@ -118,20 +129,16 @@ final class ImagesListViewController: UIViewController {
     //MARK: - Extensions
 extension ImagesListViewController: UITableViewDataSource {
     
-//    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-//        if photos.count == indexPath.row {
-//            if let token = storage.token {
-//                ImageListService.shared.fetchPhotoNextPage(token: token)
-//            }
-//        }
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        if photos.count - 1 == indexPath.row {
+            if let token = storage.token {
+                ImageListService.shared.fetchPhotoNextPage(token: token)
+            }
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        var rows = 0
-        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-            rows = ImageListService.shared.photos.count
-            print (rows)
-        }
-        return  rows
+        return  photos.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -140,8 +147,11 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения ячейки")
             return UITableViewCell()
         }
-
         
+        print(indexPath.row)
+        print(photos.count)
+
+
         configCell(for: imagesListCell, indexPath: indexPath)
 
         return imagesListCell
