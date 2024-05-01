@@ -96,4 +96,36 @@ final class ImageListService {
         return date
     }
     
+    func makeLikeRequest(token: String, photoId: String, isLiked: Bool) -> URLRequest? {
+        let urlString = Constants.defaultBaseApiUrl + "photos/" + photoId + "/like"
+        print(urlString	)
+        let url = URL(string: urlString)
+        guard let url else { preconditionFailure("Невозможно сформировать URL") }
+        var request = URLRequest(url: url)
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        if isLiked {
+            request.httpMethod = "DELETE"
+        } else{
+            request.httpMethod = "POST"
+        }
+
+        return request
+    }
+    
+    func changeLike (token: String, photoId: String, isLike: Bool, _ compliction: @escaping (Result<PhotoResult, Error>) -> Void) {
+  
+        guard let request = makeLikeRequest(token: token, photoId: photoId, isLiked: isLike) else { return }
+        
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<PhotoResult, Error>) in
+            switch result {
+            case .success(let photo):
+                compliction(.success(photo))
+            case .failure(let error):
+                compliction(.failure(error))
+            }
+        }
+        task.resume()
+        
+    }
+    
 }

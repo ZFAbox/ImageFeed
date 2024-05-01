@@ -31,6 +31,7 @@ final class ImagesListViewController: UIViewController {
     private let photoArray: [String] = Array(0..<20).map{ String($0) }
     private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
+    var destination: UITableViewCell?
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -106,8 +107,8 @@ final class ImagesListViewController: UIViewController {
         let imageUrlStringForRow = photos[indexPath.row].thumbImageURL
         let imageUrlForRow = URL(string: imageUrlStringForRow)
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
-        
-        imagesListCell.likeCellViewButton.imageView?.tintColor = indexPath.row % 2 != 0 ? UIColor.transperantWhite : UIColor.ypRed
+        imagesListCell.photo = photos[indexPath.row]
+        imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
         prepareGradientLayer(cell: imagesListCell)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
         }
@@ -124,6 +125,33 @@ final class ImagesListViewController: UIViewController {
         } completion: { _ in
         }
     }
+    
+    func didLikePhoto (id: String, isLiked: Bool) -> Photo? {
+        guard let token = storage.token else {
+            preconditionFailure() }
+        var returnedPhoto: Photo?
+        ImageListService.shared.changeLike(token: token, photoId: id, isLike: isLiked) { result in
+            switch result {
+            case.success(let photo):
+                if let index = self.photos.firstIndex(where: {$0.id == id}){
+                    let newPhoto = Photo(
+                        id: photo.id,
+                        size: CGSize(width: Double(photo.width), height: Double(photo.height)),
+                        createdAt: ImageListService.shared.convertStringToDate(stringDate: photo.createdAt),
+                        welcomeDescription: photo.description,
+                        thumbImageURL: photo.urls.thumb,
+                        largeImageURL: photo.urls.full,
+                        isLiked: photo.likedByUser)
+                    self.photos[index] = newPhoto
+                    returnedPhoto = newPhoto
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+        return returnedPhoto
+    }
+    
 }
 
     //MARK: - Extensions
@@ -153,6 +181,7 @@ extension ImagesListViewController: UITableViewDataSource {
 
 
         configCell(for: imagesListCell, indexPath: indexPath)
+        imagesListCell.delegate = self
 
         return imagesListCell
     }
