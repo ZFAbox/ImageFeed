@@ -22,25 +22,17 @@ final class ImagesListCell: UITableViewCell {
     //MARK: - Statics
     static let reuseIdentifier = "ImagesListCell"
     
+    weak var delegate: ImagesListViewController?
     
-    var photo: Photo?
-    var delegate: ImagesListViewController?
-    
-    
-    @IBAction func likeImage(_ sender: Any) {
-        guard let photo = self.photo else {
-            assertionFailure()
-            return}
-        guard let delegate else {return}
-        print(photo.id)
-        print(photo.isLiked)
-        let newPhoto = delegate.didLikePhoto(id: photo.id, isLiked: photo.isLiked)
-            self.photo = newPhoto
-            likeCellViewButton.imageView?.tintColor = !photo.isLiked ? UIColor.ypRed : UIColor.transperantWhite
+    func setIsLiked(isLiked: Bool){
+        likeCellViewButton.imageView?.tintColor = isLiked ? UIColor.ypRed : UIColor.transperantWhite
+        likeCellViewButton.isEnabled = true
     }
     
-//    func updateLike(photo: Photo) {
-//        likeCellViewButton.imageView?.tintColor = photo.isLiked ? UIColor.ypRed : UIColor.transperantWhite
-//    }
-//    
+    @IBAction func likeImage(_ sender: Any) {
+        likeCellViewButton.isEnabled = false
+        delegate?.imageListCellDidTapLike(self)
+    }
+    
+
 }

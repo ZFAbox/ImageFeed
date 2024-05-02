@@ -38,6 +38,8 @@
 		9F8FFE572BBFE7E700B2EDD7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FFE562BBFE7E700B2EDD7 /* Kingfisher */; };
 		9F8FFE5C2BC01A0900B2EDD7 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FFE5B2BC01A0900B2EDD7 /* SwiftKeychainWrapper */; };
 		9F8FFE5E2BC0296800B2EDD7 /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8FFE5D2BC0296800B2EDD7 /* TabBarViewController.swift */; };
+		9F9873382BE3ACAB007D86EB /* ImagesListCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9873372BE3ACAB007D86EB /* ImagesListCellDelegate.swift */; };
+		9F98733A2BE3BE73007D86EB /* SinglePhotoUpdate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9873392BE3BE73007D86EB /* SinglePhotoUpdate.swift */; };
 		9F9BD0212BCEC41B00B18BBF /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9BD0202BCEC41B00B18BBF /* Photo.swift */; };
 		9F9BD0252BCEC46700B18BBF /* PhotoResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F9BD0242BCEC46700B18BBF /* PhotoResult.swift */; };
 		9FA27DA82BB3F952000EA883 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = 9FA27DA72BB3F952000EA883 /* ProgressHUD */; };
@@ -88,6 +90,8 @@
 		9F7870EC2BB45D3500254517 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
 		9F8A014A2BD0025400872823 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
 		9F8FFE5D2BC0296800B2EDD7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
+		9F9873372BE3ACAB007D86EB /* ImagesListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegate.swift; sourceTree = "<group>"; };
+		9F9873392BE3BE73007D86EB /* SinglePhotoUpdate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SinglePhotoUpdate.swift; sourceTree = "<group>"; };
 		9F9BD0202BCEC41B00B18BBF /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		9F9BD0242BCEC46700B18BBF /* PhotoResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoResult.swift; sourceTree = "<group>"; };
 		9FA27DA92BB431DB000EA883 /* UIBlockingProgreeHud.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIBlockingProgreeHud.swift; sourceTree = "<group>"; };
@@ -210,6 +214,7 @@
 				90BE185E2BBA116A009135FD /* UserResultImageDecoder.swift */,
 				9F9BD0202BCEC41B00B18BBF /* Photo.swift */,
 				9F9BD0242BCEC46700B18BBF /* PhotoResult.swift */,
+				9F9873392BE3BE73007D86EB /* SinglePhotoUpdate.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -219,6 +224,7 @@
 			children = (
 				90EB4E852B8D7504007A228B /* WebViewViewControllerDelegate.swift */,
 				90931EC12BAB92F900AC7914 /* AuthViewControllerDelegate.swift */,
+				9F9873372BE3ACAB007D86EB /* ImagesListCellDelegate.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 				9FA27DAA2BB431DB000EA883 /* UIBlockingProgreeHud.swift in Sources */,
 				90E7F10D2B9D4B8000DEC5E6 /* OAuthTokenResponseDecoder.swift in Sources */,
 				90E7F10A2B9D411400DEC5E6 /* URLSession+data.swift in Sources */,
+				9F9873382BE3ACAB007D86EB /* ImagesListCellDelegate.swift in Sources */,
 				9005CB8C2B52614C00EA81C5 /* Colors.swift in Sources */,
 				90EF4A012B9947E700DC568C /* OAuth2Service.swift in Sources */,
 				9068736D2B3F60EF00F47AE0 /* ImagesListViewController.swift in Sources */,
@@ -380,6 +387,7 @@
 				9F7870E92BB4582F00254517 /* ProfileService.swift in Sources */,
 				90F018B02BA5635900270B68 /* OAuth2TokenStorage.swift in Sources */,
 				9F9BD0252BCEC46700B18BBF /* PhotoResult.swift in Sources */,
+				9F98733A2BE3BE73007D86EB /* SinglePhotoUpdate.swift in Sources */,
 				90C4362B2B81CACD00590BB1 /* Constants.swift in Sources */,
 				9F8A014B2BD0025400872823 /* ImageListService.swift in Sources */,
 				90FE471A2B8AC346007884D8 /* AuthViewController.swift in Sources */,

@@ -7,8 +7,10 @@
 
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class ImagesListViewController: UIViewController {
+    
     //MARK: - IBOutlets
     @IBOutlet private var imagesListTableView: UITableView! {
         didSet {
@@ -39,14 +41,16 @@ final class ImagesListViewController: UIViewController {
             let indexPath = sender as! IndexPath
 //            let image = UIImage(named: photoArray[indexPath.row])
             let imageUrlStringForRow = photos[indexPath.row].largeImageURL
-            let imageUrlForRow = URL(string: imageUrlStringForRow)
-            guard let url = imageUrlForRow else { return }
-            let data = try? Data(contentsOf: url)
-            guard let data else { return }
-            let image = UIImage(data: data)
-            DispatchQueue.main.async {
-                viewController.image = image
+            guard let imageUrlForRow = URL(string: imageUrlStringForRow) else {
+                preconditionFailure("Ошибка формирования URL для полноразмерного изображения")
             }
+//            let data = try? Data(contentsOf: url)
+//            guard let data else { return }
+//            let image = UIImage(data: data)
+//            DispatchQueue.main.async {
+//                viewController.image = image
+//            }
+            loadFullSizeImage(on: viewController, with: imageUrlForRow)
 
         } else {
             super.prepare(for: segue, sender: sender)
@@ -102,12 +106,9 @@ final class ImagesListViewController: UIViewController {
     }
     
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
-//        imagesListCell.imageCellView?.image = UIImage(named: "\(indexPath.row)")
-//
         let imageUrlStringForRow = photos[indexPath.row].thumbImageURL
         let imageUrlForRow = URL(string: imageUrlStringForRow)
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
-        imagesListCell.photo = photos[indexPath.row]
         imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
         prepareGradientLayer(cell: imagesListCell)
         imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
@@ -125,33 +126,6 @@ final class ImagesListViewController: UIViewController {
         } completion: { _ in
         }
     }
-    
-    func didLikePhoto (id: String, isLiked: Bool) -> Photo? {
-        guard let token = storage.token else {
-            preconditionFailure() }
-        var returnedPhoto: Photo?
-        ImageListService.shared.changeLike(token: token, photoId: id, isLike: isLiked) { result in
-            switch result {
-            case.success(let photo):
-                if let index = self.photos.firstIndex(where: {$0.id == id}){
-                    let newPhoto = Photo(
-                        id: photo.id,
-                        size: CGSize(width: Double(photo.width), height: Double(photo.height)),
-                        createdAt: ImageListService.shared.convertStringToDate(stringDate: photo.createdAt),
-                        welcomeDescription: photo.description,
-                        thumbImageURL: photo.urls.thumb,
-                        largeImageURL: photo.urls.full,
-                        isLiked: photo.likedByUser)
-                    self.photos[index] = newPhoto
-                    returnedPhoto = newPhoto
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-        return returnedPhoto
-    }
-    
 }
 
     //MARK: - Extensions
@@ -182,7 +156,6 @@ extension ImagesListViewController: UITableViewDataSource {
 
         configCell(for: imagesListCell, indexPath: indexPath)
         imagesListCell.delegate = self
-
         return imagesListCell
     }
     
@@ -204,7 +177,72 @@ extension ImagesListViewController: UITableViewDelegate {
         let cellRowHeight = CGFloat(cellRowWidth) / CGFloat(imageWidth) * CGFloat(imageHeight) + 8
         return cellRowHeight
     }
-    
+}
 
+extension ImagesListViewController: ImagesListCellDelegate {
+    func imageListCellDidTapLike(_ cell: ImagesListCell) {
+        guard let indexPath = imagesListTableView.indexPath(for: cell) else {
+            preconditionFailure("Ошибка формирования индекса ячейки")
+        }
+        let photo = photos[indexPath.row]
+        let id = photo.id
+        let isLiked = photo.isLiked
+        ImageListService.shared.changeLike(photoId: id, isLike: isLiked) { result in
+            switch result {
+            case.success(let photo):
+                if let index = self.photos.firstIndex(where: {$0.id == id}){
+                    let newPhoto = Photo(
+                        id: photo.photo.id,
+                        size: CGSize(width: Double(photo.photo.width), height: Double(photo.photo.height)),
+                        createdAt: ImageListService.shared.convertStringToDate(stringDate: photo.photo.createdAt),
+                        welcomeDescription: photo.photo.description,
+                        thumbImageURL: photo.photo.urls.thumb,
+                        largeImageURL: photo.photo.urls.full,
+                        isLiked: photo.photo.likedByUser)
+                    self.photos[index] = newPhoto
+                    cell.setIsLiked(isLiked: photo.photo.likedByUser)
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
+    }
+}
+
+extension ImagesListViewController {
+    
+    private func showError(_ vc: SingleImageViewController, url: URL) {
+        let alert = UIAlertController(title: "Что-то пошло не так. Попробовать еще раз?", message: "", preferredStyle: .alert)
+        alert.view.accessibilityIdentifier = "alertId"
+
+        let cancelAction = UIAlertAction(title: "Не надо", style: .default) { _ in
+            alert.dismiss(animated: true)
+            }
+        let reloadImageAction = UIAlertAction(title: "Повторить", style: .default) { _ in
+            self.loadFullSizeImage(on: vc, with: url)
+            }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(reloadImageAction)
+        vc.present(alert, animated: true, completion: nil)
+    }
+}
+
+extension ImagesListViewController {
+    
+    private func loadFullSizeImage (on vc: SingleImageViewController, with url: URL) {
+        let imageView = UIImageView()
+        UIBlockingProgressHud.show()
+        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Image placeholder")) { result in
+            UIBlockingProgressHud.dismiss()
+            switch result {
+            case .success(let imageResult):
+                vc.image = imageResult.image
+            case .failure(let error):
+                self.showError(vc, url: url)
+                print(error.localizedDescription)
+            }
+        }
+    }
 }
 

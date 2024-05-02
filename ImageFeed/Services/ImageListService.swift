@@ -21,6 +21,7 @@ final class ImageListService {
     var perPage: Int = 10
     var task: URLSessionTask?
     var delegate: ImagesListViewController?
+    let storage = OAuth2TokenStorage()
     
     private enum GetPhotoListError: Error {
         case invalidPhotoRequest
@@ -112,11 +113,12 @@ final class ImageListService {
         return request
     }
     
-    func changeLike (token: String, photoId: String, isLike: Bool, _ compliction: @escaping (Result<PhotoResult, Error>) -> Void) {
-  
+    func changeLike (photoId: String, isLike: Bool, _ compliction: @escaping (Result<SinglePhotoUpdate, Error>) -> Void) {
+        guard let token = storage.token else {
+            preconditionFailure() }
         guard let request = makeLikeRequest(token: token, photoId: photoId, isLiked: isLike) else { return }
         
-        let task = URLSession.shared.objectTask(for: request) { (result: Result<PhotoResult, Error>) in
+        let task = URLSession.shared.objectTask(for: request) { (result: Result<SinglePhotoUpdate, Error>) in
             switch result {
             case .success(let photo):
                 compliction(.success(photo))
@@ -125,7 +127,6 @@ final class ImageListService {
             }
         }
         task.resume()
-        
     }
     
 }
