@@ -56,11 +56,12 @@ final class ImageListService {
             case .success(let decodedPhotoList):
                 self.photos += self.preparePhotoModel(photoResult: decodedPhotoList)
                 guard let delegate = self.delegate else { return }
+                print(self.photos.count)
                 delegate.photos = self.photos
-                NotificationCenter.default.post(
-                    name: ImageListService.didChangeNotification,
-                    object: nil,
-                    userInfo: ["Photos" : self.photos])
+//                NotificationCenter.default.post(
+//                    name: ImageListService.didChangeNotification,
+//                    object: nil,
+//                    userInfo: ["Photos" : self.photos])
             case .failure(let error):
                 print(error.localizedDescription)
             }

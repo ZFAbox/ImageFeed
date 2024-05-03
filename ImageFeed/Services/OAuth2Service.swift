@@ -16,7 +16,7 @@ final class OAuth2Service {
     //MARK: - Privates
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
     private var task: URLSessionTask?
-    private var lastCode: String?
+    var lastCode: String?
     private enum AuthServiceError: Error {
         case invalidRequest
     }

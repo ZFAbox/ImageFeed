@@ -49,7 +49,7 @@ final class ProfileViewController:UIViewController {
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         exitButton.setBackgroundImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
         exitButton.tintColor = .ypRed
-        exitButton.addTarget(ProfileViewController.self, action: Selector(("exitButtonTapped")), for: .touchUpInside)
+        exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return exitButton
     } ()
     
@@ -59,6 +59,7 @@ final class ProfileViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .ypBlack
         addSubViews()
         applyConstrains()
         if let model = ProfileService.shared.profileModel {
@@ -143,12 +144,11 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
-        if let authViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: authViewController) as? AuthViewController {
+        let authViewController = AuthViewController()
             authViewController.modalPresentationStyle = .fullScreen
-            present(authViewController, animated: true)
-        }
+            self.present(authViewController, animated: true)
         storage.removeToken()
+        ProfileLogoutService.shared.logout()
     }
     
     private func loadUserData(profileModel: ProfileModel) {

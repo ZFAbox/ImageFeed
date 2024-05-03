@@ -34,6 +34,7 @@
 		9F7870E92BB4582F00254517 /* ProfileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7870E82BB4582F00254517 /* ProfileService.swift */; };
 		9F7870EB2BB4586A00254517 /* ProfileDataDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7870EA2BB4586A00254517 /* ProfileDataDecoder.swift */; };
 		9F7870ED2BB45D3500254517 /* ProfileModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F7870EC2BB45D3500254517 /* ProfileModel.swift */; };
+		9F8406122BE4C6B400220F7B /* ProfileLogoutService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8406112BE4C6B400220F7B /* ProfileLogoutService.swift */; };
 		9F8A014B2BD0025400872823 /* ImageListService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F8A014A2BD0025400872823 /* ImageListService.swift */; };
 		9F8FFE572BBFE7E700B2EDD7 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FFE562BBFE7E700B2EDD7 /* Kingfisher */; };
 		9F8FFE5C2BC01A0900B2EDD7 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = 9F8FFE5B2BC01A0900B2EDD7 /* SwiftKeychainWrapper */; };
@@ -88,6 +89,7 @@
 		9F7870E82BB4582F00254517 /* ProfileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileService.swift; sourceTree = "<group>"; };
 		9F7870EA2BB4586A00254517 /* ProfileDataDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDataDecoder.swift; sourceTree = "<group>"; };
 		9F7870EC2BB45D3500254517 /* ProfileModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileModel.swift; sourceTree = "<group>"; };
+		9F8406112BE4C6B400220F7B /* ProfileLogoutService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileLogoutService.swift; sourceTree = "<group>"; };
 		9F8A014A2BD0025400872823 /* ImageListService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageListService.swift; sourceTree = "<group>"; };
 		9F8FFE5D2BC0296800B2EDD7 /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		9F9873372BE3ACAB007D86EB /* ImagesListCellDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesListCellDelegate.swift; sourceTree = "<group>"; };
@@ -238,6 +240,7 @@
 				9F7870E82BB4582F00254517 /* ProfileService.swift */,
 				90BE185C2BBA1111009135FD /* ProfileImageService.swift */,
 				9F8A014A2BD0025400872823 /* ImageListService.swift */,
+				9F8406112BE4C6B400220F7B /* ProfileLogoutService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -387,6 +390,7 @@
 				9F7870E92BB4582F00254517 /* ProfileService.swift in Sources */,
 				90F018B02BA5635900270B68 /* OAuth2TokenStorage.swift in Sources */,
 				9F9BD0252BCEC46700B18BBF /* PhotoResult.swift in Sources */,
+				9F8406122BE4C6B400220F7B /* ProfileLogoutService.swift in Sources */,
 				9F98733A2BE3BE73007D86EB /* SinglePhotoUpdate.swift in Sources */,
 				90C4362B2B81CACD00590BB1 /* Constants.swift in Sources */,
 				9F8A014B2BD0025400872823 /* ImageListService.swift in Sources */,

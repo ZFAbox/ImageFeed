@@ -23,14 +23,14 @@ final class ImagesListViewController: UIViewController {
     //MARK: - Privates
     var photos: [Photo] = [] {
         didSet {
-            if photos.count - 10 == 0 {
+            if oldValue.count == 0 {
                 imagesListTableView.reloadData()
             } else {
                 updateTableViewAnimated()
             }
         }
     }
-    private let photoArray: [String] = Array(0..<20).map{ String($0) }
+//    private let photoArray: [String] = Array(0..<20).map{ String($0) }
     private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
     var destination: UITableViewCell?
