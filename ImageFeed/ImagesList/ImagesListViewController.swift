@@ -25,7 +25,10 @@ final class ImagesListViewController: UIViewController {
         didSet {
             if oldValue.count == 0 {
                 imagesListTableView.reloadData()
-            } else {
+            } else if oldValue.count == photos.count {
+            print ("Ставим лайк")
+            }
+            else{
                 updateTableViewAnimated()
             }
         }

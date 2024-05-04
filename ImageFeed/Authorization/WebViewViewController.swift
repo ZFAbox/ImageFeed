@@ -70,8 +70,8 @@ extension WebViewViewController: WKNavigationDelegate {
             DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
                 delegate.webViewViewController(self, didAuthenticateWithCode: code)
+                decisionHandler(.cancel)
             }
-            decisionHandler(.cancel)
         } else {
             decisionHandler(.allow)
         }

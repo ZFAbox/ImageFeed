@@ -29,8 +29,6 @@ final class ProfileLogoutService {
         }
         ProfileImageService.shared.profileImageUrl = nil
         ImageListService.shared.photos = []
-        OAuth2Service.shared.lastCode = nil
-        OAuth2Service.shared.task = nil
 //        ImageListService.shared.delegate?.photos = []
         ImageListService.shared.page = 0
     }
