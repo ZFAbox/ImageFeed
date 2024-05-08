@@ -40,6 +40,7 @@ final class ProfileService {
             switch result {
             case .success(let decodedData):
                 handler(.success(decodedData))
+                self.task = nil
             case .failure(let error):
                 handler(.failure(error))
             }

@@ -114,7 +114,8 @@ final class ImagesListViewController: UIViewController {
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
         imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
         prepareGradientLayer(cell: imagesListCell)
-        imagesListCell.imageCellViewDate?.text = dateFormat(date: Date())
+        let date = photos[indexPath.row].createdAt ?? Date()
+        imagesListCell.imageCellViewDate?.text = dateFormat(date: date)
         }
     
     func updateTableViewAnimated() {

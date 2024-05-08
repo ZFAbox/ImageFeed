@@ -19,7 +19,7 @@ final class ImageListService {
 //    }
     var page: Int = 0
     var perPage: Int = 10
-    var task: URLSessionTask?
+    private var task: URLSessionTask?
     var delegate: ImagesListViewController?
     let storage = OAuth2TokenStorage()
     
@@ -46,6 +46,7 @@ final class ImageListService {
     }
     
     func fetchPhotoNextPage (token: String) {
+        task?.cancel()
         if photos.count < page * perPage || task != nil {task?.cancel()}
         page += 1
         guard let request = self.makePhotoRequest(token: token, page: page, perPage: perPage) else {
@@ -58,6 +59,7 @@ final class ImageListService {
                 guard let delegate = self.delegate else { return }
                 print(self.photos.count)
                 delegate.photos = self.photos
+                self.task = nil
 //                NotificationCenter.default.post(
 //                    name: ImageListService.didChangeNotification,
 //                    object: nil,
