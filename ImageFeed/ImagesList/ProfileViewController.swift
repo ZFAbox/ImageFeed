@@ -144,9 +144,9 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
-        let authViewController = AuthViewController()
-            authViewController.modalPresentationStyle = .fullScreen
-            self.present(authViewController, animated: true)
+        let splashViewController = SplashViewController()
+            splashViewController.modalPresentationStyle = .fullScreen
+            self.present(splashViewController, animated: true)
         storage.removeToken()
         ProfileLogoutService.shared.logout()
     }

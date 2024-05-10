@@ -33,7 +33,6 @@ final class ImagesListViewController: UIViewController {
             }
         }
     }
-//    private let photoArray: [String] = Array(0..<20).map{ String($0) }
     private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
     var destination: UITableViewCell?
@@ -42,39 +41,22 @@ final class ImagesListViewController: UIViewController {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
-//            let image = UIImage(named: photoArray[indexPath.row])
             let imageUrlStringForRow = photos[indexPath.row].largeImageURL
             guard let imageUrlForRow = URL(string: imageUrlStringForRow) else {
                 preconditionFailure("Ошибка формирования URL для полноразмерного изображения")
             }
-//            let data = try? Data(contentsOf: url)
-//            guard let data else { return }
-//            let image = UIImage(data: data)
-//            DispatchQueue.main.async {
-//                viewController.image = image
-//            }
             loadFullSizeImage(on: viewController, with: imageUrlForRow)
-
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        ImageListService.shared.delegate = self
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-//        if photos.isEmpty {
-//            if let token = storage.token {
-//                ImageListService.shared.fetchPhotoNextPage(token: token)
-//            }
-//        }
-//        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
-//            self.imagesListTableView.reloadData()
-//        }
-
-//        photos = ImageListService.shared.photos
-//        imagesListTableView.beginUpdates()
+        NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
+            self.photos = ImageListService.shared.photos
+        }
     }
     
     //MARK: - Class Methods
@@ -139,6 +121,7 @@ extension ImagesListViewController: UITableViewDataSource {
         if photos.count - 1 == indexPath.row {
             if let token = storage.token {
                 ImageListService.shared.fetchPhotoNextPage(token: token)
+                self.photos = ImageListService.shared.photos
             }
         }
     }
@@ -153,11 +136,6 @@ extension ImagesListViewController: UITableViewDataSource {
             print("Ошибка приведения ячейки")
             return UITableViewCell()
         }
-        
-        print(indexPath.row)
-        print(photos.count)
-
-
         configCell(for: imagesListCell, indexPath: indexPath)
         imagesListCell.delegate = self
         return imagesListCell

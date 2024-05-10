@@ -12,15 +12,10 @@ final class ImageListService {
     static var shared = ImageListService()
     static let didChangeNotification = Notification.Name(rawValue: "ImageListServiceDidChange")
     var photos: [Photo] = []
-//    {
-//        didSet {
-//            delegate?.updateTableViewAnimated()
-//        }
-//    }
     var page: Int = 0
     var perPage: Int = 10
     private var task: URLSessionTask?
-    var delegate: ImagesListViewController?
+//    var delegate: ImagesListViewController?
     let storage = OAuth2TokenStorage()
     
     private enum GetPhotoListError: Error {
@@ -56,14 +51,14 @@ final class ImageListService {
             switch result {
             case .success(let decodedPhotoList):
                 self.photos += self.preparePhotoModel(photoResult: decodedPhotoList)
-                guard let delegate = self.delegate else { return }
-                print(self.photos.count)
-                delegate.photos = self.photos
+//                guard let delegate = self.delegate else { return }
+                print("Запрос фотографий")
+//                delegate.photos = self.photos
                 self.task = nil
-//                NotificationCenter.default.post(
-//                    name: ImageListService.didChangeNotification,
-//                    object: nil,
-//                    userInfo: ["Photos" : self.photos])
+                NotificationCenter.default.post(
+                    name: ImageListService.didChangeNotification,
+                    object: nil,
+                    userInfo: ["Photos" : self.photos])
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -71,7 +66,6 @@ final class ImageListService {
         self.task = task
         task.resume()
     }
-    
     
     func preparePhotoModel(photoResult: [PhotoResult]) -> [Photo] {
         var photoModel: [Photo] = []

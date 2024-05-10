@@ -27,9 +27,11 @@ final class ProfileLogoutService {
                 WKWebsiteDataStore.default().removeData(ofTypes: record.dataTypes, for: [record], completionHandler: {})
             }
         }
+        URLCache.shared.removeAllCachedResponses()
+        URLCache.shared.diskCapacity = 0
+        URLCache.shared.memoryCapacity = 0
         ProfileImageService.shared.profileImageUrl = nil
         ImageListService.shared.photos = []
-//        ImageListService.shared.delegate?.photos = []
         ImageListService.shared.page = 0
     }
 }
