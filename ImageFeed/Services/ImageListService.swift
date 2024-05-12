@@ -41,8 +41,10 @@ final class ImageListService {
     }
     
     func fetchPhotoNextPage (token: String) {
-        task?.cancel()
-        if photos.count < page * perPage || task != nil {task?.cancel()}
+        if (photos.count < page * perPage) || (task != nil) {
+            task?.cancel()
+            return
+        }
         page += 1
         guard let request = self.makePhotoRequest(token: token, page: page, perPage: perPage) else {
             return
@@ -51,9 +53,7 @@ final class ImageListService {
             switch result {
             case .success(let decodedPhotoList):
                 self.photos += self.preparePhotoModel(photoResult: decodedPhotoList)
-//                guard let delegate = self.delegate else { return }
                 print("Запрос фотографий")
-//                delegate.photos = self.photos
                 self.task = nil
                 NotificationCenter.default.post(
                     name: ImageListService.didChangeNotification,
@@ -61,6 +61,7 @@ final class ImageListService {
                     userInfo: ["Photos" : self.photos])
             case .failure(let error):
                 print(error.localizedDescription)
+                self.task = nil
             }
         }
         self.task = task
@@ -73,7 +74,7 @@ final class ImageListService {
             let photo = Photo(
                 id: result.id,
                 size: CGSize(width: Double(result.width), height: Double(result.height)),
-                createdAt: convertStringToDate(stringDate: result.createdAt),
+                createdAt: ISO8601DateFormatter().convertStringToDate(stringDate: result.createdAt),
                 welcomeDescription: result.description,
                 thumbImageURL: result.urls.thumb,
                 largeImageURL: result.urls.full,
@@ -82,17 +83,17 @@ final class ImageListService {
         }
         return photoModel
     }
-    
-    func convertStringToDate(stringDate: String?) -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        guard let stringDate else {
-            print("Пустая дата")
-            return nil}
-        let date = dateFormatter.date(from: stringDate)
-        return date
-    }
+//    
+//    func convertStringToDate(stringDate: String?) -> Date? {
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "ru_RU")
+//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+//        guard let stringDate else {
+//            print("Пустая дата")
+//            return nil}
+//        let date = dateFormatter.date(from: stringDate)
+//        return date
+//    }
     
     func makeLikeRequest(token: String, photoId: String, isLiked: Bool) -> URLRequest? {
         let urlString = Constants.defaultBaseApiUrl + "photos/" + photoId + "/like"
@@ -101,11 +102,7 @@ final class ImageListService {
         guard let url else { preconditionFailure("Невозможно сформировать URL") }
         var request = URLRequest(url: url)
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        if isLiked {
-            request.httpMethod = "DELETE"
-        } else{
-            request.httpMethod = "POST"
-        }
+        request.httpMethod = isLiked ? "DELETE" : "POST"
 
         return request
     }

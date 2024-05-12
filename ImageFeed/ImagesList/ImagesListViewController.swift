@@ -60,20 +60,20 @@ final class ImagesListViewController: UIViewController {
     }
     
     //MARK: - Class Methods
-    func dateFormat(date: Date) -> String {
-        var curentDate = ""
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.setLocalizedDateFormatFromTemplate("dMMMMyyyy")
-        for charackter in dateFormatter.string(from: date) {
-            if charackter != "г" {
-                if charackter != "." {
-                    curentDate.append(charackter)
-                }
-            }
-        }
-        return curentDate
-    }
+//    func dateFormat(date: Date) -> String {
+//        var curentDate = ""
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.locale = Locale(identifier: "ru_RU")
+//        dateFormatter.setLocalizedDateFormatFromTemplate("dMMMMyyyy")
+//        for charackter in dateFormatter.string(from: date) {
+//            if charackter != "г" {
+//                if charackter != "." {
+//                    curentDate.append(charackter)
+//                }
+//            }
+//        }
+//        return curentDate
+//    }
     
     func prepareGradientLayer(cell: ImagesListCell){
         cell.gradienCellView.layer.sublayers?.first?.removeFromSuperlayer()
@@ -96,9 +96,12 @@ final class ImagesListViewController: UIViewController {
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
         imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
         prepareGradientLayer(cell: imagesListCell)
-        let date = photos[indexPath.row].createdAt ?? Date()
-        imagesListCell.imageCellViewDate?.text = dateFormat(date: date)
+        if let date = photos[indexPath.row].createdAt {
+            imagesListCell.imageCellViewDate?.text = DateFormatter.dateFormat(date: date)
+        } else {
+            imagesListCell.imageCellViewDate.text = ""
         }
+    }
     
     func updateTableViewAnimated() {
         imagesListTableView.performBatchUpdates {
@@ -176,7 +179,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
                     let newPhoto = Photo(
                         id: photo.photo.id,
                         size: CGSize(width: Double(photo.photo.width), height: Double(photo.photo.height)),
-                        createdAt: ImageListService.shared.convertStringToDate(stringDate: photo.photo.createdAt),
+                        createdAt: ISO8601DateFormatter().convertStringToDate(stringDate: photo.photo.createdAt),
                         welcomeDescription: photo.photo.description,
                         thumbImageURL: photo.photo.urls.thumb,
                         largeImageURL: photo.photo.urls.full,
@@ -195,7 +198,6 @@ extension ImagesListViewController {
     
     private func showError(_ vc: SingleImageViewController, url: URL) {
         let alert = UIAlertController(title: "Что-то пошло не так. Попробовать еще раз?", message: "", preferredStyle: .alert)
-        alert.view.accessibilityIdentifier = "alertId"
 
         let cancelAction = UIAlertAction(title: "Не надо", style: .default) { _ in
             alert.dismiss(animated: true)

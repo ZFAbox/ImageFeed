@@ -144,15 +144,36 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
-        let splashViewController = SplashViewController()
-            splashViewController.modalPresentationStyle = .fullScreen
-            self.present(splashViewController, animated: true)
-        storage.removeToken()
-        ProfileLogoutService.shared.logout()
+        showExitAler()
+//        let splashViewController = SplashViewController()
+//            splashViewController.modalPresentationStyle = .fullScreen
+//            self.present(splashViewController, animated: true)
+//        storage.removeToken()
+//        ProfileLogoutService.shared.logout()
     }
     
     private func loadUserData(profileModel: ProfileModel) {
         profileName.text = profileModel.name
         profileId.text = profileModel.loginName
+    }
+    
+    private func showExitAler() {
+        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+        
+        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+            guard let self = self else{ return }
+            let splashViewController = SplashViewController()
+                splashViewController.modalPresentationStyle = .fullScreen
+                self.present(splashViewController, animated: true)
+            self.storage.removeToken()
+            ProfileLogoutService.shared.logout()
+        }
+        
+        let noAction = UIAlertAction(title: "Нет", style: .default) { _ in
+            alert.dismiss(animated: true)
+        }
+        alert.addAction(yesAction)
+        alert.addAction(noAction)
+        self.present(alert, animated: true)
     }
 }

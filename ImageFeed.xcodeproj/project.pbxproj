@@ -10,6 +10,7 @@
 		9005CB8C2B52614C00EA81C5 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9005CB8B2B52614C00EA81C5 /* Colors.swift */; };
 		9005CB8D2B5261B300EA81C5 /* YS Display-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 902A9E132B51E356001436EE /* YS Display-Bold.ttf */; };
 		9005CB8E2B5261B500EA81C5 /* YS Display-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 902A9E142B51E356001436EE /* YS Display-Medium.ttf */; };
+		903F38E92BF00DD300DF234E /* ISO8601DateFormatter+convertStringToDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 903F38E82BF00DD300DF234E /* ISO8601DateFormatter+convertStringToDate.swift */; };
 		906873692B3F60EF00F47AE0 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 906873682B3F60EF00F47AE0 /* AppDelegate.swift */; };
 		9068736B2B3F60EF00F47AE0 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9068736A2B3F60EF00F47AE0 /* SceneDelegate.swift */; };
 		9068736D2B3F60EF00F47AE0 /* ImagesListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9068736C2B3F60EF00F47AE0 /* ImagesListViewController.swift */; };
@@ -22,6 +23,7 @@
 		90BE185D2BBA1111009135FD /* ProfileImageService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BE185C2BBA1111009135FD /* ProfileImageService.swift */; };
 		90BE185F2BBA116A009135FD /* UserResultImageDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90BE185E2BBA116A009135FD /* UserResultImageDecoder.swift */; };
 		90C4362B2B81CACD00590BB1 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90C4362A2B81CACD00590BB1 /* Constants.swift */; };
+		90CC15142BEF8DE600185CAD /* DateFormatter+dateFormat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90CC15132BEF8DE600185CAD /* DateFormatter+dateFormat.swift */; };
 		90D461F42B5CF3DF0042A3AD /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90D461F32B5CF3DF0042A3AD /* ProfileViewController.swift */; };
 		90E7F10A2B9D411400DEC5E6 /* URLSession+data.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E7F1092B9D411400DEC5E6 /* URLSession+data.swift */; };
 		90E7F10D2B9D4B8000DEC5E6 /* OAuthTokenResponseDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90E7F10C2B9D4B8000DEC5E6 /* OAuthTokenResponseDecoder.swift */; };
@@ -62,6 +64,7 @@
 		9005CB8B2B52614C00EA81C5 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		902A9E132B51E356001436EE /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		902A9E142B51E356001436EE /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
+		903F38E82BF00DD300DF234E /* ISO8601DateFormatter+convertStringToDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601DateFormatter+convertStringToDate.swift"; sourceTree = "<group>"; };
 		906873652B3F60EF00F47AE0 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		906873682B3F60EF00F47AE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9068736A2B3F60EF00F47AE0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		90BE185C2BBA1111009135FD /* ProfileImageService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageService.swift; sourceTree = "<group>"; };
 		90BE185E2BBA116A009135FD /* UserResultImageDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserResultImageDecoder.swift; sourceTree = "<group>"; };
 		90C4362A2B81CACD00590BB1 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		90CC15132BEF8DE600185CAD /* DateFormatter+dateFormat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DateFormatter+dateFormat.swift"; sourceTree = "<group>"; };
 		90D461F32B5CF3DF0042A3AD /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		90E7F1092B9D411400DEC5E6 /* URLSession+data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URLSession+data.swift"; sourceTree = "<group>"; };
 		90E7F10C2B9D4B8000DEC5E6 /* OAuthTokenResponseDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OAuthTokenResponseDecoder.swift; sourceTree = "<group>"; };
@@ -203,6 +207,8 @@
 			isa = PBXGroup;
 			children = (
 				90E7F1092B9D411400DEC5E6 /* URLSession+data.swift */,
+				90CC15132BEF8DE600185CAD /* DateFormatter+dateFormat.swift */,
+				903F38E82BF00DD300DF234E /* ISO8601DateFormatter+convertStringToDate.swift */,
 			);
 			path = Extansions;
 			sourceTree = "<group>";
@@ -380,6 +386,7 @@
 				9F9BD0212BCEC41B00B18BBF /* Photo.swift in Sources */,
 				9F8FFE5E2BC0296800B2EDD7 /* TabBarViewController.swift in Sources */,
 				90931EC22BAB92F900AC7914 /* AuthViewControllerDelegate.swift in Sources */,
+				903F38E92BF00DD300DF234E /* ISO8601DateFormatter+convertStringToDate.swift in Sources */,
 				90BE185D2BBA1111009135FD /* ProfileImageService.swift in Sources */,
 				9F7870ED2BB45D3500254517 /* ProfileModel.swift in Sources */,
 				90AEEC222B4DE4FD007A473A /* ImagesListCell.swift in Sources */,
@@ -394,6 +401,7 @@
 				9F98733A2BE3BE73007D86EB /* SinglePhotoUpdate.swift in Sources */,
 				90C4362B2B81CACD00590BB1 /* Constants.swift in Sources */,
 				9F8A014B2BD0025400872823 /* ImageListService.swift in Sources */,
+				90CC15142BEF8DE600185CAD /* DateFormatter+dateFormat.swift in Sources */,
 				90FE471A2B8AC346007884D8 /* AuthViewController.swift in Sources */,
 				90BE185F2BBA116A009135FD /* UserResultImageDecoder.swift in Sources */,
 				9FB2E4232BA87E650020B926 /* SplashViewController.swift in Sources */,
