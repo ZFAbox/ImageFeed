@@ -15,7 +15,6 @@ final class ImageListService {
     var page: Int = 0
     var perPage: Int = 10
     private var task: URLSessionTask?
-//    var delegate: ImagesListViewController?
     let storage = OAuth2TokenStorage()
     
     private enum GetPhotoListError: Error {
@@ -74,7 +73,7 @@ final class ImageListService {
             let photo = Photo(
                 id: result.id,
                 size: CGSize(width: Double(result.width), height: Double(result.height)),
-                createdAt: ISO8601DateFormatter().convertStringToDate(stringDate: result.createdAt),
+                createdAt: ISO8601DateFormatter.convertStringToDate(stringDate: result.createdAt),
                 welcomeDescription: result.description,
                 thumbImageURL: result.urls.thumb,
                 largeImageURL: result.urls.full,
@@ -83,17 +82,6 @@ final class ImageListService {
         }
         return photoModel
     }
-//    
-//    func convertStringToDate(stringDate: String?) -> Date? {
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "ru_RU")
-//        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-//        guard let stringDate else {
-//            print("Пустая дата")
-//            return nil}
-//        let date = dateFormatter.date(from: stringDate)
-//        return date
-//    }
     
     func makeLikeRequest(token: String, photoId: String, isLiked: Bool) -> URLRequest? {
         let urlString = Constants.defaultBaseApiUrl + "photos/" + photoId + "/like"
@@ -111,7 +99,6 @@ final class ImageListService {
         guard let token = storage.token else {
             preconditionFailure() }
         guard let request = makeLikeRequest(token: token, photoId: photoId, isLiked: isLike) else { return }
-        
         let task = URLSession.shared.objectTask(for: request) { (result: Result<SinglePhotoUpdate, Error>) in
             switch result {
             case .success(let photo):

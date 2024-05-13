@@ -60,20 +60,6 @@ final class ImagesListViewController: UIViewController {
     }
     
     //MARK: - Class Methods
-//    func dateFormat(date: Date) -> String {
-//        var curentDate = ""
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.locale = Locale(identifier: "ru_RU")
-//        dateFormatter.setLocalizedDateFormatFromTemplate("dMMMMyyyy")
-//        for charackter in dateFormatter.string(from: date) {
-//            if charackter != "г" {
-//                if charackter != "." {
-//                    curentDate.append(charackter)
-//                }
-//            }
-//        }
-//        return curentDate
-//    }
     
     func prepareGradientLayer(cell: ImagesListCell){
         cell.gradienCellView.layer.sublayers?.first?.removeFromSuperlayer()
@@ -179,7 +165,7 @@ extension ImagesListViewController: ImagesListCellDelegate {
                     let newPhoto = Photo(
                         id: photo.photo.id,
                         size: CGSize(width: Double(photo.photo.width), height: Double(photo.photo.height)),
-                        createdAt: ISO8601DateFormatter().convertStringToDate(stringDate: photo.photo.createdAt),
+                        createdAt: ISO8601DateFormatter.convertStringToDate(stringDate: photo.photo.createdAt),
                         welcomeDescription: photo.photo.description,
                         thumbImageURL: photo.photo.urls.thumb,
                         largeImageURL: photo.photo.urls.full,

@@ -17,7 +17,6 @@ final class ProfileImageService {
     var task: URLSessionTask?
     
     //MARK: - Privates
-    private var mailImageProfileUrl = "https://api.unsplash.com/users/"
     private enum GetUserImageDataError: Error {
         case invalidProfileImageRequest
     }
@@ -26,7 +25,7 @@ final class ProfileImageService {
     
     //MARK: - Class Methods
     private func makeProfileImageRequest (token: String, username: String) -> URLRequest? {
-        let imageUrlString = mailImageProfileUrl + username
+        let imageUrlString = Constants.profileRequestURL + username
         guard let url = URL(string: imageUrlString) else {
             preconditionFailure("Ошибка формирования URL для получения изображения пользователя")
         }

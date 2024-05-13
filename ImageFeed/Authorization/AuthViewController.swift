@@ -50,18 +50,18 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     
 
     //MARK: - Class Methods
-    func addSubviews(){
+    private func addSubviews(){
         view.addSubview(authViewControllerImageView)
         view.addSubview(authViewControllerButton)
     }
     
     
-    func addConstrains(){
+    private func addConstrains(){
         addImageViewConstrains()
         addButtonConstrains()
     }
     
-    func addButtonConstrains (){
+    private func addButtonConstrains (){
         NSLayoutConstraint.activate([
             authViewControllerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
             authViewControllerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
@@ -70,7 +70,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         ])
     }
     
-    func addImageViewConstrains(){
+    private func addImageViewConstrains(){
         NSLayoutConstraint.activate([
             authViewControllerImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             authViewControllerImageView.centerYAnchor.constraint(equalTo: view.centerYAnchor),
@@ -128,7 +128,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         alert.addAction(action)
         vc.present(alert, animated: true, completion: nil)
     }
-    
     
     @IBAction func enterButtonDidTapped(_ sender: Any) {
         showWebViewController()

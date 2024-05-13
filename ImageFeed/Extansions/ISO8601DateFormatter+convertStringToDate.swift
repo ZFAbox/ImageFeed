@@ -10,7 +10,7 @@ import Foundation
 
 extension ISO8601DateFormatter {
     
-    func convertStringToDate(stringDate: String?) -> Date? {
+    static func convertStringToDate(stringDate: String?) -> Date? {
         let dateFormatter = ISO8601DateFormatter()
         guard let stringDate else {
             print("Пустая дата")
