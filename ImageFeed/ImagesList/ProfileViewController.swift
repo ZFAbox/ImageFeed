@@ -18,6 +18,7 @@ final class ProfileViewController:UIViewController {
         profileImageView.image = image
         profileImageView.layer.cornerRadius = 70 / 2
         profileImageView.clipsToBounds = true
+        profileImageView.layer.addSublayer(Gradient.addGradient(height: 70, width: 70, corenerRadius: 35))
         return profileImageView
     }()
     private lazy var profileName: UILabel = {
