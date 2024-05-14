@@ -26,7 +26,7 @@ final class ImagesListViewController: UIViewController {
             if oldValue.count == 0 {
                 imagesListTableView.reloadData()
             } else if oldValue.count == photos.count {
-            print ("Ставим лайк")
+                print ("Ставим лайк")
             }
             else{
                 updateTableViewAnimated()
@@ -38,7 +38,7 @@ final class ImagesListViewController: UIViewController {
     var destination: UITableViewCell?
     private var heightArray:[CGFloat] = []
     private var widthArray:[CGFloat] = []
-   
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
             let viewController = segue.destination as! SingleImageViewController
@@ -78,20 +78,23 @@ final class ImagesListViewController: UIViewController {
         cell.gradienCellView.layer.addSublayer(gradientLayer)
     }
     
+    func addAnimation(cell: ImagesListCell, indexPath: IndexPath) {
+        if cell.imageCellView.layer.sublayers?.first != nil {
+            cell.imageCellView.layer.sublayers?.first?.removeFromSuperlayer()
+        }
+        cell.imageCellView.layer.addSublayer(
+            Gradient.addGradient(
+                height: Int(heightArray[indexPath.row]),
+                width: Int(widthArray[indexPath.row]),
+                corenerRadius: nil))
+    }
     func configCell(for imagesListCell: ImagesListCell, indexPath: IndexPath) {
         let imageUrlStringForRow = photos[indexPath.row].thumbImageURL
         let imageUrlForRow = URL(string: imageUrlStringForRow)
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
-        imagesListCell.imageCellView.layer.sublayers?.first?.removeFromSuperlayer()
-        if imagesListCell.imageCellView.image != nil {
-            imagesListCell.imageCellView.layer.addSublayer(
-                Gradient.addGradient(
-                    height: Int(heightArray[indexPath.row]),
-                    width: Int(widthArray[indexPath.row]),
-                    corenerRadius: nil))
-            imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
-            prepareGradientLayer(cell: imagesListCell)
-        }
+        imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
+        addAnimation(cell: imagesListCell, indexPath: indexPath)
+        prepareGradientLayer(cell: imagesListCell)
         if let date = photos[indexPath.row].createdAt {
             imagesListCell.imageCellViewDate?.text = DateFormatter.dateFormat(date: date)
         } else {
@@ -113,7 +116,7 @@ final class ImagesListViewController: UIViewController {
     }
 }
 
-    //MARK: - Extensions
+//MARK: - Extensions
 extension ImagesListViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -198,13 +201,13 @@ extension ImagesListViewController {
     
     private func showError(_ vc: SingleImageViewController, url: URL) {
         let alert = UIAlertController(title: "Что-то пошло не так. Попробовать еще раз?", message: "", preferredStyle: .alert)
-
+        
         let cancelAction = UIAlertAction(title: "Не надо", style: .default) { _ in
             alert.dismiss(animated: true)
-            }
+        }
         let reloadImageAction = UIAlertAction(title: "Повторить", style: .default) { _ in
             self.loadFullSizeImage(on: vc, with: url)
-            }
+        }
         
         alert.addAction(cancelAction)
         alert.addAction(reloadImageAction)

@@ -36,7 +36,7 @@ class Gradient {
         
         let opacity = CAKeyframeAnimation(keyPath: "opacity"
         )
-        opacity.values = [0, 0.8, 0]
+        opacity.values = [0, 0.5, 0]
         
         let animationGroupe = CAAnimationGroup()
         animationGroupe.animations = [gradientAnimationLayer, opacity]

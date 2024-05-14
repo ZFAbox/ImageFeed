@@ -10,9 +10,10 @@ import Foundation
 
 extension DateFormatter {
     
+    static let dateFormatter = DateFormatter()
+    
     static func dateFormat(date: Date) -> String {
         var curentDate = ""
-        let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
         dateFormatter.setLocalizedDateFormatFromTemplate("dMMMMyyyy")
         for charackter in dateFormatter.string(from: date) {

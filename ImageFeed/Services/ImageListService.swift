@@ -41,7 +41,6 @@ final class ImageListService {
     
     func fetchPhotoNextPage (token: String) {
         if (photos.count < page * perPage) || (task != nil) {
-            task?.cancel()
             return
         }
         page += 1
