@@ -18,7 +18,6 @@ final class ProfileViewController:UIViewController {
         profileImageView.image = image
         profileImageView.layer.cornerRadius = 70 / 2
         profileImageView.clipsToBounds = true
-        profileImageView.layer.addSublayer(Gradient.addGradient(height: 70, width: 70, corenerRadius: 35))
         return profileImageView
     }()
     private lazy var profileName: UILabel = {
@@ -60,6 +59,7 @@ final class ProfileViewController:UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
         view.backgroundColor = .ypBlack
         addSubViews()
         applyConstrains()
@@ -76,6 +76,13 @@ final class ProfileViewController:UIViewController {
             }
         )
         updateAvatar()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        Gradient.animationLayers.removeAll()
+        profileImageView.layer.sublayers?.removeAll()
+        profileImageView.layer.addSublayer(Gradient.addGradient(height: 70, width: 70, corenerRadius: 35))
     }
     
     //MARK: - Layout Methods
@@ -146,11 +153,6 @@ final class ProfileViewController:UIViewController {
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
         showExitAler()
-//        let splashViewController = SplashViewController()
-//            splashViewController.modalPresentationStyle = .fullScreen
-//            self.present(splashViewController, animated: true)
-//        storage.removeToken()
-//        ProfileLogoutService.shared.logout()
     }
     
     private func loadUserData(profileModel: ProfileModel) {

@@ -10,7 +10,7 @@ import UIKit
 
 class Gradient {
     
-    private static var animationLayers = Set<CALayer>()
+    static var animationLayers = Set<CALayer>()
     
     static func addGradient(height: Int, width: Int, corenerRadius: Int?) -> CALayer {
         

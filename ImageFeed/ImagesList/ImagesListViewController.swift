@@ -41,6 +41,7 @@ final class ImagesListViewController: UIViewController {
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
+            Gradient.animationLayers.removeAll()
             let viewController = segue.destination as! SingleImageViewController
             let indexPath = sender as! IndexPath
             let imageUrlStringForRow = photos[indexPath.row].largeImageURL
@@ -79,9 +80,6 @@ final class ImagesListViewController: UIViewController {
     }
     
     func addAnimation(cell: ImagesListCell, indexPath: IndexPath) {
-        if cell.imageCellView.layer.sublayers?.first != nil {
-            cell.imageCellView.layer.sublayers?.first?.removeFromSuperlayer()
-        }
         cell.imageCellView.layer.addSublayer(
             Gradient.addGradient(
                 height: Int(heightArray[indexPath.row]),
