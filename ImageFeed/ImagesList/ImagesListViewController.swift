@@ -36,6 +36,8 @@ final class ImagesListViewController: UIViewController {
     private let storage = OAuth2TokenStorage()
     private var showSingleImageSegueIdentifier = "ShowSingleImage"
     var destination: UITableViewCell?
+    private var heightArray:[CGFloat] = []
+    private var widthArray:[CGFloat] = []
    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -80,8 +82,16 @@ final class ImagesListViewController: UIViewController {
         let imageUrlStringForRow = photos[indexPath.row].thumbImageURL
         let imageUrlForRow = URL(string: imageUrlStringForRow)
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
-        imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
-        prepareGradientLayer(cell: imagesListCell)
+        imagesListCell.imageCellView.layer.sublayers?.first?.removeFromSuperlayer()
+        if imagesListCell.imageCellView.image != nil {
+            imagesListCell.imageCellView.layer.addSublayer(
+                Gradient.addGradient(
+                    height: Int(heightArray[indexPath.row]),
+                    width: Int(widthArray[indexPath.row]),
+                    corenerRadius: nil))
+            imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
+            prepareGradientLayer(cell: imagesListCell)
+        }
         if let date = photos[indexPath.row].createdAt {
             imagesListCell.imageCellViewDate?.text = DateFormatter.dateFormat(date: date)
         } else {
@@ -142,10 +152,14 @@ extension ImagesListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard let imageWidth = UIImage(named: "\(indexPath.row)")?.cgImage?.width else {return 10}
         let cellRowWidth = tableView.frame.width
-        guard let imageHeight = UIImage(named: "\(indexPath.row)")?.cgImage?.height else { return 10 }
-        let cellRowHeight = CGFloat(cellRowWidth) / CGFloat(imageWidth) * CGFloat(imageHeight) + 8
+        let imageWidth = photos[indexPath.row].size.width
+        let imageHeight = photos[indexPath.row].size.height
+        let scale = CGFloat(cellRowWidth) / CGFloat(imageWidth)
+        let relativeIMageHegiht = scale * CGFloat(imageHeight)
+        widthArray.append(cellRowWidth)
+        heightArray.append(relativeIMageHegiht)
+        let cellRowHeight = scale * CGFloat(imageHeight) + 8
         return cellRowHeight
     }
 }
