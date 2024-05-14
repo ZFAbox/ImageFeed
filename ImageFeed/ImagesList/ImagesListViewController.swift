@@ -93,7 +93,7 @@ final class ImagesListViewController: UIViewController {
         let imageUrlForRow = URL(string: imageUrlStringForRow)
         imagesListCell.imageCellView.kf.setImage(with: imageUrlForRow, placeholder: UIImage(named: "Image placeholder"))
         imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
-        addAnimation(cell: imagesListCell, indexPath: indexPath)
+//        addAnimation(cell: imagesListCell, indexPath: indexPath)
         prepareGradientLayer(cell: imagesListCell)
         if let date = photos[indexPath.row].createdAt {
             imagesListCell.imageCellViewDate?.text = DateFormatter.dateFormat(date: date)
