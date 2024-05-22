@@ -9,8 +9,9 @@ import Foundation
 import UIKit
 import WebKit
 
-class WebViewViewController: UIViewController {
+class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     
+    var presenter: WebViewPresenterProtocol?
     var delegate: AuthViewController?
     private let splashController = SplashViewController()
     let storage = OAuth2TokenStorage()
@@ -94,6 +95,12 @@ extension WebViewViewController: WKNavigationDelegate {
     @IBAction func BackButtonAction(_ sender: Any) {
         guard let delegate else { return }
         delegate.webViewViewControllerDismiss(self)
+    }
+}
+
+extension WebViewViewController {
+    func load(request: URLRequest) {
+        webView.load(request)
     }
 }
 

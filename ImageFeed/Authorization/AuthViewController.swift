@@ -81,6 +81,9 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     private func showWebViewController (){
         if let webViewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
+            let webViewPresenter = WebViewPresenter()
+            webViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewController
             webViewController.delegate = self
             webViewController.modalPresentationStyle = .fullScreen
             self.present(webViewController, animated: true)
