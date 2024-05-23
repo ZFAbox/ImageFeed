@@ -9,5 +9,7 @@ import Foundation
 
 public protocol WebViewViewControllerProtocol: AnyObject {
     var presenter: WebViewPresenterProtocol? { get set }
+    func setProgressValue(_ newValue: Float)
+    func setProgressIsHidden(_ isHidden: Bool)
     func load(request: URLRequest)
 }

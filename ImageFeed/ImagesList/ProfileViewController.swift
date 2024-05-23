@@ -169,6 +169,7 @@ final class ProfileViewController:UIViewController {
                 splashViewController.modalPresentationStyle = .fullScreen
                 self.present(splashViewController, animated: true)
             self.storage.removeToken()
+            ImageListService.shared.page = 0
             ProfileLogoutService.shared.logout()
         }
         

@@ -78,22 +78,23 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
             authViewControllerImageView.widthAnchor.constraint(equalToConstant: 60)
         ])
     }
-    private func showWebViewController (){
-        if let webViewController = UIStoryboard(name: "Main", bundle: .main)
-            .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
-            let webViewPresenter = WebViewPresenter()
-            webViewController.presenter = webViewPresenter
-            webViewPresenter.view = webViewController
-            webViewController.delegate = self
-            webViewController.modalPresentationStyle = .fullScreen
-            self.present(webViewController, animated: true)
-        }
-    }
+    
+//    private func showWebViewController (){
+//        if let webViewController = UIStoryboard(name: "Main", bundle: .main)
+//            .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
+//            let webViewPresenter = WebViewPresenter(view: webViewController)
+//            webViewController.presenter = webViewPresenter
+//            webViewController.delegate = self
+//            webViewController.modalPresentationStyle = .fullScreen
+//            self.present(webViewController, animated: true)
+//        }
+//    }
     
     @objc func buttonAction() {
         if let webViewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
             webViewController.delegate = self
+            webViewController.presenter = WebViewPresenter(view: webViewController)
             webViewController.modalPresentationStyle = .fullScreen
             self.present(webViewController, animated: true)
         }
@@ -130,9 +131,5 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         
         alert.addAction(action)
         vc.present(alert, animated: true, completion: nil)
-    }
-    
-    @IBAction func enterButtonDidTapped(_ sender: Any) {
-        showWebViewController()
     }
 }
