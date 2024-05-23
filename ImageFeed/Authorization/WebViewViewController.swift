@@ -16,7 +16,6 @@ class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     private let splashController = SplashViewController()
     let storage = OAuth2TokenStorage()
     var estimatedProgreeObservation: NSKeyValueObservation?
-//    private let authViewController = "AuthViewController"
     
     @IBOutlet weak var webView: WKWebView!
     @IBOutlet weak var progreesView: UIProgressView!
@@ -37,8 +36,6 @@ class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
                  self.presenter?.didUpdateProgresValue(self.webView.estimatedProgress)
              })
         presenter?.viewDidLoad()
-//        loadAuthorizationView()
-//        updateProgress()
     }
     
     //MARK: - Class Methods
@@ -50,30 +47,6 @@ class WebViewViewController: UIViewController & WebViewViewControllerProtocol {
     func setProgressIsHidden(_ isHidden: Bool) {
         progreesView.isHidden = isHidden
     }
-    
-//    private func updateProgress() {
-//        progreesView.progress = Float(webView.estimatedProgress)
-//        progreesView.isHidden = fabs(webView.estimatedProgress - 1.0) <= 0.0001
-//    }
-    
-//    private func loadAuthorizationView(){
-//        guard var urlComponents = URLComponents(string: WebViewConstants.unsplashAuthirizeURLString) else {
-//            print("Ошибка формирования труктуры URLComponentns")
-//            return
-//        }
-//        urlComponents.queryItems = [
-//            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: Constants.accessKey),
-//            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: Constants.redirectURI),
-//            URLQueryItem(name: URLQueryItemsList.responseType.rawValue, value: "code"),
-//            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: Constants.accessScope)
-//        ]
-//        guard let url = urlComponents.url else {
-//            print ("Ошибка формирования URL")
-//            return
-//        }
-//        let request = URLRequest(url: url)
-//        webView.load(request)
-//    }
 }
 
 extension WebViewViewController: WKNavigationDelegate {
@@ -94,12 +67,6 @@ extension WebViewViewController: WKNavigationDelegate {
         if
             let url = navigationAction.request.url{
             return presenter?.code(from: url)
-//            let urlComponents = URLComponents(string: url.absoluteString),
-//            urlComponents.path == "/oauth/authorize/native",
-//            let items = urlComponents.queryItems,
-//            let codeItem = items.first(where: { $0.name == "code" })
-//        {
-//            return codeItem.value
         } else {
             return nil
         }

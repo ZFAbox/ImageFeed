@@ -13,7 +13,6 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
     //MARK: - Statics
     static var showWebViewSigueIdentifier = "ShowWebView"
     
-    
     //MARK: - Privates
     private let oauth2Service = OAuth2Service.shared
     private let unsplashPostRequestURLString = "https://unsplash.com/oauth/token"
@@ -48,13 +47,11 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         addConstrains()
     }
     
-
     //MARK: - Class Methods
     private func addSubviews(){
         view.addSubview(authViewControllerImageView)
         view.addSubview(authViewControllerButton)
     }
-    
     
     private func addConstrains(){
         addImageViewConstrains()
@@ -79,22 +76,14 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         ])
     }
     
-//    private func showWebViewController (){
-//        if let webViewController = UIStoryboard(name: "Main", bundle: .main)
-//            .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
-//            let webViewPresenter = WebViewPresenter(view: webViewController)
-//            webViewController.presenter = webViewPresenter
-//            webViewController.delegate = self
-//            webViewController.modalPresentationStyle = .fullScreen
-//            self.present(webViewController, animated: true)
-//        }
-//    }
-    
     @objc func buttonAction() {
         if let webViewController = UIStoryboard(name: "Main", bundle: .main)
             .instantiateViewController(withIdentifier: AuthViewController.showWebViewSigueIdentifier) as? WebViewViewController {
             webViewController.delegate = self
-            webViewController.presenter = WebViewPresenter(view: webViewController)
+            let authHelper = AuthHelper()
+            let webViewPresenter = WebViewPresenter(authHelper: authHelper)
+            webViewController.presenter = webViewPresenter
+            webViewPresenter.view = webViewController
             webViewController.modalPresentationStyle = .fullScreen
             self.present(webViewController, animated: true)
         }
