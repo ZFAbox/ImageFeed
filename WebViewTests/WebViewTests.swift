@@ -89,7 +89,57 @@ final class WebViewTests: XCTestCase {
         let shouldHideProgress = presenter.shouldHideProgress(for: progrees)
         
         //then
+        XCTAssertFalse(shouldHideProgress)
+    }
+    
+    func testProgreeHideWhenOne(){
+        //given
+        let authHelper = AuthHelper()
+        let presenter = WebViewPresenter(authHelper: authHelper)
+        let progrees: Float = 1
+        
+        //when
+        let shouldHideProgress = presenter.shouldHideProgress(for: progrees)
+        
+        //then
         XCTAssertTrue(shouldHideProgress)
     }
     
+    func testAuthHelperAuthURL(){
+        //given
+        let configuration = AuthConfiguration.standard
+        let authHelper = AuthHelper(configuration: configuration)
+        
+        //when
+        let url = authHelper.authURL()
+        let urlString = url?.absoluteString
+        
+        //then
+        XCTAssertTrue(urlString!.contains(configuration.authURLString))
+        XCTAssertTrue(urlString!.contains(configuration.accessKey))
+        XCTAssertTrue(urlString!.contains(configuration.redirectURI))
+        XCTAssertTrue(urlString!.contains("code"))
+        XCTAssertTrue(urlString!.contains(configuration.accessScope))
+    }
+    
+    func testCodeFromURL() {
+        
+        let configuration = AuthConfiguration.standard
+        let authHelper = AuthHelper(configuration: configuration)
+        
+        guard var urlComponents = URLComponents(string: configuration.authURLString) else {
+            return nil
+        }
+        
+        urlComponents.queryItems = [
+            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: configuration.accessKey),
+            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: configuration.redirectURI),
+            URLQueryItem(name: URLQueryItemsList.responseType.rawValue, value: "test code"),
+            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: configuration.accessScope)
+        ]
+        
+        let url = urlComponents.url
+        
+        authHelper.code(from: url)
+    }
 }
