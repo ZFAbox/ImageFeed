@@ -9,6 +9,10 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
+protocol ImageLIstViewControllerProtocol: AnyObject {
+    var imageListPresenter: ImageListViewPresenterProtocol? { get set }
+}
+
 final class ImagesListViewController: UIViewController {
     
     //MARK: - IBOutlets
@@ -38,6 +42,7 @@ final class ImagesListViewController: UIViewController {
     var destination: UITableViewCell?
     private var heightArray:[CGFloat] = []
     private var widthArray:[CGFloat] = []
+    var imageListViewPresenter: ImageListViewPresenterProtocol?
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -48,13 +53,15 @@ final class ImagesListViewController: UIViewController {
             guard let imageUrlForRow = URL(string: imageUrlStringForRow) else {
                 preconditionFailure("Ошибка формирования URL для полноразмерного изображения")
             }
-            loadFullSizeImage(on: viewController, with: imageUrlForRow)
+            imageListViewPresenter?.loadFullSizeImage(on: viewController, with: imageUrlForRow)
+//            loadFullSizeImage(on: viewController, with: imageUrlForRow)
         } else {
             super.prepare(for: segue, sender: sender)
         }
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        imageListViewPresenter = ImageListViewPresenter()
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in
@@ -195,39 +202,39 @@ extension ImagesListViewController: ImagesListCellDelegate {
     }
 }
 
-extension ImagesListViewController {
-    
-    private func showError(_ vc: SingleImageViewController, url: URL) {
-        let alert = UIAlertController(title: "Что-то пошло не так. Попробовать еще раз?", message: "", preferredStyle: .alert)
-        
-        let cancelAction = UIAlertAction(title: "Не надо", style: .default) { _ in
-            alert.dismiss(animated: true)
-        }
-        let reloadImageAction = UIAlertAction(title: "Повторить", style: .default) { _ in
-            self.loadFullSizeImage(on: vc, with: url)
-        }
-        
-        alert.addAction(cancelAction)
-        alert.addAction(reloadImageAction)
-        vc.present(alert, animated: true, completion: nil)
-    }
-}
-
-extension ImagesListViewController {
-    
-    private func loadFullSizeImage (on vc: SingleImageViewController, with url: URL) {
-        let imageView = UIImageView()
-        UIBlockingProgressHud.show()
-        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Image placeholder")) { result in
-            UIBlockingProgressHud.dismiss()
-            switch result {
-            case .success(let imageResult):
-                vc.image = imageResult.image
-            case .failure(let error):
-                self.showError(vc, url: url)
-                print(error.localizedDescription)
-            }
-        }
-    }
-}
+//extension ImagesListViewController {
+//
+//    private func showError(_ vc: SingleImageViewController, url: URL) {
+//        let alert = UIAlertController(title: "Что-то пошло не так. Попробовать еще раз?", message: "", preferredStyle: .alert)
+//
+//        let cancelAction = UIAlertAction(title: "Не надо", style: .default) { _ in
+//            alert.dismiss(animated: true)
+//        }
+//        let reloadImageAction = UIAlertAction(title: "Повторить", style: .default) { _ in
+//            self.loadFullSizeImage(on: vc, with: url)
+//        }
+//
+//        alert.addAction(cancelAction)
+//        alert.addAction(reloadImageAction)
+//        vc.present(alert, animated: true, completion: nil)
+//    }
+//}
+//
+//extension ImagesListViewController {
+//
+//    private func loadFullSizeImage (on vc: SingleImageViewController, with url: URL) {
+//        let imageView = UIImageView()
+//        UIBlockingProgressHud.show()
+//        imageView.kf.setImage(with: url, placeholder: UIImage(named: "Image placeholder")) { result in
+//            UIBlockingProgressHud.dismiss()
+//            switch result {
+//            case .success(let imageResult):
+//                vc.image = imageResult.image
+//            case .failure(let error):
+//                self.showError(vc, url: url)
+//                print(error.localizedDescription)
+//            }
+//        }
+//    }
+//}
 

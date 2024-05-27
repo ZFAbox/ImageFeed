@@ -33,6 +33,5 @@ final class ProfileLogoutService {
         ProfileImageService.shared.profileImageUrl = nil
         ImageListService.shared.photos = []
         ImageListService.shared.page = 0
-        
     }
 }

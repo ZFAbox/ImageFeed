@@ -123,23 +123,19 @@ final class WebViewTests: XCTestCase {
     }
     
     func testCodeFromURL() {
-        
-        let configuration = AuthConfiguration.standard
-        let authHelper = AuthHelper(configuration: configuration)
-        
-        guard var urlComponents = URLComponents(string: configuration.authURLString) else {
-            return nil
-        }
+        //given
+        let authHelper = AuthHelper()
+        let authCodeURLString = "https://unsplash.com/oauth/authorize/native"
+        let testCode = "test code"
+        guard var urlComponents = URLComponents(string: authCodeURLString) else { return }
         
         urlComponents.queryItems = [
-            URLQueryItem(name: URLQueryItemsList.clientId.rawValue, value: configuration.accessKey),
-            URLQueryItem(name: URLQueryItemsList.redirectURI.rawValue, value: configuration.redirectURI),
-            URLQueryItem(name: URLQueryItemsList.responseType.rawValue, value: "test code"),
-            URLQueryItem(name: URLQueryItemsList.scope.rawValue, value: configuration.accessScope)
+            URLQueryItem(name: URLQueryItemsList.code.rawValue, value: testCode)
         ]
         
-        let url = urlComponents.url
+        guard let url = urlComponents.url else { return }
         
-        authHelper.code(from: url)
+        let returnedCode = authHelper.code(from: url)
+        XCTAssertEqual(testCode, returnedCode)
     }
 }

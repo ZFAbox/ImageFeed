@@ -8,7 +8,14 @@
 import UIKit
 import Kingfisher
 
-final class ProfileViewController:UIViewController {
+protocol ProfileViewControllerProtocol: UIViewController {
+    var presenter: ProfileViewPresenterProtocol? { get set }
+}
+
+final class ProfileViewController:UIViewController, ProfileViewControllerProtocol {
+    var presenter: ProfileViewPresenterProtocol?
+    
+    
     
     //MARK: - Privates
     private lazy var profileImageView: UIImageView = {
@@ -57,8 +64,10 @@ final class ProfileViewController:UIViewController {
     private var storage = OAuth2TokenStorage()
     private let authViewController = "AuthViewController"
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        presenter = ProfileViewPresenter()
 
         view.backgroundColor = .ypBlack
         addSubViews()
@@ -152,7 +161,8 @@ final class ProfileViewController:UIViewController {
     
     //MARK: - Button Actions
     @objc func exitButtonTapped(){
-        showExitAler()
+//        showExitAlert ()
+        presenter?.showExitAler(view: self)
     }
     
     private func loadUserData(profileModel: ProfileModel) {
@@ -160,24 +170,24 @@ final class ProfileViewController:UIViewController {
         profileId.text = profileModel.loginName
     }
     
-    private func showExitAler() {
-        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
-        
-        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
-            guard let self = self else{ return }
-            let splashViewController = SplashViewController()
-                splashViewController.modalPresentationStyle = .fullScreen
-                self.present(splashViewController, animated: true)
-            self.storage.removeToken()
-            ImageListService.shared.page = 0
-            ProfileLogoutService.shared.logout()
-        }
-        
-        let noAction = UIAlertAction(title: "Нет", style: .default) { _ in
-            alert.dismiss(animated: true)
-        }
-        alert.addAction(yesAction)
-        alert.addAction(noAction)
-        self.present(alert, animated: true)
-    }
+//    private func showExitAlert() {
+//        let alert = UIAlertController(title: "Пока, пока!", message: "Уверены, что хотите выйти?", preferredStyle: .alert)
+//
+//        let yesAction = UIAlertAction(title: "Да", style: .default) { [weak self] _ in
+//            guard let self = self else{ return }
+//            let splashViewController = SplashViewController()
+//                splashViewController.modalPresentationStyle = .fullScreen
+//                self.present(splashViewController, animated: true)
+//            self.storage.removeToken()
+//            ImageListService.shared.page = 0
+//            ProfileLogoutService.shared.logout()
+//        }
+//
+//        let noAction = UIAlertAction(title: "Нет", style: .default) { _ in
+//            alert.dismiss(animated: true)
+//        }
+//        alert.addAction(yesAction)
+//        alert.addAction(noAction)
+//        self.present(alert, animated: true)
+//    }
 }
