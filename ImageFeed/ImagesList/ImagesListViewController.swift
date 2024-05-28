@@ -9,11 +9,14 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
-protocol ImageLIstViewControllerProtocol: AnyObject {
+protocol ImageListViewControllerProtocol: AnyObject {
     var imageListPresenter: ImageListViewPresenterProtocol? { get set }
 }
 
-final class ImagesListViewController: UIViewController {
+final class ImagesListViewController: UIViewController, ImageListViewControllerProtocol {
+    
+    var imageListPresenter: ImageListViewPresenterProtocol?
+    
     
     //MARK: - IBOutlets
     @IBOutlet private var imagesListTableView: UITableView! {
@@ -42,7 +45,6 @@ final class ImagesListViewController: UIViewController {
     var destination: UITableViewCell?
     private var heightArray:[CGFloat] = []
     private var widthArray:[CGFloat] = []
-    var imageListViewPresenter: ImageListViewPresenterProtocol?
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showSingleImageSegueIdentifier {
@@ -53,7 +55,7 @@ final class ImagesListViewController: UIViewController {
             guard let imageUrlForRow = URL(string: imageUrlStringForRow) else {
                 preconditionFailure("Ошибка формирования URL для полноразмерного изображения")
             }
-            imageListViewPresenter?.loadFullSizeImage(on: viewController, with: imageUrlForRow)
+            imageListPresenter?.loadFullSizeImage(on: viewController, with: imageUrlForRow)
 //            loadFullSizeImage(on: viewController, with: imageUrlForRow)
         } else {
             super.prepare(for: segue, sender: sender)
@@ -61,7 +63,7 @@ final class ImagesListViewController: UIViewController {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        imageListViewPresenter = ImageListViewPresenter()
+        imageListPresenter = ImageListViewPresenter()
         imagesListTableView.contentInset = UIEdgeInsets(top: 12, left: 0, bottom: 12, right: 0)
         self.navigationController?.setNavigationBarHidden(true, animated: false)
         NotificationCenter.default.addObserver(forName: ImageListService.didChangeNotification, object: nil, queue: .main) { _ in

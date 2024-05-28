@@ -39,13 +39,39 @@ final class ImageListTests: XCTestCase {
     func testShowAlert() {
         //given
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! Ima
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        let singleViewController = storyboard.instantiateViewController(withIdentifier: "SingleImageView") as! SingleImageViewController
         let presenter = ImageListPresenterSpy()
-        viewController.presenter = presenter
-        let imageURLString = "https://paleontol.ru/wp-content/uploads/2021/04/planeta-sputnik-encelad-2048x1739.jpg"
-        let url = URL(string: imageURLString)
+        viewController.imageListPresenter = presenter
+        let imageURLString = ""
+        guard let url = URL(string: imageURLString) else { return }
+        
+        //when
+        viewController.imageListPresenter?.loadFullSizeImage(on: singleViewController, with: url)
         
         //then
-        viewController.presenter.load
+        
+        XCTAssertTrue(presenter.isAlertShown)
+        
+    }
+    
+    
+    func testNotShowAlert() {
+        //given
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController = storyboard.instantiateViewController(withIdentifier: "ImagesListViewController") as! ImagesListViewController
+        let singleViewController = storyboard.instantiateViewController(withIdentifier: "SingleImageView") as! SingleImageViewController
+        let presenter = ImageListPresenterSpy()
+        viewController.imageListPresenter = presenter
+        let imageURLString = "https://paleontol.ru/wp-content/uploads/2021/04/planeta-sputnik-encelad-2048x1739.jpg"
+        guard let url = URL(string: imageURLString) else { return }
+        
+        //when
+        viewController.imageListPresenter?.loadFullSizeImage(on: singleViewController, with: url)
+        
+        //then
+        
+        XCTAssertFalse(presenter.isAlertShown)
+        
     }
 }
