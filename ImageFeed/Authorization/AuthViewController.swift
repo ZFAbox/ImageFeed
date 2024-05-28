@@ -29,6 +29,7 @@ final class AuthViewController: UIViewController, WebViewViewControllerDelegate 
         authViewControllerButton.tintColor = .ypBlack
         authViewControllerButton.translatesAutoresizingMaskIntoConstraints = false
         authViewControllerButton.setTitle("Войти", for: .normal)
+        authViewControllerButton.accessibilityIdentifier = "Authenticate"
         authViewControllerButton.titleLabel?.font = UIFont(name: "YSDisplay-Bold", size: 17)
         authViewControllerButton.backgroundColor = .ypWhite
         authViewControllerButton.layer.cornerRadius = 16
