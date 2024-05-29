@@ -24,14 +24,12 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(loginTextField.waitForExistence(timeout: 3))
         loginTextField.tap()
         loginTextField.typeText("zfa.box@gmail.com")
-        webView.swipeDown()
         XCUIApplication().toolbars.buttons["Done"].tap()
         let passwordTextField = webView.descendants(matching: .secureTextField).element
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 3))
         passwordTextField.tap()
         passwordTextField.typeText("Mem0ry1986!unsplash")
         XCUIApplication().toolbars.buttons["Done"].tap()
-//        webView.swipeUp()
         let button = webView.buttons["Login"]
         button.tap()
         print(app.debugDescription)
@@ -43,24 +41,28 @@ final class ImageFeedUITests: XCTestCase {
 
     func testFeed() throws {
         let table = app.tables
-        sleep(10)
+        sleep(5)
+        
         let cell = table.children(matching: .cell).element(boundBy: 0)
         cell.swipeUp()
-        sleep(6)
+        sleep(2)
+        
         let cellToLike = table.children(matching: .cell).element(boundBy: 1)
         sleep(3)
+        
         cellToLike.buttons.firstMatch.tap()
-        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 4))
         cellToLike.buttons.firstMatch.tap()
-        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 4))
         
         cellToLike.tap()
-        sleep(3)
+        sleep(4)
         
         let image = app.scrollViews.images.element(boundBy: 0)
         image.pinch(withScale: 3, velocity: 1)
+        sleep(2)
         image.pinch(withScale: 0.5, velocity: -1)
-        
+        sleep(2)
         let navigationButton = app.buttons["backButton"]
         navigationButton.tap()
         sleep(3)

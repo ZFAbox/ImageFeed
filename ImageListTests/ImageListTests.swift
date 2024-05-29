@@ -32,8 +32,6 @@ final class ImageListTests: XCTestCase {
                 }
             }
         }
-        
-        
     }
 
     func testShowAlert() {

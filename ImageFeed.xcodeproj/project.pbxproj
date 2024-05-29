@@ -104,6 +104,7 @@
 		902A9E132B51E356001436EE /* YS Display-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Bold.ttf"; sourceTree = "<group>"; };
 		902A9E142B51E356001436EE /* YS Display-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "YS Display-Medium.ttf"; sourceTree = "<group>"; };
 		903F38E82BF00DD300DF234E /* ISO8601DateFormatter+convertStringToDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ISO8601DateFormatter+convertStringToDate.swift"; sourceTree = "<group>"; };
+		906010F92C07D3710008E78F /* ImageFeed.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = ImageFeed.xctestplan; sourceTree = "<group>"; };
 		906873652B3F60EF00F47AE0 /* ImageFeed.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImageFeed.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		906873682B3F60EF00F47AE0 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9068736A2B3F60EF00F47AE0 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -231,6 +232,7 @@
 		9068735C2B3F60EF00F47AE0 = {
 			isa = PBXGroup;
 			children = (
+				906010F92C07D3710008E78F /* ImageFeed.xctestplan */,
 				906873672B3F60EF00F47AE0 /* ImageFeed */,
 				9088D24B2BD4632E008167DB /* ImagesListServiceTests */,
 				9FA19E382BFF8C42005A5746 /* WebViewTests */,
@@ -285,12 +287,12 @@
 			children = (
 				90AEEC212B4DE4FD007A473A /* ImagesListCell.swift */,
 				9068736C2B3F60EF00F47AE0 /* ImagesListViewController.swift */,
+				9F8905DB2C04C4AB008911E4 /* ImageListViewPresenter.swift */,
 				90D461F32B5CF3DF0042A3AD /* ProfileViewController.swift */,
+				9F8905CC2C047669008911E4 /* ProfileViewPresenter.swift */,
 				90FE33902B61BF4D00B91BEE /* SingleImageViewController.swift */,
 				9FB2E4222BA87E650020B926 /* SplashViewController.swift */,
 				9F8FFE5D2BC0296800B2EDD7 /* TabBarViewController.swift */,
-				9F8905CC2C047669008911E4 /* ProfileViewPresenter.swift */,
-				9F8905DB2C04C4AB008911E4 /* ImageListViewPresenter.swift */,
 			);
 			path = ImagesList;
 			sourceTree = "<group>";

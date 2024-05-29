@@ -24,7 +24,6 @@
       }
     },
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:ImageFeed.xcodeproj",
         "identifier" : "9FA19E362BFF8C42005A5746",
@@ -32,7 +31,6 @@
       }
     },
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:ImageFeed.xcodeproj",
         "identifier" : "9F8905D12C04B1B5008911E4",
@@ -40,7 +38,6 @@
       }
     },
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:ImageFeed.xcodeproj",
         "identifier" : "9F8905E02C04CF5E008911E4",
@@ -48,7 +45,6 @@
       }
     },
     {
-      "parallelizable" : true,
       "target" : {
         "containerPath" : "container:ImageFeed.xcodeproj",
         "identifier" : "9F88DA932C0610A4006C9B4C",

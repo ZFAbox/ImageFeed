@@ -24,6 +24,7 @@ class SingleImageViewController: UIViewController {
     //MARK: - IBOutlets
     @IBOutlet private var scrollView: UIScrollView!
     @IBOutlet weak var singleImageView: UIImageView!
+    @IBOutlet weak var backButton: UIButton!
     @IBOutlet private weak var shareButton: UIButton! {
         didSet {
             shareButton.layer.cornerRadius = 0.5 * shareButton.layer.bounds.height
@@ -32,6 +33,7 @@ class SingleImageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backButton.accessibilityIdentifier = "backButton"
         scrollView.minimumZoomScale = 0.1
         scrollView.maximumZoomScale = 1.25
         guard let image else { return }
