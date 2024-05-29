@@ -30,7 +30,8 @@ final class ImageFeedUITests: XCTestCase {
         XCTAssertTrue(passwordTextField.waitForExistence(timeout: 3))
         passwordTextField.tap()
         passwordTextField.typeText("Mem0ry1986!unsplash")
-        webView.swipeUp()
+        XCUIApplication().toolbars.buttons["Done"].tap()
+//        webView.swipeUp()
         let button = webView.buttons["Login"]
         button.tap()
         print(app.debugDescription)
@@ -42,15 +43,48 @@ final class ImageFeedUITests: XCTestCase {
 
     func testFeed() throws {
         let table = app.tables
-        sleep(2)
-        table.element.swipeUp()
-        sleep(3)
+        sleep(4)
         let cell = table.children(matching: .cell).element(boundBy: 0)
-        cell.buttons["LikeButton"].tap()
-        XCTAssertTrue(cell.waitForExistence(timeout: 2))
+        cell.swipeUp()
+        sleep(4)
+        let cellToLike = table.children(matching: .cell).element(boundBy: 1)
+        cellToLike.buttons.element.tap()
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
+        cellToLike.buttons.element.tap()
+        XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
+        
+        cellToLike.tap()
+        sleep(3)
+        
+        let image = app.scrollViews.images.element(boundBy: 0)
+        image.pinch(withScale: 3, velocity: 1)
+        image.pinch(withScale: 0.5, velocity: 1)
+        
+        let navigationButton = app.buttons["backButton"]
+        navigationButton.tap()
+        sleep(3)
+
     }
     
     func testProfile() throws {
+        sleep(5)
+        let profileView = app.tabBars.buttons.element(boundBy: 1)
+        profileView.tap()
+        XCTAssertTrue(profileView.waitForExistence(timeout: 3))
+        let nameIsExist = app.staticTexts["Fedor Zavyalov"].exists
+        XCTAssertTrue(nameIsExist)
+        let idIsExist = app.staticTexts["@zfabox"].exists
+        XCTAssertTrue(idIsExist)
+        let statusIsExist = app.staticTexts["Hello, world!"].exists
+        XCTAssertTrue(statusIsExist)
+        let exitButton = app.buttons["ExitButton"]
+        exitButton.tap()
+        sleep(2)
+        let alertYesButton = app.alerts["Пока, пока!"].otherElements.buttons["Да"]
+        alertYesButton.tap()
+        sleep(2)
+        let enterButton = app.buttons["Authenticate"].exists
+        XCTAssertTrue(enterButton)
         
     }
 }

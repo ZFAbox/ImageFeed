@@ -55,6 +55,7 @@ final class ProfileViewController:UIViewController, ProfileViewControllerProtoco
         let exitButton = UIButton(type: .system)
         exitButton.translatesAutoresizingMaskIntoConstraints = false
         exitButton.setBackgroundImage(UIImage(systemName: "rectangle.portrait.and.arrow.right"), for: .normal)
+        exitButton.accessibilityIdentifier = "ExitButton"
         exitButton.tintColor = .ypRed
         exitButton.addTarget(self, action: #selector(exitButtonTapped), for: .touchUpInside)
         return exitButton

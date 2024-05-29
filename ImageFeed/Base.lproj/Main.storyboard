@@ -97,7 +97,6 @@
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3P0-Mj-pse">
                                                     <rect key="frame" x="340" y="4" width="42" height="42"/>
-                                                    <accessibility key="accessibilityConfiguration" identifier="LikeButton"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="42" id="0Af-W7-ide"/>
                                                         <constraint firstAttribute="width" constant="42" id="Hfc-hZ-oNc"/>
@@ -117,7 +116,7 @@
                                                     </constraints>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="13 января 2024" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8dI-Pf-xbv">
-                                                    <rect key="frame" x="8" y="218.5" width="94" height="15.5"/>
+                                                    <rect key="frame" x="8" y="218.5" width="88" height="15.5"/>
                                                     <fontDescription key="fontDescription" name="YSDisplay-Medium" family="YS Display" pointSize="13"/>
                                                     <color key="textColor" name="YP White"/>
                                                     <nil key="highlightedColor"/>
