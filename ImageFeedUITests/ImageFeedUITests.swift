@@ -43,14 +43,15 @@ final class ImageFeedUITests: XCTestCase {
 
     func testFeed() throws {
         let table = app.tables
-        sleep(4)
+        sleep(10)
         let cell = table.children(matching: .cell).element(boundBy: 0)
         cell.swipeUp()
-        sleep(4)
+        sleep(6)
         let cellToLike = table.children(matching: .cell).element(boundBy: 1)
-        cellToLike.buttons.element.tap()
+        sleep(3)
+        cellToLike.buttons.firstMatch.tap()
         XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
-        cellToLike.buttons.element.tap()
+        cellToLike.buttons.firstMatch.tap()
         XCTAssertTrue(cellToLike.waitForExistence(timeout: 3))
         
         cellToLike.tap()
@@ -58,7 +59,7 @@ final class ImageFeedUITests: XCTestCase {
         
         let image = app.scrollViews.images.element(boundBy: 0)
         image.pinch(withScale: 3, velocity: 1)
-        image.pinch(withScale: 0.5, velocity: 1)
+        image.pinch(withScale: 0.5, velocity: -1)
         
         let navigationButton = app.buttons["backButton"]
         navigationButton.tap()

@@ -102,6 +102,7 @@ final class ImagesListViewController: UIViewController, ImageListViewControllerP
         imagesListCell.likeCellViewButton.imageView?.tintColor = photos[indexPath.row].isLiked ? UIColor.ypRed : UIColor.transperantWhite
 //        addAnimation(cell: imagesListCell, indexPath: indexPath)
         prepareGradientLayer(cell: imagesListCell)
+        imagesListCell.likeCellViewButton.accessibilityIdentifier = "LikeButton"
         if let date = photos[indexPath.row].createdAt {
             imagesListCell.imageCellViewDate?.text = DateFormatter.dateFormat(date: date)
         } else {

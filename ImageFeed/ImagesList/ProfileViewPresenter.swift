@@ -42,8 +42,4 @@ final class ProfileViewPresenter: ProfileViewPresenterProtocol {
         alert.addAction(noAction)
         view.present(alert, animated: true)
     }
-    
-    
-    
-    
 }
