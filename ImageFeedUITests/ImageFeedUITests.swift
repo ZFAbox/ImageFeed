@@ -33,7 +33,7 @@ final class ImageFeedUITests: XCTestCase {
         let button = webView.buttons["Login"]
         button.tap()
         print(app.debugDescription)
-    
+        sleep(3)
         let tablesQuery = app.tables
         let cell = tablesQuery.children(matching: .cell).element(boundBy: 0)
         XCTAssertTrue(cell.waitForExistence(timeout: 2))

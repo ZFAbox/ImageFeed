@@ -29,9 +29,4 @@ final class ProfileViewTests: XCTestCase {
         XCTAssertTrue(presenter.isAlertShown)
     }
     
-    func testUserLogout(){
-        //given
-        
-    }
-    
 }

@@ -25,18 +25,5 @@ final class ImagesListServiceTests: XCTestCase {
         service.fetchPhotoNextPage(token: token)
         wait(for: [expectation], timeout: 10)
         XCTAssertEqual(service.photos.count, 10)
-        
-        
-        //            service.fetchPhotoNextPage(token: token) { result in
-        //                switch result {
-        //                case .success(let data):
-        //                    print(data.count)
-        //                    XCTAssertEqual(data.count, 10)
-        //                    expectation.fulfill()
-        //                case.failure(let error):
-        //                    XCTFail(error.localizedDescription)
-        //                }
-        //            }
-        //                waitForExpectations(timeout: 2)
     }
 }
